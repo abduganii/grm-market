@@ -6,7 +6,6 @@ import { BackIcons } from './icons'
 
 export default function Back() {
   const router = useRouter()
-  // fixed top-[26px] left-[26px]
   return (
     <div className="flex z-[10000]  items-center gap-[26px] justify-self-start self-start">
         <Link className='w-full inline-block max-w-[220px] mx-auto' href='/'>
