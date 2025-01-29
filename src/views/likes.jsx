@@ -7,7 +7,7 @@ import { useLocalStorage } from '../hooks/useLocalStorage';
 
 export default function LikesPage() {
   const { likes } = useAppSelector(store => store.likes);
-  const [setlocLikes] = useLocalStorage("likes",[])
+  const [localLike,setlocLikes] = useLocalStorage("likes",[])
   const dispatch = useAppDispatch();
   return (
     <div className='w-full max-w-[860px] gap-3 items-start flex flex-wrap justify-between'>
@@ -24,7 +24,7 @@ export default function LikesPage() {
               isLike={true}
               onLike={() => {
                 dispatch(changeLike(likes?.filter(itms => itms !== e)))
-                setlocLikes( changeLike([e, ...likes] ))
+                setlocLikes([e, ...likes] )
               }}
               
             />

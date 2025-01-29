@@ -9,8 +9,8 @@ import { changeBuskets, changeLike } from '../lib/features'
 import { useLocalStorage } from "../hooks/useLocalStorage"
 
 export default function HomePage({ product }) {
-  const [setlocLikes] = useLocalStorage("likes", [])
-  const [setLocBuskets] = useLocalStorage("buskets",[])
+  const [localLeks,setlocLikes] = useLocalStorage("likes", [])
+  const [localBuskets,setLocBuskets] = useLocalStorage("buskets",[])
   const { buskets } = useAppSelector(store => store.buskets);
   const {likes} = useAppSelector(store => store.likes);
   const dispatch = useAppDispatch();
@@ -37,12 +37,12 @@ export default function HomePage({ product }) {
               image={e.images?.[0 || 1]}
               isLike={likes?.map(it=>it?.title)?.includes(e?.title)}
               onLike={() => {
-                dispatch(likes?.includes(e) && likes?.length ? changeLike(likes?.filter(itms=> itms !== e)): changeLike([e, ...likes] ))
-                setlocLikes(likes?.includes(e) && likes?.length ? changeLike(likes?.filter(itms=> itms !== e)): changeLike([e, ...likes] ))
+                dispatch(likes?.includes(e)  ? changeLike(likes?.filter(itms=> itms !== e)): changeLike([e, ...likes] ))
+                likes?.includes(e) ? setlocLikes(likes?.filter(itms=> itms !== e)) : setlocLikes([e, ...likes])
               }}
               onBuslet={() => {
-                dispatch(buskets?.includes(e) && buskets?.length ? changeBuskets(buskets?.filter(itms=> itms !== e)): changeBuskets([e, ...buskets] ))
-                setLocBuskets(buskets?.includes(e) && buskets?.length ? changeBuskets(buskets?.filter(itms=> itms !== e)): changeBuskets([e, ...buskets] ))
+                dispatch(buskets?.includes(e) ? changeBuskets(buskets?.filter(itms=> itms !== e)): changeBuskets([e, ...buskets] ))
+               buskets?.includes(e) ? setLocBuskets(buskets?.filter(itms=> itms !== e)): setLocBuskets([e, ...buskets] )
               }}
             />
             ))

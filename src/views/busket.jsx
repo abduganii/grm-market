@@ -7,7 +7,7 @@ import GlamCardBusket from "../components/gllam-card-busket"
 
 export default function BusketPage() {
   const { buskets } = useAppSelector(store => store.buskets);
-  const [setLocBuskets] = useLocalStorage("buskets",[])
+  const [localBuskets,setLocBuskets] = useLocalStorage("buskets",[])
   const dispatch = useAppDispatch();
   return (
       <div className='w-full max-w-[1100px] gap-[20px] items-start flex justify-between'>
@@ -23,7 +23,7 @@ export default function BusketPage() {
               image={e.images?.[0 || 1]}
               onLike={() => {
                 dispatch(changeBuskets(buskets?.filter(itms => itms !== e)))
-                setLocBuskets( changeBuskets([e, ...buskets] ))
+                setLocBuskets( [e, ...buskets] )
               }}
               
             />

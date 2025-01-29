@@ -22,13 +22,14 @@ export default function FixedLayout() {
     
   }, [])
   useEffect(() => {
-    if (locLikes?.payload?.length) {
-      dispatch(changeLike(locLikes?.payload))
+    console.log(locLikes)
+    if (locLikes?.length) {
+      dispatch(changeLike(locLikes))
     }
   }, [locLikes])
   useEffect(() => {
-    if (locBuskets?.payload?.length) {
-      dispatch(changeBuskets(locBuskets?.payload))
+    if (locBuskets.length) {
+      dispatch(changeBuskets(locBuskets))
     }
   }, [locBuskets])
   
