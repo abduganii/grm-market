@@ -15,7 +15,7 @@ export default function HomePage({ product }) {
   const {likes} = useAppSelector(store => store.likes);
   const dispatch = useAppDispatch();
   return (
-      <Container className='mt-[90px]'>
+      <div className='w-full px-[30px] mt-[90px]'>
           <header className='mb-[110px] text-center w-full max-w-[477px] mx-auto px-[30px] text-center '>
                 <Link className='w-full inline-block max-w-[220px] mx-auto' href='/'>
                     <Image src={'/logo.svg'} width={220 } height={90}  alt="image" title='gr-code'/>
@@ -24,9 +24,11 @@ export default function HomePage({ product }) {
               <p className='text-normal text-[14px] leading-[16.71px]'>Турецкие, иранские и узбекские ковры – только премиальное качество и доступные цены. </p>
           </header>
 
-          <div className='w-full  gap-3 items-start flex flex-wrap justify-between'>
+      {/* <div className='w-full  gap-3 items-start flex flex-wrap'> */}
+      <div className='w-full  columns-1 sm:columns-2 md:columns-3 lg:columns-4 xl:columns-5 gap-8 '>
+  
           {
-          product?.length && product?.map(e => (
+          product?.length && product?.map((e,i) => (
             <GlamCard
               key={e?.title}
               className='colm1'
@@ -34,6 +36,7 @@ export default function HomePage({ product }) {
               title={e?.title}
               items={e}
               text="220x350"
+              type={i==1? "medium": i===3 ? "small" :i === 4? "large": i === 6? "small":i === 6?"medium":"extraLarge"}
               image={e.images?.[0 || 1]}
               isLike={likes?.map(it=>it?.title)?.includes(e?.title)}
               onLike={() => {
@@ -49,6 +52,7 @@ export default function HomePage({ product }) {
             }
            
           </div>
-    </Container>
+    </div>
   )
 }
+

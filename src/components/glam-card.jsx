@@ -4,12 +4,19 @@ import { Link, useRouter } from '../i18n/routing'
 import React from 'react'
 import { BusketIcons, LikeIcons } from './icons'
 
-export default function GlamCard({ className,onBuslet, onLike, isLike, url, title, text, image }) {
+const typeObj = {
+  extraSmall:52,
+  small:63,
+  medium:75,
+  large:87,
+  extraLarge:100,
+}
+export default function GlamCard({ className,onBuslet,type, onLike, isLike, url, title, text, image }) {
   const router = useRouter()
   return (
-    <div className={`${className && className}    text-center mb-[65px]`}>
-          <div onClick={()=>router.push(url)} className='w-full h-auto min-h-[100px] relative group flex text-center items-center justify-center'>
-            <img className='object-contain m-auto  hover:shadow-xl bg-transparent cursor-pointer ease-in duration-200 hover:-translate-y-2'  src={image}  alt='image ' title={title} />
+    <div className={`${className && className} mb-[60px]   text-center`}>
+          <div onClick={()=>router.push(url)}  className='w-full h-auto min-h-[100px] relative group flex text-center items-center justify-center'>
+            <img style={{width:`${typeObj?.[type]}%`}} className='object-contain m-auto  hover:shadow-xl bg-transparent cursor-pointer ease-in duration-200 hover:-translate-y-2'  src={image}  alt='image ' title={title} />
         <div className={`absolute ${isLike ? "flex":"hidden"} group-hover:flex bottom-[69px] left-0 gap-1 w-full  items-center justify-center`}>
           <div
               onClick={(e) => {
