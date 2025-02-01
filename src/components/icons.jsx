@@ -74,3 +74,58 @@ export const ShareIcons = () => {
 </svg>
   )
 }
+export const PlusIcons = () => {
+    return (
+<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M10.0003 4.16667V15.8333M4.16699 10H15.8337" stroke="black" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
+)
+}
+
+export const MinutIcons = () => {
+    return (
+<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M4.16699 10H15.8337" stroke="black" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
+
+)
+}
+export const RoundedIcons = () => {
+    return (
+<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g filter="url(#filter0_i_479_5996)">
+<circle cx="10" cy="10" r="10" fill="white"/>
+</g>
+<circle cx="10" cy="10" r="9" stroke="black" stroke-width="2"/>
+<defs>
+<filter id="filter0_i_479_5996" x="0" y="0" width="20" height="22" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="2"/>
+<feGaussianBlur stdDeviation="1"/>
+<feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0"/>
+<feBlend mode="normal" in2="shape" result="effect1_innerShadow_479_5996"/>
+</filter>
+</defs>
+</svg>
+)
+}
+export const SomeThingIcons = () => {
+    return (
+<svg width="29" height="34" viewBox="0 0 29 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M26.6151 32.9657C26.8723 33.4545 27.477 33.6421 27.9657 33.3849C28.4545 33.1277 28.6421 32.523 28.3849 32.0343L26.6151 32.9657ZM16.2446 11.1147L15.3597 11.5804L16.2446 11.1147ZM2.83312 7.16513L14.3599 11.0074L14.9924 9.11004L3.46557 5.26777L2.83312 7.16513ZM15.3597 11.5804L26.6151 32.9657L28.3849 32.0343L17.1295 10.649L15.3597 11.5804ZM5.38703 4.00571L3.00376 31.4134L4.99624 31.5866L7.37952 4.17897L5.38703 4.00571ZM12.4417 12.1788C12.6475 10.6005 14.692 10.3119 15.3597 11.5804L17.1295 10.649C15.4793 7.51359 10.8963 8.56365 10.4585 11.9202L12.4417 12.1788ZM14.1834 13.8435C13.2161 14.037 12.3088 13.1973 12.4417 12.1788L10.4585 11.9202C10.1538 14.2563 12.2255 16.2747 14.5756 15.8047L14.1834 13.8435ZM14.3599 11.0074C15.7901 11.4841 15.6616 13.5479 14.1834 13.8435L14.5756 15.8047C18.0649 15.1068 18.3682 10.2353 14.9924 9.11004L14.3599 11.0074ZM2.86049 2.87759C3.81117 1.86353 5.50745 2.62093 5.38703 4.00571L7.37952 4.17897C7.66443 0.902418 3.65084 -0.889673 1.40141 1.50971L2.86049 2.87759ZM3.46557 5.26777C2.45259 4.9301 2.13019 3.65658 2.86049 2.87759L1.40141 1.50971C-0.326556 3.35288 0.436281 6.36619 2.83312 7.16513L3.46557 5.26777Z" fill="black"/>
+</svg>
+)
+}
+export const EditIcons = () => {
+    return (
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M7 7H6C5.46957 7 4.96086 7.21071 4.58579 7.58579C4.21071 7.96086 4 8.46957 4 9V18C4 18.5304 4.21071 19.0391 4.58579 19.4142C4.96086 19.7893 5.46957 20 6 20H15C15.5304 20 16.0391 19.7893 16.4142 19.4142C16.7893 19.0391 17 18.5304 17 18V17M16 5L19 8M20.385 6.585C20.7788 6.19115 21.0001 5.65698 21.0001 5.1C21.0001 4.54302 20.7788 4.00885 20.385 3.615C19.9912 3.22115 19.457 2.99989 18.9 2.99989C18.343 2.99989 17.8088 3.22115 17.415 3.615L9 12V15H12L20.385 6.585Z" stroke="black" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        
+        )
+}

@@ -25,7 +25,7 @@ export default function HomePage({ product }) {
           </header>
 
       {/* <div className='w-full  gap-3 items-start flex flex-wrap'> */}
-      <div className='w-full  columns-1 sm:columns-2 md:columns-3 lg:columns-4 xl:columns-5 gap-8 '>
+      <div className='w-full  columns-1 sm:columns-2 md:columns-3 lg:columns-4 xl:columns-5 gap-8  '>
   
           {
           product?.length && product?.map((e,i) => (
@@ -36,7 +36,7 @@ export default function HomePage({ product }) {
               title={e?.title}
               items={e}
               text="220x350"
-              type={i==1? "medium": i===3 ? "small" :i === 4? "large": i === 6? "small":i === 6?"medium":"extraLarge"}
+              type={i==1? "medium" : i===3 ? "medium" :i === 4? "large": i === 2? "small":i === 6?"small":"extraLarge"}
               image={e.images?.[0 || 1]}
               isLike={likes?.map(it=>it?.title)?.includes(e?.title)}
               onLike={() => {
@@ -49,7 +49,8 @@ export default function HomePage({ product }) {
               }}
             />
             ))
-            }
+        }
+       
            
           </div>
     </div>

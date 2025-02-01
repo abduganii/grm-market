@@ -30,8 +30,19 @@ export default function BusketPage() {
             )):""
             }
           </div>
-          <div >
-              contact
+          <div  className='w-full max-w-[270px]'>
+              <p className='text-[12px] leading-[14.4px] text-[#212121]'>Заказчик</p>
+            <p className='text-[20px] leading-[23.4px] text-[#212121] mt-[6px] mb-[24px]'>Не ригистрирован</p>
+        
+        <div className='items-center w-full mb-2 flex justify-between'>
+          <p className='text-[12px] leading-[14.4px] text-[#212121]'>Номер для связи</p>
+          <p className='text-[12px] leading-[14.4px] text-[#006BD6]'>Изменить</p>
+        </div>
+          <input className='py-[11px] w-full px-[12px] outline-none border-[#EEEEEE] border-[1px] border-solid'
+          placeholder='+998' />
+        <buttun className='py-[11px] text-center inline-block w-full mt-[30px]  px-[12px] border-[#EEEEEE] border-[1px] border-solid'>
+        Оформиь заказ
+        </buttun>
           </div>
         </div>
   )
