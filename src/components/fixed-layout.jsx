@@ -34,9 +34,9 @@ export default function FixedLayout() {
   }, [locBuskets])
   
   return (
-    <Container className={"flex justify-between left-0  fixed bottom-[40px]"}>
-      <div className='w-[162px]'></div>
-          <div className='  flex gap-1 '>
+    <Container className={"flex justify-between left-0  fixed  bottom-[20px] sm:bottom-[40px]"}>
+      <div className='lg:w-[162px]'></div>
+        <div className=' flex gap-1 '>
             <div className='cursor-pointer bg-white p-[10px] rounded-[3px] shadow'><HomeIcons/></div> 
           <div
           onClick={(e) => {
@@ -58,7 +58,7 @@ export default function FixedLayout() {
           <input onFocus={() => setIsfocus(true)}  onBlur={() => setIsfocus(false)} className={`${isFocus ? "max-w-[180px] ":"max-w-[120px] "} transition-all  duration-150 ease-in-out  w-full outline-none`} placeholder='Поиск'/>
           </div> 
       </div>
-      <a href='tel:+998991404422' className='cursor-pointer bg-white p-[10px] rounded-[3px] shadow flex gap-1  items-center '>
+      <a href='tel:+998991404422' className='cursor-pointer hidden  bg-white p-[10px] rounded-[3px] shadow lg:flex gap-1  items-center '>
         <TelIcons />
         <p className='text-[14px] leading-[18px]'>+998 99 140-44-22</p>
       </a> 

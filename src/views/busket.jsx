@@ -4,13 +4,15 @@ import { useAppDispatch, useAppSelector } from '../lib/hooks';
 import { changeBuskets } from '../lib/features';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import GlamCardBusket from "../components/gllam-card-busket"
+import { useRouter } from '@/i18n/routing';
 
 export default function BusketPage() {
   const { buskets } = useAppSelector(store => store.buskets);
-  const [localBuskets,setLocBuskets] = useLocalStorage("buskets",[])
+  const [localBuskets, setLocBuskets] = useLocalStorage("buskets", [])
+  const router = useRouter()
   const dispatch = useAppDispatch();
   return (
-      <div className='w-full max-w-[1100px] gap-[20px] items-start flex justify-between'>
+      <div className='w-full max-w-[1100px] gap-[20px] items-start flex flex-wrap xl:flex-nowrap justify-between'>
           <div className='w-full max-w-[560px]'>
           {buskets?.length ? buskets?.map(e => (
             <GlamCardBusket
@@ -30,7 +32,7 @@ export default function BusketPage() {
             )):""
             }
           </div>
-          <div  className='w-full max-w-[270px]'>
+          <div  className='w-full sm:max-w-[270px]'>
               <p className='text-[12px] leading-[14.4px] text-[#212121]'>Заказчик</p>
             <p className='text-[20px] leading-[23.4px] text-[#212121] mt-[6px] mb-[24px]'>Не ригистрирован</p>
         
@@ -40,7 +42,7 @@ export default function BusketPage() {
         </div>
           <input className='py-[11px] w-full px-[12px] outline-none border-[#EEEEEE] border-[1px] border-solid'
           placeholder='+998' />
-        <buttun className='py-[11px] text-center inline-block w-full mt-[30px]  px-[12px] border-[#EEEEEE] border-[1px] border-solid'>
+        <buttun onClick={()=>router.push('/profile/order')} className='py-[11px] text-center inline-block w-full mt-[30px]  px-[12px] border-[#EEEEEE] border-[1px] border-solid'>
         Оформиь заказ
         </buttun>
           </div>

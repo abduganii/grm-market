@@ -10,7 +10,7 @@ export default function GlamById({ id }) {
   const [type,setType] = useState(1)
   return (
     <>
-    <Container className={"flex  px-[26px] mt-[26px] gap-[35px] items-center"}>
+    <Container className={"flex flex-wrap justify-center lg:flex-nowrap px-[15px] md:px-[26px] mt-[26px] gap-[35px] items-center"}>
       <Back />
         <Image className="object-contain max-h-[740px]" width={683} height={740} src='/image2.png' alt='image' />
         <div className='w-full max-w-[430px] '>

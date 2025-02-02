@@ -10,7 +10,7 @@ export default function OrderPage() {
   const [localBuskets,setLocBuskets] = useLocalStorage("buskets",[])
   const dispatch = useAppDispatch();
   return (
-      <div className='w-full max-w-[1100px] gap-[20px] items-start flex justify-between'>
+      <div className='w-full max-w-[1100px] lg:flex-nowrap flex-wrap gap-[20px] items-start flex justify-between'>
           <div className='w-full max-w-[610px]'>
               <div className='p-[30px] rounded-[3px] border-[#EEEEEE] border-[1px] mb-2'>
                   <p className='text-[12px] leading-[14px] mb-[15px]'>Список выбранные вами заказов</p>
@@ -55,7 +55,7 @@ export default function OrderPage() {
               </div>
               <p className='text-[12px] leading-[14px] mb-[12px]'>Комментарий для курьера</p>
               <textarea className='px-[16px] py-[13px] bg-[#F9F9F9] border-[#EEEEEE] border-[1px] outline-none w-full mb-[60px]' rows={3} placeholder='Оставьте комментарий для курьера'/>
-              <buttun className='py-[11px] w-full mb-[139px] bg-[#212121] text-white text-center inline-block w-full ]  px-[12px] border-[#EEEEEE] border-[1px] border-solid'>
+              <buttun className='py-[11px] w-full mb-[59px] bg-[#212121] text-white text-center inline-block w-full ]  px-[12px] border-[#EEEEEE] border-[1px] border-solid'>
         Оформиь заказ
         </buttun>
            

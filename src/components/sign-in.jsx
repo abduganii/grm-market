@@ -7,13 +7,13 @@ export default function SignInMadal() {
 
   return (
     <div  className='w-full fixed flex items-center justify-center top-0 left-0 bg-[#21212199]  h-full'>
-        <div onClick={(e)=>e.stopPropagation()} className='w-full bg-white max-w-[600px] p-[63px] pt-[43px]'>
+        <div onClick={(e)=>e.stopPropagation()} className='w-full bg-white max-w-[600px] p-[20px] sm:p-[63px] sm:pt-[43px]'>
               <h3 className='text-[32px] leading-[37px] font-bold'>Регистрация & Логин</h3>
            {
           type == 1 ? <>
            <p className='text-[14px] leading-[16.4px] mt-[20px] mb-2'>Введите ваш номер для подтверждения вашей личности.</p>
-              <div className='flex gap-2'>
-                  <input className='py-[11px] w-full max-w-[290px] px-[12px] outline-none border-[#EEEEEE] border-[1px] border-solid' placeholder='+998' />
+              <div className='flex flex-wrap sm:flex-nowrap gap-2'>
+                  <input className='py-[11px] w-full sm:max-w-[290px] px-[12px] outline-none border-[#EEEEEE] border-[1px] border-solid' placeholder='+998' />
                   <button onClick={()=>setType(2)} className='bg-[#121212]  text-white  text-[16px] leading-[15px] py-[11px] rounded-[2px] px-[16px] flex items-center gap-2'>
                   Отправить смс код
           </button>

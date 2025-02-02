@@ -64,3 +64,9 @@ button {
 .colm2{
   width: calc((100% / 2) - 12px);
 }
+
+@media screen and (max-width:500px) {
+  .colm2{
+    width: 100%;
+  }
+}
