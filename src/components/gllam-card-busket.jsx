@@ -1,43 +1,107 @@
-import Image from 'next/image'
-import React, { useState } from 'react'
-import { MinutIcons, PlusIcons, RoundedIcons, SomeThingIcons } from './icons'
+import Image from "next/image";
+import React, { useState } from "react";
+import { MinutIcons, PlusIcons, RoundedIcons, SomeThingIcons } from "./icons";
 
-export default function GlamCardBusket({ title, text, image }) {
-  const [count,setCount] = useState(1)
+const data = [
+  {
+    label: "Коллекция",
+    key: "Hera Classic",
+  },
+  {
+    label: "Модель",
+    key: "M3559",
+  },
+  {
+    label: "Размер",
+    key: "200x300",
+  },
+  {
+    label: "Цена за м²",
+    key: "320 000 сум",
+  },
+  {
+    label: "Цвет",
+    key: "Беживый",
+  },
+  {
+    label: "Стиль",
+    key: "Классик",
+  },
+  {
+    label: "Форма",
+    key: "Овал",
+  },
+  {
+    label: "Страна",
+    key: "Турция",
+  },
+];
+export default function GlamCardBusket({ title, image }) {
+  const [count, setCount] = useState(1);
+
   return (
-    <div className='flex sm:flex-nowrap flex-wrap justify-center w-full mb-[30px] pb-[30px] border-b-[1px] border-[#EEEEEE] items-start gap-[24px]'>
-          {image && <Image src={image} alt={"img"} title={title} width={174} height={ 256} />}
-          <div className='w-full max-w-[360px] mt-[10px]'>
-            <div className='flex items-center justify-between '>
-              <h3 className='text-[#282A2C] text-[24px] leading-[30px]'>3667</h3>
-              <p className='text-[#212121] text-[12px] leading-[14px]'>Характеристика ковра</p>
+    <div className="flex w-full max-w-[610px] sm:flex-nowrap border-[1px] flex-wrap  mb-[30px] p-[2px]  border-[#EEEEEE] items-start gap-[24px]">
+      {image && (
+        <Image src={image} alt={"img"} title={title} width={174} height={256} />
+      )}
+      <div className="w-full max-w-[360px] ">
+        <div className="flex  flex-wrap py-[30px] border-b-[1px]">
+          {data?.map((e, i) => (
+            <div key={i} className="w-1/4">
+              <h3 className="text-[12px] leading-[14px] text-[#282A2C] mb-1 opacity-45">
+                {e?.label}
+              </h3>
+              <p className="text-[16px]  leading-[19px] text-[#282A2C] mb-1 ">
+                {e?.key}
+              </p>
             </div>
-            <h3 className='text-[#282A2C] text-[32px] leading-[40px] mt-[2px] mb-[12px]'>Aspendos</h3>
-            
-            <div className='flex sm:flex-nowrap flex-wrap w-full items-center gap-1'>
-              <div className='text-[#FFFFFF] bg-[#212121] rounded-[5px] py-1 px-2'>100X150</div>
-              <div className='text-[#FFFFFF] bg-[#212121] rounded-[5px] py-1 px-2'>Blue</div>
-              <div className='text-[#FFFFFF] bg-[#212121] rounded-[5px] py-1 px-2'>Hi-tech</div>
+          ))}
+        </div>
+        <div className="flex sm:flex-nowrap flex-wrap w-full items-center py-[25px] gap-[19px]">
+          <div className="flex w-1/3 gap-[2px]   ">
+            <div
+              className={`${
+                count == 1
+                  ? "opacity-40 cursor-not-allowed"
+                  : " hover:bg-[#EEEEEE] active:bg-white cursor-pointer"
+              }  p-2  border-[1px] border-[#EEEEEE] `}
+              onClick={count > 1 ? () => setCount(count - 1) : () => {}}
+            >
+              <MinutIcons />
             </div>
-            <div className='flex sm:flex-nowrap flex-wrap w-full items-center mt-[43px] gap-[19px]'>
-              <div className='flex w-full max-w-[140px] border-[1px] border-[#EEEEEE] '>
-                <div className={ `${count ==6 ? "opacity-40 cursor-not-allowed":" hover:bg-[#EEEEEE] active:bg-white cursor-pointer"}  p-3 pr-[15px] `} onClick={()=>setCount(count+1)}>
-                  <PlusIcons/>
-                </div>
-                <div className='px-4 py-3 border-x-[1px] border-[#EEEEEE]  text-[18px] leading-[22px] text-medium'>
-                      {count}
-                </div>
-            <div className={ `${count ==1 ? "opacity-40 cursor-not-allowed":" hover:bg-[#EEEEEE] active:bg-white cursor-pointer"} cursor-pointer p-3 pl-[15px] hover:bg-[#EEEEEE] active:bg-white`} onClick={count > 1 ? ()=> setCount(count-1):()=>{}}>
-                      <MinutIcons/>
-                    </div>
+            <div className="px-3 pb-[6px] pt-[10px] border-[1px]  border-[#EEEEEE]  text-[14px] leading-[16px] text-medium">
+              {count}
             </div>
-          <div className='bg-[#FFA500] flex  items-center gap-3 p-3 pr-[18px] rounded-[2px] relative' >
-           <div className='absolute -top-[20px] -left-[9px]'> <SomeThingIcons/></div>
-            <RoundedIcons/>
-                <p className='text-[#FFFFFF] text-[17px] leading-[21px] font-bold'>{120000000 * count} uzs</p>
-            </div>
+            <div
+              className={`${
+                count == 6
+                  ? "opacity-40 cursor-not-allowed"
+                  : " hover:bg-[#EEEEEE] active:bg-white cursor-pointer"
+              } cursor-pointer p-2  border-[1px] border-[#EEEEEE] hover:bg-[#EEEEEE] active:bg-white`}
+              onClick={() => setCount(count + 1)}
+            >
+              <PlusIcons />
             </div>
           </div>
+
+          <div className="w-1/3">
+            <h3 className="text-[12px] leading-[14px] text-[#282A2C] mb-1 opacity-45">
+              Скидка
+            </h3>
+            <p className="text-[16px]  leading-[19px] text-[#282A2C] mb-1 ">
+              -15%
+            </p>
+          </div>
+          <div className="w-1/3 ">
+            <h3 className="text-[12px] leading-[14px] text-[#282A2C] mb-1 opacity-45">
+              Итого
+            </h3>
+            <p className="text-[16px]  leading-[19px] text-[#282A2C] mb-1 ">
+              1 632 000 сум
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
-  )
+  );
 }
