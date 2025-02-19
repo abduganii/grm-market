@@ -15,9 +15,9 @@
 } */
 
 body {
-  color:black;
-  background:#fff;
-  font-family: 'SF Pro Display', sans-serif;
+  color: black;
+  background: #fff;
+  font-family: "SF Pro Display", sans-serif;
 }
 a {
   color: inherit;
@@ -31,7 +31,6 @@ a {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
-
 }
 
 button {
@@ -52,21 +51,28 @@ ul {
 button {
   border: none;
   background: transparent;
-
 }
 
-.colm1{
+.colm1 {
   width: 100%;
   max-width: 420px;
   /* width: calc((100% / 5) - 10px); */
 }
 
-.colm2{
+.colm2 {
   width: calc((100% / 2) - 12px);
 }
 
-@media screen and (max-width:500px) {
-  .colm2{
+@media screen and (max-width: 500px) {
+  .colm2 {
     width: 100%;
   }
+}
+
+.ant-select {
+  height: 47px;
+}
+
+.ant-select-selector {
+  border: none !important;
 }

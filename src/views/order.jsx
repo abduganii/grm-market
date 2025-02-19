@@ -1,12 +1,17 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../lib/hooks";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import Container from "@/components/container";
 import Back from "@/components/back";
+import Image from "next/image";
+import InputCostom from "@/components/form/input";
+import SelectCostom from "@/components/form/select";
 
+const typePayArr = ["cash", "payme", "click"];
 export default function OrderPage() {
   const dispatch = useAppDispatch();
+  const [typePay, setTypePay] = useState("cash");
   return (
     <Container
       className={
@@ -66,7 +71,7 @@ export default function OrderPage() {
                   Список выбранные вами заказов
                 </p>
                 <ul>
-                  <li className="p-[13px] flex items-center gap-2 rounded-[3px] border-[#EEEEEE] border-[1px]">
+                  <li className="p-[13px] flex items-center gap-2 rounded-[3px] mb-1 border-[#EEEEEE] border-[1px]">
                     <p className="text-[12px] leading-[14px] w-full">
                       Aspendos
                     </p>
@@ -91,27 +96,49 @@ export default function OrderPage() {
                     </p>
                   </li>
                 </ul>
+                <div className="flex items-center gap-[15px] mt-[24px] justify-end">
+                  <h4 className="font-medium text-[16px] leading-[18px] text-[#212121] ">
+                    Итоговое сумма:
+                  </h4>
+                  <h4 className="font-medium text-[16px] leading-[18px] text-[#212121] ">
+                    4 890 000 сум
+                  </h4>
+                </div>
               </div>
               <div className="p-[30px] rounded-[3px] border-[#EEEEEE] border-[1px] mb-2">
                 <p className="text-[12px] leading-[14px] mb-[15px]">
                   Укажите метод оплаты
                 </p>
                 <div className="flex items-center gap-2 mb-4 ] ">
-                  <div className="flex w-full items-center gap-2 rounded-[2px] border-[#EEEEEE] border-[1px] p-[12px] pr-[25px]">
-                    <p className="text-[#212121] text-[12px] leading-[14px]">
-                      Наличными
-                    </p>
-                  </div>
-                  <div className="flex w-full items-center gap-2 rounded-[2px] border-[#EEEEEE] border-[1px] p-[12px] pr-[25px]">
-                    <p className="text-[#212121] text-[12px] leading-[14px]">
-                      Payme
-                    </p>
-                  </div>
-                  <div className="flex w-full items-center gap-2 rounded-[2px] border-[#EEEEEE] border-[1px] p-[12px] pr-[25px]">
-                    <p className="text-[#212121] text-[12px] leading-[14px]">
-                      Click
-                    </p>
-                  </div>
+                  {typePayArr?.map((e, i) => (
+                    <div
+                      key={i}
+                      onClick={() => setTypePay(e)}
+                      className="flex w-full items-center cursor-pointer gap-2 rounded-[2px] border-[#EEEEEE] border-[1px] p-[12px] pr-[25px]"
+                    >
+                      <div
+                        className={`${
+                          typePay == e ? "border-[#212121]" : "border-[#EEEEEE]"
+                        } rounded-full w-[16px] h-[16px] flex items-center justify-center  border`}
+                      >
+                        {typePay == e ? (
+                          <div className="bg-[#212121] rounded-full w-[10px] h-[10px] leading-[10px]"></div>
+                        ) : (
+                          ""
+                        )}
+                      </div>
+                      <p className="text-[#212121] text-[12px] mr-auto leading-[14px]">
+                        {e}
+                      </p>
+                      <Image
+                        className="object-contain"
+                        src={`/pay${i + 1}.png`}
+                        width={40}
+                        height={25}
+                        alt="img"
+                      />
+                    </div>
+                  ))}
                 </div>
                 <p className="text-[12px] leading-[18px] text-[#212121] opacity-50">
                   После выбора способа оплаты: вы обязаны оплатить заказ по
@@ -120,20 +147,43 @@ export default function OrderPage() {
                   сумму, указанную в итоговой цене.
                 </p>
               </div>
-              <div className="p-[30px] rounded-[3px] border-[#EEEEEE] border-[1px] mb-6">
-                <p className="text-[12px] leading-[14px] mb-[15px]">
-                  Адрес для доставки
-                </p>
-                <input
-                  className="py-[11px] w-full px-[12px] outline-none border-[#EEEEEE] border-[1px] border-solid mb-4"
-                  placeholder="Город, улица, дом, ориентир, номер квартиры"
+              <div className="p-[30px] rounded-[3px] border-[#EEEEEE] border-[1px] mb-2">
+                <InputCostom
+                  placeholder={"Город, улица, дом, ориентир, номер квартиры"}
+                  label={"Промокод"}
                 />
+
+                <p className="text-[12px] leading-[18px] text-[#212121] opacity-50">
+                  Если у вас есть промокод, введите его здесь и получите скидку!
+                </p>
+              </div>
+              <div className="p-[30px] rounded-[3px] border-[#EEEEEE] border-[1px] mb-6">
+                <div className="flex gap-2 flex-wrap">
+                  <SelectCostom
+                    className={"colm2"}
+                    placeholder={"Город"}
+                    label={" Введите Город"}
+                  />
+                  <SelectCostom
+                    className={"colm2"}
+                    placeholder={"Район"}
+                    label={" Введите Район"}
+                  />
+                  <InputCostom
+                    className={"colm2"}
+                    placeholder={"Улица, дом, ориентир, номер квартиры"}
+                    label={" Введите Город"}
+                  />
+                </div>
                 <p className="text-[12px] leading-[18px] text-[#212121] opacity-50">
                   Убедитесь, что указали правильный адрес доставки. После
                   оформления заказа изменить адрес будет невозможно. В случае
                   ошибки в адресе, вам придется оплатить дополнительные
                   курьерские услуги. Пожалуйста, не забудьте встретить курьера
                   во дворе!
+                </p>
+                <p className="text-[12px] leading-[14px] mt-[30px] mb-[15px]">
+                  Дата для получения доставки (не обязательно)
                 </p>
               </div>
               <p className="text-[12px] leading-[14px] mb-[12px]">
@@ -144,7 +194,7 @@ export default function OrderPage() {
                 rows={3}
                 placeholder="Оставьте комментарий для курьера"
               />
-              <buttun className="py-[11px] w-full mb-[59px] bg-[#212121] text-white text-center inline-block w-full ]  px-[12px] border-[#EEEEEE] border-[1px] border-solid">
+              <buttun className="py-[11px] w-full mb-[59px] bg-[#212121] text-white text-center inline-block  px-[12px] border-[#EEEEEE] border-[1px] border-solid">
                 Оформиь заказ
               </buttun>
             </div>

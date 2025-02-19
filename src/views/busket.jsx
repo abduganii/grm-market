@@ -52,8 +52,8 @@ export default function BusketPage() {
           placeholder="+998"
         />
         <buttun
-          onClick={() => router.push("/profile/order")}
-          className="py-[11px] text-center inline-block w-full mt-[30px]  px-[12px] border-[#EEEEEE] border-[1px] border-solid"
+          onClick={() => router.push("/order")}
+          className="py-[11px] cursor-pointer text-center inline-block w-full mt-[30px]  px-[12px] border-[#EEEEEE] border-[1px] border-solid"
         >
           Оформиь заказ
         </buttun>

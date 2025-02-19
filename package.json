@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.5.1",
+    "antd": "^5.24.1",
     "next": "15.1.6",
     "next-intl": "^3.26.3",
     "nextjs-toploader": "^3.7.15",
