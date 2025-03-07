@@ -17,18 +17,12 @@ export default function BusketPage() {
         {buskets?.length
           ? buskets?.map((e) => (
               <GlamCardBusket
-                key={e?.title}
-                url={`/glam/${e?.title}`}
-                title={e?.title}
+                key={e?.id}
+                url={`/glam/${e?.id}?modelId=${e?.model?.title}&color=${e?.color?.title}&collectionId=${e?.model?.collection?.title}`}
+                title={`${e?.model?.collection?.title} ${e?.model?.title}`}
                 items={e}
                 text="220x350"
-                image={e.images?.[0 || 1]}
-                onLike={() => {
-                  dispatch(
-                    changeBuskets(buskets?.filter((itms) => itms !== e))
-                  );
-                  setLocBuskets([e, ...buskets]);
-                }}
+                image={e.imgUrl}
               />
             ))
           : ""}
