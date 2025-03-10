@@ -8,9 +8,9 @@ import { useRouter } from "@/i18n/routing";
 
 export default function BusketPage() {
   const { buskets } = useAppSelector((store) => store.buskets);
-  const [localBuskets, setLocBuskets] = useLocalStorage("buskets", []);
   const router = useRouter();
-  const dispatch = useAppDispatch();
+  
+  console.log(buskets)
   return (
     <div className="w-full max-w-[1100px] gap-[20px] items-start flex flex-wrap xl:flex-nowrap justify-between">
       <div className="w-full max-w-[610px]">
@@ -21,7 +21,7 @@ export default function BusketPage() {
                 url={`/glam/${e?.id}?modelId=${e?.model?.title}&color=${e?.color?.title}&collectionId=${e?.model?.collection?.title}`}
                 title={`${e?.model?.collection?.title} ${e?.model?.title}`}
                 items={e}
-                text="220x350"
+                text={e?.size}
                 image={e.imgUrl}
               />
             ))

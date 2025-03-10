@@ -18,6 +18,11 @@ export default function GlamById({ product, productArr, id }) {
   const { buskets } = useAppSelector((store) => store.buskets);
   const { likes } = useAppSelector((store) => store.likes);
   const dispatch = useAppDispatch();
+  const [isloading,setIsloading]= useState(true)
+
+  setTimeout(()=>{
+    setIsloading(false)
+  },1000)
 
   useEffect(() => {
     setOneProduct(product?.find((e) => e.id == LocalId));
@@ -45,9 +50,9 @@ export default function GlamById({ product, productArr, id }) {
   };
   return (
     <>
-      <Container
+      <div
         className={
-          "flex flex-wrap justify-center lg:flex-nowrap px-[15px] md:px-[26px] mt-[26px] gap-[35px] items-center"
+          "flex flex-wrap justify-start lg:flex-nowrap px-[15px] md:px-[30px] mt-[26px] gap-[35px]  items-start"
         }
       >
         <Back />
@@ -58,7 +63,7 @@ export default function GlamById({ product, productArr, id }) {
           src={oneProduct?.imgUrl}
           alt="image"
         />
-        <div className="w-full max-w-[430px] ">
+        <div className="w-full max-w-[430px] mt-[20px]">
           <h4 className="text-[24px] leading-[30px] text-[#282A2C] font-normal mb-1">
             {oneProduct?.model?.title}
           </h4>
@@ -79,7 +84,7 @@ export default function GlamById({ product, productArr, id }) {
                   e?.id == LocalId
                     ? "bg-[#212121] text-white"
                     : "bg-[#F4F4F4] text-[#212121]"
-                } px-[10px] py-1 rounded-[5px] text-[16px] leading-[18px]`}
+                } px-[10px] py-1 cursor-pointer rounded-[5px] text-[16px] leading-[18px]`}
               >
                 {e?.size}
               </p>
@@ -162,8 +167,8 @@ export default function GlamById({ product, productArr, id }) {
             </p>
           </div>
         </div>
-      </Container>
-      <div className="w-full mt-[94px] columns-1 sm:columns-2 md:columns-3 lg:columns-4 xl:columns-5 gap-8  ">
+      </div>
+      <div className="w-full mt-[94px] px-[30px] columns-1 sm:columns-2 md:columns-3 lg:columns-4 xl:columns-5 gap-8  ">
         {productArr?.length &&
           productArr?.map((e, i) => (
             <GlamCard
@@ -172,7 +177,7 @@ export default function GlamById({ product, productArr, id }) {
               url={`/glam/${e?.id}?modelId=${e?.model?.title}&color=${e?.color?.title}&collectionId=${e?.model?.collection?.title}`}
               title={`${e?.model?.collection?.title} ${e?.model?.title}`}
               items={e}
-              text="220x350"
+              text={e?.size}
               type={
                 i == 1
                   ? "medium"
@@ -186,6 +191,7 @@ export default function GlamById({ product, productArr, id }) {
                   ? "small"
                   : "extraLarge"
               }
+              isloading={isloading}
               image={e.imgUrl}
               isLike={likes?.map((it) => it?.id)?.includes(e?.id)}
               onLike={() => HendleLike(e)}

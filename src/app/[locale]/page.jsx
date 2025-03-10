@@ -10,7 +10,6 @@ async function getProduct() {
 
 export default async function Home() {
   const product = await getProduct();
-
   return (
     <>
       <HomePage product={product?.items} />

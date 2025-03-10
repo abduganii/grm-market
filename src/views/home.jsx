@@ -1,9 +1,9 @@
 "use client";
-import Container from "../components/container";
+
 import GlamCard from "../components/glam-card";
 import { Link } from "../i18n/routing";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../lib/hooks";
 import { changeBuskets, changeLike } from "../lib/features";
 import { useLocalStorage } from "../hooks/useLocalStorage";
@@ -14,6 +14,12 @@ export default function HomePage({ product }) {
   const { buskets } = useAppSelector((store) => store.buskets);
   const { likes } = useAppSelector((store) => store.likes);
   const dispatch = useAppDispatch();
+  const [isloading,setIsloading]= useState(true)
+
+  setTimeout(()=>{
+    setIsloading(false)
+  },1000)
+
   return (
     <div className="w-full px-[30px] mt-[90px]">
       <header className="mb-[110px] text-center w-full max-w-[477px] mx-auto px-[30px]">
@@ -35,16 +41,17 @@ export default function HomePage({ product }) {
         </p>
       </header>
 
-      <div className="w-full  columns-1 sm:columns-2 md:columns-3 lg:columns-4 xl:columns-5 gap-8  ">
-        {product?.length &&
+      <div className="w-full columns-1 sm:columns-2 md:columns-3 lg:columns-4 xl:columns-5 gap-8  ">
+        {product?.length&&
           product?.map((e, i) => (
             <GlamCard
               key={e?.id}
+              isloading={isloading}
               className="colm1"
               url={`/glam/${e?.id}?modelId=${e?.model?.title}&color=${e?.color?.title}&collectionId=${e?.model?.collection?.title}`}
               title={`${e?.model?.collection?.title} ${e?.model?.title}`}
               items={e}
-              text="220x350"
+              text={e?.size}
               type={
                 i == 1
                   ? "medium"

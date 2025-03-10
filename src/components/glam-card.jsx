@@ -1,6 +1,7 @@
 "use client";
+import { Skeleton } from "antd";
 import { Link, useRouter } from "../i18n/routing";
-// import Image from 'next/image'
+import Image from 'next/image'
 import React from "react";
 import { BusketIcons, LikeIcons } from "./icons";
 
@@ -21,18 +22,26 @@ export default function GlamCard({
   title,
   text,
   image,
+  isloading=true,
 }) {
   const router = useRouter();
+  
   return (
     <div className={`${className && className} mb-[60px]   text-center`}>
       <div
         onClick={() => router.push(url)}
         className="w-full h-auto min-h-[100px] relative group flex text-center items-center justify-center"
       >
-        <img
-          width={`${typeObj?.[type]}%`}
+          { isloading && <Skeleton.Button
+          
+          style={{ width: "400px", backgroundColor: "#ffffff" , height: "500px" }}
+            active
+          />}
+          <Image
+          height={1000}
+          width={1000}
           style={{ width: `${typeObj?.[type]}%` }}
-          className="object-contain m-auto  hover:shadow-xl bg-transparent cursor-pointer ease-in duration-200 hover:-translate-y-2"
+          className={`${isloading ? "hidden":""} object-contain m-auto  hover:shadow-xl bg-transparent cursor-pointer ease-in duration-200 hover:-translate-y-2`}
           src={image}
           alt="image"
           title={title}
@@ -45,7 +54,7 @@ export default function GlamCard({
           <div
             onClick={(e) => {
               e.stopPropagation();
-              onLike(e);
+              onLike && onLike(e);
             }}
             className="p-[10px] bg-white cursor-pointer"
           >
@@ -57,7 +66,7 @@ export default function GlamCard({
           <div
             onClick={(e) => {
               e.stopPropagation();
-              onBuslet(e);
+              onBuslet&&  onBuslet(e);
             }}
             className="p-[10px] bg-white cursor-pointer"
           >
