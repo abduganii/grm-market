@@ -10,7 +10,6 @@ export default function BusketPage() {
   const { buskets } = useAppSelector((store) => store.buskets);
   const router = useRouter();
   
-  console.log(buskets)
   return (
     <div className="w-full max-w-[1100px] gap-[20px] items-start flex flex-wrap xl:flex-nowrap justify-between">
       <div className="w-full max-w-[610px]">
@@ -23,6 +22,7 @@ export default function BusketPage() {
                 items={e}
                 text={e?.size}
                 image={e.imgUrl}
+
               />
             ))
           : ""}
