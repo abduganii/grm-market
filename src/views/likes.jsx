@@ -13,7 +13,7 @@ export default function LikesPage() {
 
   setTimeout(()=>{
     setIsloading(false)
-  },1000)
+  },300)
   return (
     <div className="w-full max-w-[860px] gap-3 items-start flex flex-wrap justify-between">
       {likes?.length

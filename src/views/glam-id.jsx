@@ -22,7 +22,7 @@ export default function GlamById({ product, productArr, id }) {
 
   setTimeout(()=>{
     setIsloading(false)
-  },1000)
+  },300)
 
   useEffect(() => {
     setOneProduct(product?.find((e) => e.id == LocalId));

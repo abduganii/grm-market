@@ -18,7 +18,7 @@ export default function HomePage({ product }) {
 
   setTimeout(()=>{
     setIsloading(false)
-  },1000)
+  },300)
 
   return (
     <div className="w-full px-[30px] mt-[90px]">
