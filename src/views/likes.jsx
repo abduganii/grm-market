@@ -7,7 +7,7 @@ import { useLocalStorage } from "../hooks/useLocalStorage";
 
 export default function LikesPage() {
   const { likes } = useAppSelector((store) => store.likes);
-  const [localLike, setlocLikes] = useLocalStorage("likes", []);
+  const [, setlocLikes] = useLocalStorage("likes", []);
   const dispatch = useAppDispatch();
   const [isloading,setIsloading]= useState(true)
 

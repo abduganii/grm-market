@@ -56,19 +56,24 @@ export default function GlamById({ product, productArr, id }) {
         }
       >
         <Back />
-        <Image
-          className="object-contain max-h-[740px]"
+        { isloading &&<div className="p-4 max-w-[683px] h-[740px] w-full">
+            <div className="animate-pulse max-w-[540px] mx-auto space-y-4">
+              <div className="h-[740px] bg-gray-300 rounded"></div>
+            </div>
+          </div> }
+       {oneProduct?.imgUrl  && <Image
+          className={`${isloading ? "hidden":""}  object-contain max-h-[740px]`}
           width={683}
           height={740}
-          src={oneProduct?.imgUrl}
+          src={oneProduct?.imgUrl || null}
           alt="image"
-        />
-        <div className="w-full max-w-[430px] mt-[20px]">
-          <h4 className="text-[24px] leading-[30px] text-[#282A2C] font-normal mb-1">
+        />}
+        <div className="w-full max-w-[530px] mt-[20px]">
+          <h4 className="text-[24px] leading-[30px] text-nowrap text-[#282A2C] font-normal mb-1">
             {oneProduct?.model?.title}
           </h4>
           <div className="flex items-center justify-between mb-5">
-            <h4 className="text-[40px] leading-[50px] font-normal text-[#282A2C]">
+            <h4 className="text-[40px] leading-[50px] text-nowrap font-normal text-[#282A2C]">
               {oneProduct?.model?.collection?.title}
             </h4>
             <p className="text-[18px] leading-[20px] font-normal text-[#212121]">
@@ -115,12 +120,12 @@ export default function GlamById({ product, productArr, id }) {
           </div>
           {type == 1 ? (
             <>
-              <p className="text-[15px] text-[#282A2C] w-full max-w-[144px] leading-[18px]  whitespace-pre-line">
+              <p className="text-[15px] min-h-[200px] text-[#282A2C] w-full max-w-[144px] leading-[18px]  whitespace-pre-line">
                 {oneProduct?.internetInfo}
               </p>
             </>
           ) : (
-            <p>
+            <p className="min-h-[200px]">
               Добро пожаловать в наш интернет-магазин ковров – место, где
               качество, стиль и уют соединяются! Мы гордимся тем, что предлагаем
             </p>
@@ -135,7 +140,6 @@ export default function GlamById({ product, productArr, id }) {
                 "Добавлено"
               ) : (
                 <>
-                  {" "}
                   <BackPlusIcons /> Добавить в корзинку
                 </>
               )}

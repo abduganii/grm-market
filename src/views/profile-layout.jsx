@@ -26,9 +26,9 @@ export default function ProfileLayout({ children }) {
         </h3>
         <div className="flex mb-[100px]  flex-wrap md:flex-nowrap gap-[20px] lg:gap-[80px] w-full">
           <div className="w-full flex gap-5 md:inline-block md:max-w-[115px]">
-            {arr?.map((e) => (
+            {arr?.map((e,i) => (
               <Link
-                key={e?.link}
+                key={i}
                 href={`/profile/${e?.link}`}
                 className={`${
                   pathName.includes(e?.link) ? "opacity-100" : "opacity-45"

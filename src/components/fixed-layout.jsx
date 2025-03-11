@@ -15,21 +15,32 @@ import SignInMadal from "./sign-in";
 import { useAppDispatch, useAppSelector } from "../lib/hooks";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { changeBuskets, changeLike } from "../lib/features";
+import Menu from "./menu";
+import { Drawer } from "antd";
 
 export default function FixedLayout() {
   const [isFocus, setIsfocus] = useState(false);
   const [openAuth, setOpenAuth] = useState(false);
+  const [open, setOpen] = useState(false);
+
   const [locLikes] = useLocalStorage("likes", []);
   const [locBuskets] = useLocalStorage("buskets", []);
   const { likes } = useAppSelector((store) => store.likes);
   const { buskets } = useAppSelector((store) => store.buskets);
+
+  const showDrawer = () => {
+    setOpen(true);
+  };
+
+  const onClose = () => {
+    setOpen(false);
+  };
   const dispatch = useAppDispatch();
   const router = useRouter();
   useEffect(() => {
     window.addEventListener("click", () => setOpenAuth(false));
   }, []);
   useEffect(() => {
-    console.log(locLikes);
     if (locLikes?.length) {
       dispatch(changeLike(locLikes));
     }
@@ -43,7 +54,7 @@ export default function FixedLayout() {
   return (
     <Container
       className={
-        "flex justify-between left-0  fixed  bottom-[20px] sm:bottom-[40px]"
+        "flex justify-center sm:justify-between left-0  fixed  bottom-[20px] sm:bottom-[40px]"
       }
     >
       <div className="lg:w-[162px]"></div>
@@ -63,7 +74,7 @@ export default function FixedLayout() {
         >
           <PersonIcons />
         </div>
-        <div className="cursor-pointer flex gap-1  items-center bg-white p-[10px] rounded-[3px] shadow">
+        <div onClick={showDrawer} className="cursor-pointer flex gap-1  items-center bg-white p-[10px] rounded-[3px] shadow">
           <BurgerIcons />
           <p className="text-[14px] leading-[18px]">Menu</p>
         </div>
@@ -100,7 +111,7 @@ export default function FixedLayout() {
             onBlur={() => setIsfocus(false)}
             className={`${
               isFocus ? "max-w-[180px] " : "max-w-[120px] "
-            } transition-all  duration-150 ease-in-out  w-full outline-none`}
+            } transition-all hidden sm:inline-block  duration-150 ease-in-out  w-full outline-none`}
             placeholder="Поиск"
           />
         </div>
@@ -114,6 +125,17 @@ export default function FixedLayout() {
       </a>
 
       {openAuth ? <SignInMadal /> : ""}
+
+      <Drawer
+        title="Menu"
+        placement={"bottom"}
+        closable={true}
+        onClose={onClose}
+        open={open}
+      >
+
+      </Drawer>
+      <Menu/>
     </Container>
   );
 }

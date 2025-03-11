@@ -32,20 +32,22 @@ export default function GlamCard({
         onClick={() => router.push(url)}
         className="w-full h-auto min-h-[100px] relative group flex text-center items-center justify-center"
       >
-          { isloading && <Skeleton.Button
-          
-          style={{ width: "400px", backgroundColor: "#ffffff" , height: "500px" }}
-            active
-          />}
-          <Image
+        
+       
+          { isloading &&<div className="p-4 max-w-sm w-full mx-auto">
+            <div className="animate-pulse space-y-4">
+              <div className="h-[500px] bg-gray-300 rounded"></div>
+            </div>
+          </div> }
+         {image? <Image
           height={1000}
           width={1000}
           style={{ width: `${typeObj?.[type]}%` }}
           className={`${isloading ? "hidden":""} object-contain m-auto  hover:shadow-xl bg-transparent cursor-pointer ease-in duration-200 hover:-translate-y-2`}
-          src={image}
+          src={image  || null}
           alt="image"
           title={title}
-        />
+        />:""}
         <div
           className={`absolute ${
             isLike ? "flex" : "hidden"

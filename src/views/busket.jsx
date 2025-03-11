@@ -8,8 +8,15 @@ import { useRouter } from "@/i18n/routing";
 
 export default function BusketPage() {
   const { buskets } = useAppSelector((store) => store.buskets);
+  const dispatch = useAppDispatch();
   const router = useRouter();
-  
+  const [, setLocBuskets] = useLocalStorage("buskets", []);
+  const HendleRemove = (e) => {
+    dispatch(
+    changeBuskets(buskets?.filter((itms) => itms?.id !== e?.id))
+    );
+   setLocBuskets(buskets?.filter((itms) => itms?.id !== e?.id))
+  };
   return (
     <div className="w-full max-w-[1100px] gap-[20px] items-start flex flex-wrap xl:flex-nowrap justify-between">
       <div className="w-full max-w-[610px]">
@@ -22,6 +29,7 @@ export default function BusketPage() {
                 items={e}
                 text={e?.size}
                 image={e.imgUrl}
+                onRemove={()=>HendleRemove(e)}
 
               />
             ))
