@@ -134,8 +134,8 @@ export default function FixedLayout() {
         open={open}
       >
 
-      </Drawer>
       <Menu/>
+      </Drawer>
     </Container>
   );
 }
