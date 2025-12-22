@@ -15,7 +15,6 @@ export default function HomePage({ product }) {
   const { likes } = useAppSelector((store) => store.likes);
   const dispatch = useAppDispatch();
   const [isloading,setIsloading]= useState(true)
-
   setTimeout(()=>{
     setIsloading(false)
   },300)
@@ -48,8 +47,8 @@ export default function HomePage({ product }) {
               key={e?.id}
               isloading={isloading}
               className="colm1"
-              url={`/glam/${e?.id}?modelId=${e?.model?.title}&color=${e?.color?.title}&collectionId=${e?.model?.collection?.title}`}
-              title={`${e?.model?.collection?.title} ${e?.model?.title}`}
+              url={`/glam/${e?.id}?modelId=${e?.model?.title}&color=${e?.color?.title}&collectionId=${e?.collection?.title}`}
+              title={`${e?.collection?.title} ${e?.model?.title}`}
               items={e}
               text={e?.size}
               type={
@@ -65,7 +64,7 @@ export default function HomePage({ product }) {
                   ? "small"
                   : "extraLarge"
               }
-              image={e.imgUrl}
+              image={e?.imgUrl}
               isLike={likes?.map((it) => it?.id)?.includes(e?.id)}
               onLike={() => {
                 dispatch(

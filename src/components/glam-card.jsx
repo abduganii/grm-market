@@ -79,9 +79,9 @@ export default function GlamCard({
       <h3 className="text-[20px] leading-[25px] font-normal mt-3 mb-2">
         {title}
       </h3>
-      <p className="text-[15px] tetx-[#00000005] leading-[18px] font-normal ">
+      {/* <p className="text-[15px] tetx-[#00000005] leading-[18px] font-normal ">
         {text}
-      </p>
+      </p> */}
     </div>
   );
 }
