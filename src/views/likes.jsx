@@ -23,9 +23,9 @@ export default function LikesPage() {
               key={e?.id}
               className="colm2"
               url={`/glam/${e?.id}?modelId=${e?.model?.title}&color=${e?.color?.title}&collectionId=${e?.model?.collection?.title}`}
-              title={`${e?.model?.collection?.title} ${e?.model?.title}`}
+              title={`${e.collection?.title} ${e?.model?.title}`}
               items={e}
-              text={e?.size}
+              text={e?.size?.title}
               image={e.imgUrl}
               isLike={true}
               onLike={() => {

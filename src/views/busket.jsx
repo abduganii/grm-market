@@ -24,11 +24,11 @@ export default function BusketPage() {
           ? buskets?.map((e) => (
               <GlamCardBusket
                 key={e?.id}
-                url={`/glam/${e?.id}?modelId=${e?.model?.title}&color=${e?.color?.title}&collectionId=${e?.model?.collection?.title}`}
-                title={`${e?.model?.collection?.title} ${e?.model?.title}`}
+                url={`/glam/${e?.id}?modelId=${e?.model?.title}&color=${e?.color?.title}&collectionId=${e?.collection?.title}`}
+                title={`${e?.collection?.title} ${e?.model?.title}`}
                 items={e}
                 text={e?.size}
-                image={e.imgUrl}
+                image={e?.imgUrl}
                 onRemove={()=>HendleRemove(e)}
 
               />

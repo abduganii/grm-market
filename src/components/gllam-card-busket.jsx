@@ -21,7 +21,7 @@ export default function GlamCardBusket({ title,onRemove,items, image }) {
               Коллекция
               </h3>
               <p className="text-[16px]  leading-[19px] text-[#282A2C] mb-1 ">
-                {items?.model?.collection?.title}
+                {items?.collection?.title}
               </p>
 
             </div>
@@ -38,7 +38,7 @@ export default function GlamCardBusket({ title,onRemove,items, image }) {
               Размер
               </h3>
               <p className="text-[16px]  leading-[19px] text-[#282A2C] mb-1 ">
-                {items?.size}
+                {items?.size?.title}
               </p>
             </div>
             <div className="w-1/4">
@@ -46,7 +46,7 @@ export default function GlamCardBusket({ title,onRemove,items, image }) {
               Цена за м²
               </h3>
               <p className="text-[16px]  leading-[19px] text-[#282A2C] mb-1 ">
-                {items?.price}
+                {items?.price?.title}
               </p>
             </div>
             <div className="w-1/4">
@@ -62,7 +62,7 @@ export default function GlamCardBusket({ title,onRemove,items, image }) {
               Стиль
               </h3>
               <p className="text-[16px]  leading-[19px] text-[#282A2C] mb-1 ">
-                {items?.style}
+                {items?.style?.title}
               </p>
             </div>
             <div className="w-1/4">
@@ -70,7 +70,7 @@ export default function GlamCardBusket({ title,onRemove,items, image }) {
               Форма
               </h3>
               <p className="text-[16px]  leading-[19px] text-[#282A2C] mb-1 ">
-                {items?.shape}
+                {items?.shape?.title}
               </p>
             </div>
             <div className="w-1/4">
@@ -78,7 +78,7 @@ export default function GlamCardBusket({ title,onRemove,items, image }) {
               Страна
               </h3>
               <p className="text-[16px] text-nowrap  leading-[19px] text-[#282A2C] mb-1 ">
-                {items?.country}
+                {items?.country?.title}
               </p>
             </div>
         </div>

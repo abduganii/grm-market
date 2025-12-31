@@ -1,9 +1,9 @@
 import { fetchData } from "@/service/get";
 import GlamById from "../../../../views/glam-id";
 
-async function getProductSize(modelId) {
+async function getSingleProduct(id) {
   return fetchData(
-    `${process.env.NEXT_PUBLIC_URL}/product/internet-shop?modelId=["${modelId}"]`
+    `${process.env.NEXT_PUBLIC_URL}/qr-base/i-market/${id}`
   );
 }
 async function getProduct({ collectionId, color }) {
@@ -14,19 +14,20 @@ async function getProduct({ collectionId, color }) {
 
 export default async function GilamById({ params, searchParams }) {
   const { id } = await params;
-  const { modelId, collectionId, color } = await searchParams;
-  const ProductSize = await getProductSize(modelId);
-  const product = await getProduct({
-    collectionId: collectionId,
-    color: color,
-  });
+  // const { modelId, collectionId, color } = await searchParams;
+  const Product = await getSingleProduct(id);
+  // const product = await getProduct({
+  //   collectionId: collectionId,
+  //   color: color,
+  // });
+  console.log(Product)
   return (
     <>
-      <GlamById
+      {/* <GlamById
         id={id}
-        product={ProductSize?.items}
-        productArr={product?.items}
-      />
+        // product={ProductSize?.items}
+        productArr={[]}
+      /> */}
     </>
   );
 }

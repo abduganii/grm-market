@@ -50,7 +50,7 @@ export default function HomePage({ product }) {
               url={`/glam/${e?.id}?modelId=${e?.model?.title}&color=${e?.color?.title}&collectionId=${e?.collection?.title}`}
               title={`${e?.collection?.title} ${e?.model?.title}`}
               items={e}
-              text={e?.size}
+              text={e?.size?.title}
               type={
                 i == 1
                   ? "medium"
