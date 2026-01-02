@@ -1,13 +1,13 @@
 "use client";
-import { changeToken } from "@/lib/features";
-import { formatUzPhone } from "@/lib/formatUzPhone";
-import { useAppDispatch } from "@/lib/hooks";
+import { changeToken } from "../lib/features";
+import { formatUzPhone } from "../lib/formatUzPhone";
+import { useAppDispatch } from "../lib/hooks";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 
-export default function SignInModal({ setOpenAuth }) {
+export default function SignInModal({ cosomPhone,onSuccess }) {
   const [step, setStep] = useState(1);
-  const [phone, setPhone] = useState("");
+  const [phone, setPhone] = useState(cosomPhone|| "");
   const [code, setCode] = useState("");
   const [loading, setLoading] = useState(false);
   const dispatch = useAppDispatch();
@@ -53,7 +53,7 @@ export default function SignInModal({ setOpenAuth }) {
         .then((res) => {
           toast("Вы успешно зарегистрированы");
           dispatch(changeToken(res?.token));
-          setOpenAuth(false);
+          if(onSuccess) onSuccess();
         });
     } catch (e) {
     } finally {

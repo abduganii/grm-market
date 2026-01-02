@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../lib/hooks";
 import Container from "@/components/container";
@@ -6,11 +7,91 @@ import Back from "@/components/back";
 import Image from "next/image";
 import InputCostom from "@/components/form/input";
 import SelectCostom from "@/components/form/select";
+import { DatePicker, TimePicker } from "antd";
+import { toast } from "react-toastify";
+import OrderModal from "@/components/order-modal";
+import { changeBuskets } from "@/lib/features";
 
 const typePayArr = ["cash", "payme", "click"];
+
+const paymentMap = {
+  cash: "IN_HAND",
+  payme: "PAYME",
+  click: "CLICK",
+};
+
 export default function OrderPage() {
+  const { buskets } = useAppSelector((store) => store.buskets);
+  const { userMe } = useAppSelector((store) => store.userMe);
+  const [openMadal,setOpenMadal] = useState(false)
   const dispatch = useAppDispatch();
   const [typePay, setTypePay] = useState("cash");
+  const [comment, setComment] = useState("");
+  const [city, setCity] = useState("");
+  const [district, setDistrict] = useState("");
+  const [address, setAddress] = useState("");
+  const [locationLink, setLocationLink] = useState("");
+  const [orderDate, setOrderDate] = useState(""); 
+const [orderTime, setOrderTime] = useState(""); 
+  const [loading, setLoading] = useState(false);
+
+  // 🧠 Build request body
+  const buildOrderBody = () => {
+    let combinedDate = null;
+  
+    if (orderDate) {
+      combinedDate = orderDate.format("YYYY-MM-DD");
+      if (orderTime) {
+        combinedDate = `${combinedDate}T${orderTime.format("HH:mm")}`;
+      }
+    }
+  
+    return {
+      client_order_items: buskets.map((item) => ({
+        product: item.id,
+        count: 1,
+      })),
+      payment_type: paymentMap[typePay],
+      delivery_comment: comment,
+      city,
+      district,
+      full_address: address,
+      location_link: locationLink || null,
+      date: combinedDate,
+      user: userMe?.id,
+    };
+  };
+
+  // 🚀 Submit order
+  const submitOrder = async () => {
+    if (!buskets.length || !userMe?.id) return;
+
+    try {
+      setLoading(true);
+    
+      const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/client-orders`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(buildOrderBody()),
+      });
+
+      if (!res.ok) throw new Error("Order failed");
+
+      const data = await res.json();
+      if(data) {
+        setOpenMadal(true)
+        dispatch(
+          changeBuskets([])
+          );
+      }
+    } catch (err) {
+      toast.error("Order failed");
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <Container
       className={
@@ -70,37 +151,28 @@ export default function OrderPage() {
                   Список выбранные вами заказов
                 </p>
                 <ul>
-                  <li className="p-[13px] flex items-center gap-2 rounded-[3px] mb-1 border-[#EEEEEE] border-[1px]">
-                    <p className="text-[12px] leading-[14px] w-full">
-                      Aspendos
-                    </p>
-                    <p className="text-[12px] leading-[14px] w-full">3667</p>
-                    <p className="text-[12px] leading-[14px] w-full">200x300</p>
-                    <p className="text-[12px] leading-[14px] w-full">Blue</p>
-                    <p className="text-[12px] leading-[14px] w-full">Classic</p>
-                    <p className="text-[12px] leading-[14px] w-full">
-                      1 120 000.00
-                    </p>
-                  </li>
-                  <li className="p-[13px] flex items-center gap-2 rounded-[3px] border-[#EEEEEE] border-[1px]">
-                    <p className="text-[12px] leading-[14px] w-full">
-                      Aspendos
-                    </p>
-                    <p className="text-[12px] leading-[14px] w-full">3667</p>
-                    <p className="text-[12px] leading-[14px] w-full">200x300</p>
-                    <p className="text-[12px] leading-[14px] w-full">Blue</p>
-                    <p className="text-[12px] leading-[14px] w-full">Classic</p>
-                    <p className="text-[12px] leading-[14px] w-full">
-                      1 120 000.00
-                    </p>
-                  </li>
+                  {buskets.map((item) => (
+                    <div
+                      key={item.id}
+                      className="flex gap-2 border p-2 mb-1 text-[12px]"
+                    >
+                      <p className="w-full">{item?.collection?.title}</p>
+                      <p className="w-full">{item?.model?.title}</p>
+                      <p className="w-full">{item?.size?.title}</p>
+                      <p className="w-full">{item?.color?.title}</p>
+                      <p className="w-full">{item?.shape?.title}</p>
+                      <p className="w-full">{item?.style?.title}</p>
+                      <p className="w-full">1x</p>
+                      <p className="w-full">{item?.i_price}</p>
+                    </div>
+                  ))}
                 </ul>
                 <div className="flex items-center gap-[15px] mt-[24px] justify-end">
                   <h4 className="font-medium text-[16px] leading-[18px] text-[#212121] ">
                     Итоговое сумма:
                   </h4>
                   <h4 className="font-medium text-[16px] leading-[18px] text-[#212121] ">
-                    4 890 000 сум
+                    0 сум
                   </h4>
                 </div>
               </div>
@@ -108,33 +180,26 @@ export default function OrderPage() {
                 <p className="text-[12px] leading-[14px] mb-[15px]">
                   Укажите метод оплаты
                 </p>
-                <div className="flex items-center gap-2 mb-4 ] ">
-                  {typePayArr?.map((e, i) => (
+                <div className="flex gap-2 mb-2">
+                  {typePayArr.map((e, i) => (
                     <div
-                      key={i}
-                      onClick={() => setTypePay(e)}
-                      className="flex w-full items-center cursor-pointer gap-2 rounded-[2px] border-[#EEEEEE] border-[1px] p-[12px] pr-[25px]"
+                      key={e}
+                      // onClick={() => setTypePay(e)}
+                      className={`cursor-pointer flex items-center gap-2 border p-3 w-full ${
+                        "cash" === e ? "" : "opacity-40"
+                      }`}
                     >
-                      <div
-                        className={`${
-                          typePay == e ? "border-[#212121]" : "border-[#EEEEEE]"
-                        } rounded-full w-[16px] h-[16px] flex items-center justify-center  border`}
-                      >
-                        {typePay == e ? (
-                          <div className="bg-[#212121] rounded-full w-[10px] h-[10px] leading-[10px]"></div>
-                        ) : (
-                          ""
+                      <div className="w-[16px] h-[16px] border rounded-full flex items-center justify-center">
+                        {typePay === e && (
+                          <div className="w-[10px] h-[10px] bg-black rounded-full" />
                         )}
                       </div>
-                      <p className="text-[#212121] text-[12px] mr-auto leading-[14px]">
-                        {e}
-                      </p>
+                      <p className="mr-auto text-[12px]">{e}</p>
                       <Image
-                        className="object-contain"
                         src={`/pay${i + 1}.png`}
                         width={40}
                         height={25}
-                        alt="img"
+                        alt="pay"
                       />
                     </div>
                   ))}
@@ -148,7 +213,8 @@ export default function OrderPage() {
               </div>
               <div className="p-[30px] rounded-[3px] border-[#EEEEEE] border-[1px] mb-2">
                 <InputCostom
-                  placeholder={"Город, улица, дом, ориентир, номер квартиры"}
+                
+                  placeholder={"Введите промокод"}
                   label={"Промокод"}
                 />
 
@@ -161,17 +227,34 @@ export default function OrderPage() {
                   <SelectCostom
                     className={"colm2"}
                     placeholder={"Город"}
+                    options={[
+                      {
+                        value: "Tashkent",
+                        label: "Tashkent",
+                      },
+                    ]}
                     label={" Введите Город"}
+                    onChange={(e) => {
+                      setCity(e);
+                    }}
                   />
                   <SelectCostom
                     className={"colm2"}
                     placeholder={"Район"}
+                    options={[
+                      {
+                        value: "Tashkent",
+                        label: "Tashkent",
+                      },
+                    ]}
                     label={" Введите Район"}
+                    onChange={(e) => setDistrict(e)}
                   />
                   <InputCostom
                     className={"colm2"}
                     placeholder={"Улица, дом, ориентир, номер квартиры"}
-                    label={" Введите Город"}
+                    required={true}
+                    onChange={(e) => setAddress(e.target.value)}
                   />
                 </div>
                 <p className="text-[12px] leading-[18px] text-[#212121] opacity-50">
@@ -184,17 +267,47 @@ export default function OrderPage() {
                 <p className="text-[12px] leading-[14px] mt-[30px] mb-[15px]">
                   Дата для получения доставки (не обязательно)
                 </p>
+                <div className="flex gap-2 mb-4">
+                  <div className="flex-1">
+                    <label className="text-[12px] mb-1 block">Дата доставки</label>
+                    <DatePicker
+                      value={orderDate}
+                      onChange={(date) => setOrderDate(date)}
+                      format="YYYY-MM-DD"
+                      className="w-full"
+                    />
+                  </div>
+                  <div className="flex-1">
+                    <label className="text-[12px] mb-1 block">Время доставки</label>
+                    <TimePicker
+                      value={orderTime}
+                      onChange={(time) => setOrderTime(time)}
+                      format="HH:mm"
+                      className="w-full"
+                    />
+                  </div>
+                </div>
+                <p className="text-[12px] leading-[18px] text-[#212121] opacity-50">
+                  Если у вас нет времени получить доставку в любое время, вы
+                  можете настроить удобное время получения вашего заказа!
+                </p>
               </div>
               <p className="text-[12px] leading-[14px] mb-[12px]">
                 Комментарий для курьера
               </p>
               <textarea
-                className="px-[16px] py-[13px] bg-[#F9F9F9] border-[#EEEEEE] border-[1px] outline-none w-full mb-[60px]"
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+                className="w-full p-3 border mb-6"
                 rows={3}
-                placeholder="Оставьте комментарий для курьера"
+                placeholder="Комментарий для курьера"
               />
-              <buttun className="py-[11px] w-full mb-[59px] bg-[#212121] text-white text-center inline-block  px-[12px] border-[#EEEEEE] border-[1px] border-solid">
-                Оформиь заказ
+
+              <buttun
+                onClick={loading ? () => {} : submitOrder}
+                className="py-[11px] w-full mb-[59px] bg-[#212121] text-white text-center inline-block  px-[12px] border-[#EEEEEE] border-[1px] border-solid"
+              >
+                {loading ? "Оформление..." : "Оформить заказ"}
               </buttun>
             </div>
             <div className="w-full max-w-[270px]">
@@ -202,7 +315,7 @@ export default function OrderPage() {
                 Заказчик
               </p>
               <p className="text-[20px] leading-[23.4px] text-[#212121] mt-[6px] mb-[24px]">
-                id:9823hd23i
+                id:{userMe?.login}
               </p>
 
               <div className="items-center w-full mb-2 flex justify-between">
@@ -215,12 +328,13 @@ export default function OrderPage() {
               </div>
 
               <p className="py-[11px] w-full px-[12px] outline-none border-[#EEEEEE] border-[1px] border-solid">
-                +998 94 609 34 44
+                {userMe?.phone}
               </p>
             </div>
           </div>
         </div>
       </div>
+     {openMadal && <OrderModal />}
     </Container>
   );
 }

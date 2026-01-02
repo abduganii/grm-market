@@ -2,6 +2,8 @@
 import { useRouter } from "../i18n/routing";
 import React, { useEffect, useState } from "react";
 import Container from "./container";
+import { changeUserMe } from "../lib/features";
+import { fetchData } from "../service/get";
 import {
   BurgerIcons,
   BusketIcons,
@@ -12,19 +14,21 @@ import {
   TelIcons,
 } from "./icons";
 import SignInMadal from "./sign-in";
-import { useAppSelector } from "../lib/hooks";
+import { useAppDispatch, useAppSelector } from "../lib/hooks";
 
 import Menu from "./menu";
 import { Drawer } from "antd";
+
 
 export default function FixedLayout() {
   const [isFocus, setIsfocus] = useState(false);
   const [openAuth, setOpenAuth] = useState(false);
   const [open, setOpen] = useState(false);
-
+  const dispatch = useAppDispatch();
   const { likes } = useAppSelector((store) => store.likes);
   const { buskets } = useAppSelector((store) => store.buskets);
   const { token } = useAppSelector((store) => store.token);
+  const { userMe } = useAppSelector((store) => store.userMe);
 
   const showDrawer = () => {
     setOpen(true);
@@ -37,7 +41,26 @@ export default function FixedLayout() {
   useEffect(() => {
     window.addEventListener("click", () => setOpenAuth(false));
   }, []);
+  useEffect(() => {
+    if (!token) return;
 
+    const getMe = async () => {
+      try {
+        const response = await fetchData(
+          `${process.env.NEXT_PUBLIC_URL}/auth/get/I-Market/me`,
+          {
+            token,
+          }
+        );
+        
+        dispatch(changeUserMe(response))
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    getMe();
+  }, [token]);
 
   return (
     <Container
@@ -56,9 +79,9 @@ export default function FixedLayout() {
         <div
           onClick={(e) => {
             e.stopPropagation();
-            if(token){
-              router.push("/profile/likes")
-            }else{
+            if (userMe?.id) {
+              router.push("/profile/likes");
+            } else {
               setOpenAuth(true);
             }
           }}
@@ -66,7 +89,10 @@ export default function FixedLayout() {
         >
           <PersonIcons />
         </div>
-        <div onClick={showDrawer} className="cursor-pointer flex gap-1  items-center bg-white p-[10px] rounded-[3px] shadow">
+        <div
+          onClick={showDrawer}
+          className="cursor-pointer flex gap-1  items-center bg-white p-[10px] rounded-[3px] shadow"
+        >
           <BurgerIcons />
           <p className="text-[14px] leading-[18px]">Menu</p>
         </div>
@@ -116,7 +142,7 @@ export default function FixedLayout() {
         <p className="text-[14px] leading-[18px]">+998 99 140-44-22</p>
       </a>
 
-      {openAuth ? <SignInMadal setOpenAuth={setOpenAuth}  /> : ""}
+      {openAuth ? <SignInMadal onSuccess={()=>setOpenAuth(false)} /> : ""}
 
       <Drawer
         title="Menu"
@@ -125,8 +151,7 @@ export default function FixedLayout() {
         onClose={onClose}
         open={open}
       >
-
-      <Menu/>
+        <Menu />
       </Drawer>
     </Container>
   );

@@ -8,6 +8,8 @@ import FixedLayout from "../../components/fixed-layout";
 import StoreProvider from "./store-provider";
 import { ToastContainer } from 'react-toastify';
 
+
+
 export default async function LocaleLayout({ children, params }) {
   const { locale } = await params;
   if (!routing.locales.includes(locale)) {
