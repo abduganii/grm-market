@@ -1,7 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const getInitialBuskets = () => {
+  if (typeof window !== "undefined") {
+    const storedBuskets = localStorage.getItem("buskets");
+    return storedBuskets ? JSON.parse(storedBuskets) : [];
+  }
+  return [];
+};
 const initialState = {
-  buskets: [],
+  buskets:getInitialBuskets(),
 };
 
 const Busketslice = createSlice({
@@ -10,6 +17,7 @@ const Busketslice = createSlice({
   reducers: {
     changeBuskets: (state, action) => {
       state.buskets = action.payload || [];
+      localStorage.setItem("buskets", JSON.stringify(state.buskets));
     },
   },
 });

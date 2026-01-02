@@ -6,16 +6,12 @@ export async function fetchData(url, query) {
       : "";
     const res = await fetch(`${url}${params}`, {
       method: "GET",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //     "Accept-Language": params === "uz_cyr" ? "uz-cyr" : params,
-      //   },
       cache: "no-cache",
     });
 
     if (!res.ok) throw new Error(`Failed to fetch data from ${url}`);
     return res.json();
   } catch (error) {
-    return null; // or fallback data if available
+    return null; 
   }
 }

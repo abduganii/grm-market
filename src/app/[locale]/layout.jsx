@@ -6,7 +6,7 @@ import NextTopLoader from 'nextjs-toploader';
 import "../globals.css";
 import FixedLayout from "../../components/fixed-layout";
 import StoreProvider from "./store-provider";
-
+import { ToastContainer } from 'react-toastify';
 
 export default async function LocaleLayout({ children, params }) {
   const { locale } = await params;
@@ -33,6 +33,7 @@ export default async function LocaleLayout({ children, params }) {
         <NextIntlClientProvider messages={messages}>
           <StoreProvider>
           {children}
+          <ToastContainer />
           <FixedLayout/>
         </StoreProvider>
         </NextIntlClientProvider>

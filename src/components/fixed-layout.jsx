@@ -12,9 +12,8 @@ import {
   TelIcons,
 } from "./icons";
 import SignInMadal from "./sign-in";
-import { useAppDispatch, useAppSelector } from "../lib/hooks";
-import { useLocalStorage } from "../hooks/useLocalStorage";
-import { changeBuskets, changeLike } from "../lib/features";
+import { useAppSelector } from "../lib/hooks";
+
 import Menu from "./menu";
 import { Drawer } from "antd";
 
@@ -23,10 +22,9 @@ export default function FixedLayout() {
   const [openAuth, setOpenAuth] = useState(false);
   const [open, setOpen] = useState(false);
 
-  const [locLikes] = useLocalStorage("likes", []);
-  const [locBuskets] = useLocalStorage("buskets", []);
   const { likes } = useAppSelector((store) => store.likes);
   const { buskets } = useAppSelector((store) => store.buskets);
+  const { token } = useAppSelector((store) => store.token);
 
   const showDrawer = () => {
     setOpen(true);
@@ -35,21 +33,11 @@ export default function FixedLayout() {
   const onClose = () => {
     setOpen(false);
   };
-  const dispatch = useAppDispatch();
   const router = useRouter();
   useEffect(() => {
     window.addEventListener("click", () => setOpenAuth(false));
   }, []);
-  useEffect(() => {
-    if (locLikes?.length) {
-      dispatch(changeLike(locLikes));
-    }
-  }, [locLikes]);
-  useEffect(() => {
-    if (locBuskets.length) {
-      dispatch(changeBuskets(locBuskets));
-    }
-  }, [locBuskets]);
+
 
   return (
     <Container
@@ -68,7 +56,11 @@ export default function FixedLayout() {
         <div
           onClick={(e) => {
             e.stopPropagation();
-            setOpenAuth(true);
+            if(token){
+              router.push("/profile/likes")
+            }else{
+              setOpenAuth(true);
+            }
           }}
           className="cursor-pointer bg-white p-[10px] rounded-[3px] shadow"
         >
@@ -124,7 +116,7 @@ export default function FixedLayout() {
         <p className="text-[14px] leading-[18px]">+998 99 140-44-22</p>
       </a>
 
-      {openAuth ? <SignInMadal /> : ""}
+      {openAuth ? <SignInMadal setOpenAuth={setOpenAuth}  /> : ""}
 
       <Drawer
         title="Menu"

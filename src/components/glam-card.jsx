@@ -22,7 +22,7 @@ export default function GlamCard({
   title,
   text,
   image,
-  isloading = true,
+  isloading ,
 }) {
   const router = useRouter();
 
@@ -52,8 +52,10 @@ export default function GlamCard({
           />
         ) : (
           <div
-            className={` object-contain m-auto h-[500px] w-full bg-slate-100  hover:shadow-xl cursor-pointer ease-in duration-200 hover:-translate-y-2`}
-          ></div>
+            className={`  flex items-center h-[500px] w-full bg-[#F0F0E5] justify-center `}
+          >
+            <Image src={"/empty-folder.png"} width={60} height={60} alt="img" />
+          </div>
         )}
         <div
           className={`absolute ${

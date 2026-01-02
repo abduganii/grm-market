@@ -2,12 +2,11 @@
 import GlamCard from "../components/glam-card";
 import React, { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../lib/hooks";
-import { changeLike } from "../lib/features";
-import { useLocalStorage } from "../hooks/useLocalStorage";
+import { changeBuskets, changeLike } from "../lib/features";
 
 export default function LikesPage() {
   const { likes } = useAppSelector((store) => store.likes);
-  const [, setlocLikes] = useLocalStorage("likes", []);
+  const { buskets } = useAppSelector((store) => store.buskets);
   const dispatch = useAppDispatch();
   const [isloading,setIsloading]= useState(true)
 
@@ -22,21 +21,27 @@ export default function LikesPage() {
             isloading={isloading}
               key={e?.id}
               className="colm2"
-              url={`/glam/${e?.id}?modelId=${e?.model?.title}&color=${e?.color?.title}&collectionId=${e?.model?.collection?.title}`}
+              url={`/glam/${e?.id}?modelId=${e?.model?.title}&color=${e?.color?.title}&collectionId=${e?.collection?.title}`}
               title={`${e.collection?.title} ${e?.model?.title}`}
               items={e}
               text={e?.size?.title}
               image={e.imgUrl}
               isLike={true}
+              onBuslet={() => {
+                dispatch(
+                  buskets?.includes(e)
+                    ? changeBuskets(
+                        buskets?.filter((itms) => itms?.id !== e?.id)
+                      )
+                    : changeBuskets([e, ...buskets])
+                )
+              }}
               onLike={() => {
                 dispatch(
                   likes?.includes(e)
                     ? changeLike(likes?.filter((itms) => itms?.id !== e?.id))
                     : changeLike([e, ...likes])
                 );
-                likes?.includes(e)
-                  ? setlocLikes(likes?.filter((itms) => itms?.id !== e?.id))
-                  : setlocLikes([e, ...likes]);
               }}
             />
           ))

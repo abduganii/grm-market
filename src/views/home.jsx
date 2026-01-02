@@ -6,19 +6,12 @@ import Image from "next/image";
 import React, { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../lib/hooks";
 import { changeBuskets, changeLike } from "../lib/features";
-import { useLocalStorage } from "../hooks/useLocalStorage";
 
 export default function HomePage({ product }) {
-  const [, setlocLikes] = useLocalStorage("likes", []);
-  const [, setLocBuskets] = useLocalStorage("buskets", []);
   const { buskets } = useAppSelector((store) => store.buskets);
   const { likes } = useAppSelector((store) => store.likes);
   const dispatch = useAppDispatch();
-  const [isloading,setIsloading]= useState(true)
-  setTimeout(()=>{
-    setIsloading(false)
-  },300)
-
+ 
   return (
     <div className="w-full px-[30px] mt-[90px]">
       <header className="mb-[110px] text-center w-full max-w-[477px] mx-auto px-[30px]">
@@ -40,30 +33,17 @@ export default function HomePage({ product }) {
         </p>
       </header>
 
-      <div className="w-full columns-1 sm:columns-2 md:columns-3 lg:columns-4 xl:columns-5 gap-8  ">
+      {/* <div className="w-full columns-1 sm:columns-2 md:columns-3 lg:columns-4 xl:columns-5 gap-8  "> */}
+      <div className="w-full flex  gap-8">
         {product?.length&&
-          product?.map((e, i) => (
+          product?.map((e) => (
             <GlamCard
               key={e?.id}
-              isloading={isloading}
               className="colm1"
               url={`/glam/${e?.id}?modelId=${e?.model?.title}&color=${e?.color?.title}&collectionId=${e?.collection?.title}`}
               title={`${e?.collection?.title} ${e?.model?.title}`}
               items={e}
               text={e?.size?.title}
-              type={
-                i == 1
-                  ? "medium"
-                  : i === 3
-                  ? "medium"
-                  : i === 4
-                  ? "large"
-                  : i === 2
-                  ? "small"
-                  : i === 6
-                  ? "small"
-                  : "extraLarge"
-              }
               image={e?.imgUrl}
               isLike={likes?.map((it) => it?.id)?.includes(e?.id)}
               onLike={() => {
@@ -72,9 +52,6 @@ export default function HomePage({ product }) {
                     ? changeLike(likes?.filter((itms) => itms?.id !== e?.id))
                     : changeLike([e, ...likes])
                 );
-                likes?.includes(e)
-                  ? setlocLikes(likes?.filter((itms) => itms?.id !== e?.id))
-                  : setlocLikes([e, ...likes]);
               }}
               onBuslet={() => {
                 dispatch(
@@ -83,10 +60,7 @@ export default function HomePage({ product }) {
                         buskets?.filter((itms) => itms?.id !== e?.id)
                       )
                     : changeBuskets([e, ...buskets])
-                );
-                buskets?.includes(e)
-                  ? setLocBuskets(buskets?.filter((itms) => itms?.id !== e?.id))
-                  : setLocBuskets([e, ...buskets]);
+                )
               }}
             />
           ))}

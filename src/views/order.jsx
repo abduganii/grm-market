@@ -1,7 +1,6 @@
 "use client";
 import React, { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../lib/hooks";
-import { useLocalStorage } from "../hooks/useLocalStorage";
 import Container from "@/components/container";
 import Back from "@/components/back";
 import Image from "next/image";

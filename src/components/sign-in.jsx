@@ -1,30 +1,34 @@
 "use client";
+import { changeToken } from "@/lib/features";
 import { formatUzPhone } from "@/lib/formatUzPhone";
+import { useAppDispatch } from "@/lib/hooks";
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 
-export default function SignInModal() {
+export default function SignInModal({ setOpenAuth }) {
   const [step, setStep] = useState(1);
   const [phone, setPhone] = useState("");
   const [code, setCode] = useState("");
   const [loading, setLoading] = useState(false);
-
+  const dispatch = useAppDispatch();
   // 1️⃣ SEND PHONE
   const sendPhone = async () => {
     if (!phone) return alert("Введите номер");
 
     try {
       setLoading(true);
-       await fetch(`${process.env.NEXT_PUBLIC_URL}/auth/I-Market/login`, {
+      await fetch(`${process.env.NEXT_PUBLIC_URL}/auth/I-Market/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ phone }),
-      }).then((res) => res.json()).then((res)=>{
-       if(res?.tmp){
-         setStep(2);
-         setCode(res?.tmp?.code)
-       }
       })
-
+        .then((res) => res.json())
+        .then((res) => {
+          if (res?.tmp?.code || res?.code) {
+            setStep(2);
+            setCode(res?.tmp?.code|| res?.code);
+          }
+        });
     } catch (e) {
     } finally {
       setLoading(false);
@@ -37,15 +41,20 @@ export default function SignInModal() {
 
     try {
       setLoading(true);
-
-      await fetch(`${process.env.NEXT_PUBLIC_URL}/auth/I-Market/register/confirm`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ phone, code }),
-      }).then((res) => res.json()).then((res)=>{
-        console.log(res) 
-       })
-
+      await fetch(
+        `${process.env.NEXT_PUBLIC_URL}/auth/I-Market/register/confirm`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ phone, code }),
+        }
+      )
+        .then((res) => res.json())
+        .then((res) => {
+          toast("Вы успешно зарегистрированы");
+          dispatch(changeToken(res?.token));
+          setOpenAuth(false);
+        });
     } catch (e) {
     } finally {
       setLoading(false);
@@ -66,12 +75,12 @@ export default function SignInModal() {
             <p className="text-[14px] mt-[20px] mb-2">Введите номер телефона</p>
 
             <div className="flex gap-2 flex-wrap sm:flex-nowrap">
-            <input
-              value={phone}
-              onChange={(e) => setPhone(formatUzPhone(e.target.value))}
-              placeholder="+998 99 999 99 99"
-              className="border px-[12px] py-[11px] w-full sm:max-w-[290px]"
-            />
+              <input
+                value={phone}
+                onChange={(e) => setPhone(formatUzPhone(e.target.value))}
+                placeholder="+998 99 999 99 99"
+                className="border px-[12px] py-[11px] w-full sm:max-w-[290px]"
+              />
               <button
                 onClick={sendPhone}
                 disabled={loading}
