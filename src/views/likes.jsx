@@ -6,7 +6,7 @@ import { changeBuskets, changeLike } from "../lib/features";
 
 export default function LikesPage() {
   const { likes } = useAppSelector((store) => store.likes);
-  const { buskets } = useAppSelector((store) => store.buskets);
+  const { buskets } = useAppSelector((store) => store.buskets)
   const dispatch = useAppDispatch();
   const [isloading,setIsloading]= useState(true)
 
