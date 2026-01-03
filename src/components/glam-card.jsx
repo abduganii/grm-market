@@ -22,75 +22,81 @@ export default function GlamCard({
   title,
   text,
   image,
-  isloading ,
+  isloading,
 }) {
   const router = useRouter();
 
   return (
-    <div className={`${className && className} mb-[60px]   text-center`}>
-      <div
-        onClick={() => router.push(url)}
-        className="w-full h-auto min-h-[100px] relative group flex text-center items-center justify-center"
-      >
-        {isloading ? (
-          <div className="p-4 max-w-sm w-full mx-auto">
-            <div className="animate-pulse space-y-4">
-              <div className="h-[500px] bg-gray-300 rounded"></div>
+    <div className="mb-1 break-inside-avoid w-full">
+      <div className={`${className && className} mb-[60px]   text-center`}>
+        <div
+          onClick={() => router.push(url)}
+          className="w-full h-auto min-h-[100px] relative group flex text-center items-center justify-center"
+        >
+          {isloading ? (
+            <div className="p-4 max-w-sm w-full mx-auto">
+              <div className="animate-pulse space-y-4">
+                <div className="h-[500px] bg-gray-300 rounded"></div>
+              </div>
+            </div>
+          ) : image ? (
+            <Image
+              height={1000}
+              width={1000}
+              style={{ width: `${typeObj?.[type]}%` }}
+              className={`${
+                isloading ? "hidden" : ""
+              } object-contain m-auto  hover:shadow-xl bg-transparent cursor-pointer ease-in duration-200 hover:-translate-y-2`}
+              src={image || null}
+              alt="image"
+              title={title}
+            />
+          ) : (
+            <div
+              style={{
+                width: `${typeObj?.[type] ?? 100}%`,
+                height: `${(500 * (typeObj?.[type] ?? 100)) / 100}px`,
+              }}
+              className="flex items-center mx-auto w-full bg-[#F0F0E5] justify-center"
+            >
+              <Image src="/empty-folder.png" width={60} height={60} alt="img" />
+            </div>
+          )}
+          <div
+            className={`absolute ${
+              isLike ? "flex" : "hidden"
+            } group-hover:flex bottom-[69px] left-0 gap-1 w-full  items-center justify-center`}
+          >
+            <div
+              onClick={(e) => {
+                e.stopPropagation();
+                onLike && onLike(e);
+              }}
+              className="p-[10px] bg-white cursor-pointer"
+            >
+              <LikeIcons
+                stroke={isLike ? "red" : "black"}
+                fill={isLike ? "red" : "none"}
+              />
+            </div>
+            <div
+              onClick={(e) => {
+                e.stopPropagation();
+                onBuslet && onBuslet(e);
+              }}
+              className="p-[10px] bg-white cursor-pointer"
+            >
+              <BusketIcons />
             </div>
           </div>
-        ) : image ? (
-          <Image
-            height={1000}
-            width={1000}
-            style={{ width: `${typeObj?.[type]}%` }}
-            className={`${
-              isloading ? "hidden" : ""
-            } object-contain m-auto  hover:shadow-xl bg-transparent cursor-pointer ease-in duration-200 hover:-translate-y-2`}
-            src={image || null}
-            alt="image"
-            title={title}
-          />
-        ) : (
-          <div
-            className={`  flex items-center h-[500px] w-full bg-[#F0F0E5] justify-center `}
-          >
-            <Image src={"/empty-folder.png"} width={60} height={60} alt="img" />
-          </div>
-        )}
-        <div
-          className={`absolute ${
-            isLike ? "flex" : "hidden"
-          } group-hover:flex bottom-[69px] left-0 gap-1 w-full  items-center justify-center`}
-        >
-          <div
-            onClick={(e) => {
-              e.stopPropagation();
-              onLike && onLike(e);
-            }}
-            className="p-[10px] bg-white cursor-pointer"
-          >
-            <LikeIcons
-              stroke={isLike ? "red" : "black"}
-              fill={isLike ? "red" : "none"}
-            />
-          </div>
-          <div
-            onClick={(e) => {
-              e.stopPropagation();
-              onBuslet && onBuslet(e);
-            }}
-            className="p-[10px] bg-white cursor-pointer"
-          >
-            <BusketIcons />
-          </div>
         </div>
+        <h3 className="text-[20px] leading-[25px] font-normal mt-3 mb-2">
+          {title}
+        </h3>
+        <p className="text-[15px] tetx-[#00000005] leading-[18px] font-normal ">
+          {text}
+        </p>
       </div>
-      <h3 className="text-[20px] leading-[25px] font-normal mt-3 mb-2">
-        {title}
-      </h3>
-      <p className="text-[15px] tetx-[#00000005] leading-[18px] font-normal ">
-        {text}
-      </p>
     </div>
   );
 }

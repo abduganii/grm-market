@@ -6,12 +6,19 @@ import Image from "next/image";
 import React, { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../lib/hooks";
 import { changeBuskets, changeLike } from "../lib/features";
+import Masonry from "react-masonry-css";
 
 export default function HomePage({ product }) {
   const { buskets } = useAppSelector((store) => store.buskets);
   const { likes } = useAppSelector((store) => store.likes);
   const dispatch = useAppDispatch();
- 
+  const breakpointColumnsObj = {
+    default: 4,
+    // 1280: 4,
+    1024: 3,
+    640: 2,
+  };
+  
   return (
     <div className="w-full px-[30px] mt-[90px]">
       <header className="mb-[110px] text-center w-full max-w-[477px] mx-auto px-[30px]">
@@ -34,7 +41,11 @@ export default function HomePage({ product }) {
       </header>
 
       {/* <div className="w-full columns-1 sm:columns-2 md:columns-3 lg:columns-4 xl:columns-5 gap-8  "> */}
-      <div className="w-full flex  gap-8">
+      <Masonry
+        breakpointCols={breakpointColumnsObj}
+        className="flex gap-6"
+        columnClassName="flex flex-col gap-6"
+      >
         {product?.length&&
           product?.map((e) => (
             <GlamCard
@@ -64,7 +75,97 @@ export default function HomePage({ product }) {
               }}
             />
           ))}
-      </div>
+            {product?.length&&
+          product?.map((e) => (
+            <GlamCard
+              key={e?.id}
+              className="colm1"
+              url={`/glam/${e?.id}?modelId=${e?.model?.title}&color=${e?.color?.title}&collectionId=${e?.collection?.title}`}
+              title={`${e?.collection?.title} ${e?.model?.title}`}
+              items={e}
+              text={e?.size?.title}
+              image={e?.imgUrl}
+              type={"small"}
+              isLike={likes?.map((it) => it?.id)?.includes(e?.id)}
+              onLike={() => {
+                dispatch(
+                  likes?.includes(e)
+                    ? changeLike(likes?.filter((itms) => itms?.id !== e?.id))
+                    : changeLike([e, ...likes])
+                );
+              }}
+              onBuslet={() => {
+                dispatch(
+                  buskets?.includes(e)
+                    ? changeBuskets(
+                        buskets?.filter((itms) => itms?.id !== e?.id)
+                      )
+                    : changeBuskets([e, ...buskets])
+                )
+              }}
+            />
+          ))}
+            {product?.length&&
+          product?.map((e) => (
+            <GlamCard
+              key={e?.id}
+              className="colm1"
+              url={`/glam/${e?.id}?modelId=${e?.model?.title}&color=${e?.color?.title}&collectionId=${e?.collection?.title}`}
+              title={`${e?.collection?.title} ${e?.model?.title}`}
+              items={e}
+              text={e?.size?.title}
+              image={e?.imgUrl}
+              type={"small"}
+              isLike={likes?.map((it) => it?.id)?.includes(e?.id)}
+              onLike={() => {
+                dispatch(
+                  likes?.includes(e)
+                    ? changeLike(likes?.filter((itms) => itms?.id !== e?.id))
+                    : changeLike([e, ...likes])
+                );
+              }}
+              onBuslet={() => {
+                dispatch(
+                  buskets?.includes(e)
+                    ? changeBuskets(
+                        buskets?.filter((itms) => itms?.id !== e?.id)
+                      )
+                    : changeBuskets([e, ...buskets])
+                )
+              }}
+            />
+          ))}
+            {product?.length&&
+          product?.map((e) => (
+            <GlamCard
+              key={e?.id}
+              className="colm1"
+              url={`/glam/${e?.id}?modelId=${e?.model?.title}&color=${e?.color?.title}&collectionId=${e?.collection?.title}`}
+              title={`${e?.collection?.title} ${e?.model?.title}`}
+              items={e}
+              text={e?.size?.title}
+              image={e?.imgUrl}
+              
+              isLike={likes?.map((it) => it?.id)?.includes(e?.id)}
+              onLike={() => {
+                dispatch(
+                  likes?.includes(e)
+                    ? changeLike(likes?.filter((itms) => itms?.id !== e?.id))
+                    : changeLike([e, ...likes])
+                );
+              }}
+              onBuslet={() => {
+                dispatch(
+                  buskets?.includes(e)
+                    ? changeBuskets(
+                        buskets?.filter((itms) => itms?.id !== e?.id)
+                      )
+                    : changeBuskets([e, ...buskets])
+                )
+              }}
+            />
+          ))}
+        </Masonry>
     </div>
   );
 }
