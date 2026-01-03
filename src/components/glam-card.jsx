@@ -1,6 +1,5 @@
 "use client";
-import { Skeleton } from "antd";
-import { Link, useRouter } from "../i18n/routing";
+import {  useRouter } from "../i18n/routing";
 import Image from "next/image";
 import React from "react";
 import { BusketIcons, LikeIcons } from "./icons";
