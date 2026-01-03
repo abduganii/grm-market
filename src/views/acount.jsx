@@ -6,13 +6,16 @@ import React, { useEffect, useState } from "react";
 
 export default function AcountPage() {
   const { userMe } = useAppSelector((store) => store.userMe);
+  const { token } = useAppSelector((store) => store.token);
   const [device, setDevice] = useState({});
   const [loading, setLoading] = useState(false);
-  const [name, setName] = useState("");
-  const [surname, setSurname] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
 
   useEffect(() => {
-    setName(userMe?.firstName);
+    setFirstName(userMe?.firstName);
+    setLastName(userMe?.lastName)
+    
   }, [userMe]);
   useEffect(() => {
     const getDeviceInfo = async () => {
@@ -31,16 +34,19 @@ export default function AcountPage() {
 
     getDeviceInfo();
   }, []);
-
   const ChageData = async () => {
     try {
       setLoading(true);
-      await fetch(`${process.env.NEXT_PUBLIC_URL}/update`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+      await fetch(`${process.env.NEXT_PUBLIC_URL}/user/client/`  , {
+        method: "Put",
+        headers: { 
+          "Content-Type": "application/json" ,
+          "Authorization": "Bearer " + token,
+
+        },
         body: JSON.stringify({
-          name: name,
-          title: surname,
+          firstName,
+          lastName,
         }),
       })
         .then((res) => res.json())
@@ -70,8 +76,8 @@ export default function AcountPage() {
           <p className="mb-2 text-[14px] leading-[16px]">Имя</p>
 
           <input
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
             placeholder="Имя"
             className="py-[11px] w-full px-[12px] outline-none border"
           />
@@ -80,8 +86,8 @@ export default function AcountPage() {
           <p className="mb-2 text-[14px] leading-[16px]">Фамилия</p>
 
           <input
-            value={surname}
-            onChange={(e) => setSurname(e.target.value)}
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
             placeholder="Фамилия"
             className="py-[11px] w-full px-[12px] outline-none border"
           />
