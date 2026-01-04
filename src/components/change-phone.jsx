@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 
 export default function ChnagePhone({ onSuccess }) {
   const [step, setStep] = useState(1);
-  const [phone, setPhone] = useState( "");
+  const [phone, setPhone] = useState( "+998");
   const [code, setCode] = useState("");
   const [loading, setLoading] = useState(false);
  

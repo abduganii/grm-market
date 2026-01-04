@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 
 export default function SignInModal({ cosomPhone,onSuccess }) {
   const [step, setStep] = useState(1);
-  const [phone, setPhone] = useState(cosomPhone|| "");
+  const [phone, setPhone] = useState(cosomPhone|| "+998");
   const [code, setCode] = useState("");
   const [loading, setLoading] = useState(false);
   const dispatch = useAppDispatch();

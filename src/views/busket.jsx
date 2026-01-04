@@ -11,12 +11,14 @@ export default function BusketPage() {
   const { buskets } = useAppSelector((store) => store.buskets);
   const { userMe } = useAppSelector((store) => store.userMe);
   const dispatch = useAppDispatch();
-  const [phone, setPhone] = useState();
+  const [phone, setPhone] = useState("+998");
   const [openAuth, setOpenAuth] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
-    setPhone(userMe?.phone);
+    if(userMe?.phone){
+      setPhone(userMe?.phone);
+    }
   }, [userMe]);
   const HendleRemove = (e) => {
     dispatch(changeBuskets(buskets?.filter((itms) => itms?.id !== e?.id)));

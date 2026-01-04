@@ -80,7 +80,7 @@ export default function FixedLayout() {
           onClick={(e) => {
             e.stopPropagation();
             if (userMe?.id) {
-              router.push("/profile/likes");
+              router.push("/profile/account");
             } else {
               setOpenAuth(true);
             }
