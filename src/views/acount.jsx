@@ -1,10 +1,12 @@
 "use client";
+import ChnagePhone from "@/components/change-phone";
 import { EditIcons } from "@/components/icons";
 import { useAppSelector } from "@/lib/hooks";
 import { getDetailedDeviceName } from "@/utils/divice";
 import React, { useEffect, useState } from "react";
 
 export default function AcountPage() {
+  const [openChnagePhone, setOpenChnagePhone] = useState(false);
   const { userMe } = useAppSelector((store) => store.userMe);
   const { token } = useAppSelector((store) => store.token);
   const [device, setDevice] = useState({});
@@ -14,8 +16,7 @@ export default function AcountPage() {
 
   useEffect(() => {
     setFirstName(userMe?.firstName);
-    setLastName(userMe?.lastName)
-    
+    setLastName(userMe?.lastName);
   }, [userMe]);
   useEffect(() => {
     const getDeviceInfo = async () => {
@@ -37,12 +38,11 @@ export default function AcountPage() {
   const ChageData = async () => {
     try {
       setLoading(true);
-      await fetch(`${process.env.NEXT_PUBLIC_URL}/user/client/`  , {
+      await fetch(`${process.env.NEXT_PUBLIC_URL}/user/client/`, {
         method: "Put",
-        headers: { 
-          "Content-Type": "application/json" ,
-          "Authorization": "Bearer " + token,
-
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
         },
         body: JSON.stringify({
           firstName,
@@ -64,9 +64,16 @@ export default function AcountPage() {
       <h4 className="text-[44px] leading-[51px] mt-3 mb-[13px]">
         id:{userMe?.login}
       </h4>
+      {openChnagePhone ? (
+        <ChnagePhone   onSuccess={() => openChnagePhone(false)} />
+      ) : (
+        ""
+      )}
       <div className="flex items-center gap-[21px]">
         <p className="text-[22px] leading-[25px]">{userMe?.phone}</p>
-        <EditIcons />
+        <span onClick={() => setOpenChnagePhone(true)}>
+          <EditIcons />
+        </span>
         <p className="text-[#212121] opacity-30 text-[12px] leading-[18px]">
           подтержден
         </p>
@@ -109,12 +116,11 @@ export default function AcountPage() {
 
       <p className="mt-[50px] w-full text-[#21212173]  max-w-[474px] text-[12px] leading-[15px]">
         <p className="mb-[10px]">
-          {" "}
-          Регистрируясь на нашем сайте, вы подтверждаете свое согласие с нашей{" "}
+          Регистрируясь на нашем сайте, вы подтверждаете свое согласие с нашей
           <span className="font-medium text-[#349AFF]">
             Политикой конфиденциальности
-          </span>{" "}
-          и{" "}
+          </span>
+          и
           <span className="font-medium text-[#349AFF]">
             Условиями использования.
           </span>

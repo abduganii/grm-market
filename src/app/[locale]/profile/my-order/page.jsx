@@ -1,7 +1,12 @@
-import React from 'react'
+import { fetchData } from "@/service/get";
+import MyOrdersPage from "@/views/my-orders";
+import React from "react";
 
-export default function MyOrders() {
-  return (
-    <div>MyOrders</div>
-  )
+//
+
+export default async function MyOrders() {
+
+
+
+  return <MyOrdersPage/>;
 }
