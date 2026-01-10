@@ -7,7 +7,7 @@ export default function SelectCostom({ label,onChange, options,className, placeh
       <p className="text-[12px] leading-[14px] mb-[15px]">{label}</p>
       <Select
         placeholder={placeholder}
-        className=" w-full ] outline-none border-[#EEEEEE] border-[1px] border-solid mb-4"
+        className=" w-full  outline-none border-[#EEEEEE] border-[1px] border-solid mb-4"
         onChange={onChange}
         options={options}
       />

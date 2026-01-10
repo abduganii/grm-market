@@ -54,7 +54,7 @@ export default function ProfileLayout({ children }) {
               }
             })}
 
-            <Popconfirm
+         { userMe &&   <Popconfirm
               title="Log out"
               description="Are you sure to log out?"
               onConfirm={confirm}
@@ -64,7 +64,7 @@ export default function ProfileLayout({ children }) {
               <p className="inline-block md:w-full mb-[12px] text-[13px] sm:text-[15px] leading-[17px] cursor-pointer mt-[25px]">
                 Выйти
               </p>
-            </Popconfirm>
+            </Popconfirm>}
           </div>
           {children}
         </div>

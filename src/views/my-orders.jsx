@@ -1,30 +1,93 @@
 "use client";
-import { useAppSelector } from '@/lib/hooks';
-import { fetchData } from '@/service/get';
-import React, { useEffect } from 'react'
+import { useAppSelector } from "@/lib/hooks";
+import { fetchData } from "@/service/get";
+import React, { useEffect, useState } from "react";
+import dayjs from "dayjs";
+import GlamCardBusket from "@/components/gllam-card-busket";
 
-export default function MyOrdersPage() {
-    const { token } = useAppSelector((store) => store.token);
-    useEffect(() => {
-        if (!token) return;
-    
-        const getMyOrders = async () => {
-          try {
-            const response = await fetchData(
-              `${process.env.NEXT_PUBLIC_URL}/client-orders/for-client`,
-              {
-                token,
-              }
-            );
-            console.log(response);
-          } catch (error) {
-            console.error(error);
-          }
-        };
-    
-        getMyOrders();
-      }, [token]);
+
+function HeaderItem({title, value}){
   return (
-    <div>my-orders</div>
+    <div className="w-full">
+    <h3 className="text-[12px] leading-[14px] text-[#282A2C] mb-1 opacity-45">
+     {title}
+    </h3>
+    <p className="text-[14px]  leading-[19px] text-[#282A2C] mb-1 ">
+
+    {value}
+    </p>
+  </div>
   )
+}
+export default function MyOrdersPage() {
+  const { token } = useAppSelector((store) => store.token);
+  const [myOrder, setMyOrder] = useState([]);
+  useEffect(() => {
+    if (!token) return;
+
+    const getMyOrders = async () => {
+      try {
+        const response = await fetchData(
+          `${process.env.NEXT_PUBLIC_URL}/client-orders/for-client`,
+          {
+            token,
+            limit: 20,
+          }
+        );
+        setMyOrder(response);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    getMyOrders();
+  }, [token]);
+  console.log(myOrder);
+ 
+  return (
+    <div className="w-full max-w-[1100px] gap-[20px] items-start flex flex-wrap xl:flex-nowrap justify-between">
+      <div className="w-full max-w-[610px]">
+        {myOrder?.items?.map((item) => (
+          <div key={item?.id}>
+            <p className="text-[12px] text-[#212121]/45">
+              {" "}
+              {dayjs(item?.startDate)?.format("DD MMMM YYYY HH:mm")}
+            </p>
+            <div className="flex px-[14px] py-[10px] gap-1 border-[#EEEEEE] my-[10px] border">
+              <HeaderItem title="Номер заказа" value={"№"+ item?.sequence}/>
+              <HeaderItem title="Статус заказа" value={ item?.order_status}/>
+              <HeaderItem title="Дата доставки" value={item?.date}/>
+              <HeaderItem title="Предоплата" value={item?.pre_payment}/>
+              <HeaderItem title="Осталось" value={Number(item?.totalPrice) - Number(item?.pre_payment)}/>
+              
+            </div>
+            {item?.client_order_items?.length
+              ? item?.client_order_items?.map((e) => (
+                  <GlamCardBusket
+                    key={e?.id}
+                    isMyOrder
+                    myCount={e?.count}
+                    price={e?.price}
+                    url={`/glam/${e?.id}?modelId=${e?.model?.title}&color=${e?.color?.title}&collectionId=${e?.collection?.title}`}
+                    title={`${e?.collection?.title} ${e?.model?.title}`}
+                    items={e?.product}
+                    image={e?.imgUrl}
+                  />
+                ))
+              : ""}
+          </div>
+        ))}
+        {/*  */}
+      </div>
+      <div className="w-full sm:max-w-[270px]">
+        <p className="text-[20px] leading-[23.4px] text-[#212121] font-bold mb-[15px]">
+          Для уточнений
+        </p>
+        <p className="text-[12px] leading-[14.4px] text-[#212121]">
+          Если вы хотите узнать подробности о вашем заказе, свяжитесь с нашими
+          операторами по телефону.
+        </p>
+      </div>
+    </div>
+  );
 }

@@ -3,9 +3,8 @@ import React, { useState } from "react";
 import { CloseIcons, MinutIcons, PlusIcons } from "./icons";
 
 
-export default function GlamCardBusket({ title,onRemove,items, image }) {
+export default function GlamCardBusket({isMyOrder,myCount=1,price, title,onRemove,items, image }) {
   const [count, setCount] = useState(1);
-  console.log(items)
   return (
     <div className="flex w-full max-w-[610px] relative sm:flex-nowrap border-[1px] flex-wrap  mb-[30px] p-[2px]  border-[#EEEEEE] items-start gap-[24px]">
       {image ? (
@@ -16,9 +15,9 @@ export default function GlamCardBusket({ title,onRemove,items, image }) {
       <Image src={"/empty-folder.png"} width={60} height={60} alt="img" />
     </div>}
 
-      <div onClick={onRemove} className="ms-auto -mx-1.5 cursor-pointer absolute top-4 right-4 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700" data-dismiss-target="#toast-success" aria-label="Close">
+    {onRemove?  <div onClick={onRemove} className="ms-auto -mx-1.5 cursor-pointer absolute top-4 right-4 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700" data-dismiss-target="#toast-success" aria-label="Close">
              <CloseIcons/>
-          </div>
+          </div>:""}
       <div className="w-full max-w-[360px] ">
         <div className="flex flex-wrap py-[30px] border-b-[1px]">
             <div className="w-1/4 mr-[4px]">
@@ -87,8 +86,8 @@ export default function GlamCardBusket({ title,onRemove,items, image }) {
               </p>
             </div>
         </div>
-        <div className="flex sm:flex-nowrap flex-wrap w-full items-center py-[25px] gap-[19px]">
-          <div className="flex w-1/3 gap-[2px]   ">
+        <div className="flex justify-between  sm:flex-nowrap flex-wrap w-full items-center py-[25px] gap-[19px]">
+         {!isMyOrder? <div className="flex  w-1/3 gap-[2px]">
             <div
               className={`${
                 count == 1
@@ -115,14 +114,21 @@ export default function GlamCardBusket({ title,onRemove,items, image }) {
             >
               <PlusIcons />
             </div>
-          </div>
+          </div>:  <div className="w-1/3">
+            <h3 className="text-[12px] leading-[14px] text-[#282A2C] mb-1 opacity-45">
+            Количество
+            </h3>
+            <p className="text-[16px]  leading-[19px] text-[#282A2C] mb-1 ">
+              {myCount}
+            </p>
+          </div>}
 
           <div className="w-1/3">
             <h3 className="text-[12px] leading-[14px] text-[#282A2C] mb-1 opacity-45">
               Скидка
             </h3>
             <p className="text-[16px]  leading-[19px] text-[#282A2C] mb-1 ">
-              -15%
+              0%
             </p>
           </div>
           <div className="w-1/3 ">
@@ -130,7 +136,7 @@ export default function GlamCardBusket({ title,onRemove,items, image }) {
               Итого
             </h3>
             <p className="text-[16px]  leading-[19px] text-[#282A2C] mb-1 ">
-              {items?.i_price * count} sum
+              {price? price: items?.i_price * count} sum
             </p>
           </div>
         </div>

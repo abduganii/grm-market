@@ -27,7 +27,7 @@ export default function GlamCard({
 
   return (
     <div className="mb-1 break-inside-avoid w-full">
-      <div className={`${className && className} mb-[60px]   text-center`}>
+      <div className={`${className && className}   text-center`}>
         <div
           onClick={() => router.push(url)}
           className="w-full h-auto min-h-[100px] relative group flex text-center items-center justify-center"

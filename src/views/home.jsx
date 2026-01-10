@@ -40,7 +40,6 @@ export default function HomePage({ product }) {
         </p>
       </header>
 
-      {/* <div className="w-full columns-1 sm:columns-2 md:columns-3 lg:columns-4 xl:columns-5 gap-8  "> */}
       <Masonry
         breakpointCols={breakpointColumnsObj}
         className="flex gap-6"
@@ -54,98 +53,9 @@ export default function HomePage({ product }) {
               url={`/glam/${e?.id}?modelId=${e?.model?.title}&color=${e?.color?.title}&collectionId=${e?.collection?.title}`}
               title={`${e?.collection?.title} ${e?.model?.title}`}
               items={e}
+              type={e?.sizeType}
               text={e?.size?.title}
               image={e?.imgUrl}
-              isLike={likes?.map((it) => it?.id)?.includes(e?.id)}
-              onLike={() => {
-                dispatch(
-                  likes?.includes(e)
-                    ? changeLike(likes?.filter((itms) => itms?.id !== e?.id))
-                    : changeLike([e, ...likes])
-                );
-              }}
-              onBuslet={() => {
-                dispatch(
-                  buskets?.includes(e)
-                    ? changeBuskets(
-                        buskets?.filter((itms) => itms?.id !== e?.id)
-                      )
-                    : changeBuskets([e, ...buskets])
-                )
-              }}
-            />
-          ))}
-            {product?.length&&
-          product?.map((e) => (
-            <GlamCard
-              key={e?.id}
-              className="colm1"
-              url={`/glam/${e?.id}?modelId=${e?.model?.title}&color=${e?.color?.title}&collectionId=${e?.collection?.title}`}
-              title={`${e?.collection?.title} ${e?.model?.title}`}
-              items={e}
-              text={e?.size?.title}
-              image={e?.imgUrl}
-              type={"small"}
-              isLike={likes?.map((it) => it?.id)?.includes(e?.id)}
-              onLike={() => {
-                dispatch(
-                  likes?.includes(e)
-                    ? changeLike(likes?.filter((itms) => itms?.id !== e?.id))
-                    : changeLike([e, ...likes])
-                );
-              }}
-              onBuslet={() => {
-                dispatch(
-                  buskets?.includes(e)
-                    ? changeBuskets(
-                        buskets?.filter((itms) => itms?.id !== e?.id)
-                      )
-                    : changeBuskets([e, ...buskets])
-                )
-              }}
-            />
-          ))}
-            {product?.length&&
-          product?.map((e) => (
-            <GlamCard
-              key={e?.id}
-              className="colm1"
-              url={`/glam/${e?.id}?modelId=${e?.model?.title}&color=${e?.color?.title}&collectionId=${e?.collection?.title}`}
-              title={`${e?.collection?.title} ${e?.model?.title}`}
-              items={e}
-              text={e?.size?.title}
-              image={e?.imgUrl}
-              type={"small"}
-              isLike={likes?.map((it) => it?.id)?.includes(e?.id)}
-              onLike={() => {
-                dispatch(
-                  likes?.includes(e)
-                    ? changeLike(likes?.filter((itms) => itms?.id !== e?.id))
-                    : changeLike([e, ...likes])
-                );
-              }}
-              onBuslet={() => {
-                dispatch(
-                  buskets?.includes(e)
-                    ? changeBuskets(
-                        buskets?.filter((itms) => itms?.id !== e?.id)
-                      )
-                    : changeBuskets([e, ...buskets])
-                )
-              }}
-            />
-          ))}
-            {product?.length&&
-          product?.map((e) => (
-            <GlamCard
-              key={e?.id}
-              className="colm1"
-              url={`/glam/${e?.id}?modelId=${e?.model?.title}&color=${e?.color?.title}&collectionId=${e?.collection?.title}`}
-              title={`${e?.collection?.title} ${e?.model?.title}`}
-              items={e}
-              text={e?.size?.title}
-              image={e?.imgUrl}
-              
               isLike={likes?.map((it) => it?.id)?.includes(e?.id)}
               onLike={() => {
                 dispatch(

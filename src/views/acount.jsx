@@ -1,7 +1,8 @@
 "use client";
 import ChnagePhone from "@/components/change-phone";
 import { EditIcons } from "@/components/icons";
-import { useAppSelector } from "@/lib/hooks";
+import { changeUserMe } from "@/lib/features";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { getDetailedDeviceName } from "@/utils/divice";
 import React, { useEffect, useState } from "react";
 
@@ -13,7 +14,7 @@ export default function AcountPage() {
   const [loading, setLoading] = useState(false);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-
+  const dispatch = useAppDispatch();
   useEffect(() => {
     setFirstName(userMe?.firstName);
     setLastName(userMe?.lastName);
@@ -51,7 +52,10 @@ export default function AcountPage() {
       })
         .then((res) => res.json())
         .then((res) => {
-          toast(" успешно ");
+          dispatch(changeUserMe({...userMe,...res}));
+          setFirstName(res?.firstName);
+          setLastName(res?.lastName);
+          toast("успешно");
         });
     } catch (e) {
     } finally {
@@ -83,7 +87,7 @@ export default function AcountPage() {
           <p className="mb-2 text-[14px] leading-[16px]">Имя</p>
 
           <input
-            value={firstName}
+            defaultValue={firstName}
             onChange={(e) => setFirstName(e.target.value)}
             placeholder="Имя"
             className="py-[11px] w-full px-[12px] outline-none border"
@@ -93,7 +97,7 @@ export default function AcountPage() {
           <p className="mb-2 text-[14px] leading-[16px]">Фамилия</p>
 
           <input
-            value={lastName}
+            defaultValue={lastName}
             onChange={(e) => setLastName(e.target.value)}
             placeholder="Фамилия"
             className="py-[11px] w-full px-[12px] outline-none border"

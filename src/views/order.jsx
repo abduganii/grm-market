@@ -11,6 +11,7 @@ import { DatePicker, TimePicker } from "antd";
 import { toast } from "react-toastify";
 import OrderModal from "@/components/order-modal";
 import { changeBuskets } from "@/lib/features";
+import LocationModal from "@/components/LocationModal";
 
 const typePayArr = ["cash", "payme", "click"];
 
@@ -29,20 +30,20 @@ export default function OrderPage() {
   const [comment, setComment] = useState("");
   const [city, setCity] = useState("");
   const [district, setDistrict] = useState("");
-  const [address, setAddress] = useState("");
-  const [locationLink, setLocationLink] = useState("");
+  // const [address, setAddress] = useState("");
+
   const [orderDate, setOrderDate] = useState(""); 
 const [orderTime, setOrderTime] = useState(""); 
   const [loading, setLoading] = useState(false);
-
+  const [location, setLocation] = useState(null);
   // 🧠 Build request body
   const buildOrderBody = () => {
     let combinedDate = null;
   
     if (orderDate) {
-      combinedDate = orderDate.format("YYYY-MM-DD");
+      combinedDate = orderDate.format("YYYY.MM.DD");
       if (orderTime) {
-        combinedDate = `${combinedDate}T${orderTime.format("HH:mm")}`;
+        combinedDate = `${combinedDate} ${orderTime.format("HH:mm")}`;
       }
     }
   
@@ -55,12 +56,13 @@ const [orderTime, setOrderTime] = useState("");
       delivery_comment: comment,
       city,
       district,
-      full_address: address,
-      location_link: locationLink || null,
+      full_address: location?.address,
+      location_link:  `https://yandex.com/maps/?pt=${location.lng},${location.lat}&z=17&l=map`,
       date: combinedDate,
       user: userMe?.id,
     };
   };
+  console.log(location)
 
   // 🚀 Submit order
   const submitOrder = async () => {
@@ -68,7 +70,8 @@ const [orderTime, setOrderTime] = useState("");
 
     try {
       setLoading(true);
-    
+      console.log(buildOrderBody())
+      return
       const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/client-orders`, {
         method: "POST",
         headers: {
@@ -254,8 +257,11 @@ const [orderTime, setOrderTime] = useState("");
                     className={"colm2"}
                     placeholder={"Улица, дом, ориентир, номер квартиры"}
                     required={true}
-                    onChange={(e) => setAddress(e.target.value)}
+                    value={location?.address ||null}
+                    // onChange={(e) => setAddress(e.target.value)}
                   />
+                 
+                  <LocationModal location={location} setLocation={setLocation}  />
                 </div>
                 <p className="text-[12px] leading-[18px] text-[#212121] opacity-50">
                   Убедитесь, что указали правильный адрес доставки. После
@@ -272,9 +278,10 @@ const [orderTime, setOrderTime] = useState("");
                     <label className="text-[12px] mb-1 block">Дата доставки</label>
                     <DatePicker
                       value={orderDate}
+                      className=" w-full  outline-none  rounded-none border-solid h-12"
                       onChange={(date) => setOrderDate(date)}
                       format="YYYY-MM-DD"
-                      className="w-full"
+                   
                     />
                   </div>
                   <div className="flex-1">
@@ -283,7 +290,7 @@ const [orderTime, setOrderTime] = useState("");
                       value={orderTime}
                       onChange={(time) => setOrderTime(time)}
                       format="HH:mm"
-                      className="w-full"
+                    className=" w-full  outline-none  rounded-none border-solid h-12"
                     />
                   </div>
                 </div>
