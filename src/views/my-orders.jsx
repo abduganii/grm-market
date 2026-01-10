@@ -4,6 +4,7 @@ import { fetchData } from "@/service/get";
 import React, { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import GlamCardBusket from "@/components/gllam-card-busket";
+import { minio_img_url } from "@/utils/divice";
 
 
 function HeaderItem({title, value}){
@@ -71,7 +72,7 @@ export default function MyOrdersPage() {
                     url={`/glam/${e?.id}?modelId=${e?.model?.title}&color=${e?.color?.title}&collectionId=${e?.collection?.title}`}
                     title={`${e?.collection?.title} ${e?.model?.title}`}
                     items={e?.product}
-                    image={e?.imgUrl}
+                    image={e?.imgUrl?.path? minio_img_url+ e?.imgUrl?.path :""}
                   />
                 ))
               : ""}

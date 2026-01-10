@@ -5,7 +5,7 @@ const withNextIntl = createNextIntlPlugin();
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["grm-upload.getter.uz"],
+    domains: ["grm-upload.getter.uz","s3.gilam-market.uz"],
   },
 };
 

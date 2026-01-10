@@ -6,6 +6,7 @@ import GlamCardBusket from "../components/gllam-card-busket";
 import { useRouter } from "@/i18n/routing";
 import SignInModal from "@/components/sign-in";
 import { formatUzPhone } from "@/lib/formatUzPhone";
+import { minio_img_url } from "@/utils/divice";
 
 export default function BusketPage() {
   const { buskets } = useAppSelector((store) => store.buskets);
@@ -33,7 +34,7 @@ export default function BusketPage() {
                 url={`/glam/${e?.id}?modelId=${e?.model?.title}&color=${e?.color?.title}&collectionId=${e?.collection?.title}`}
                 title={`${e?.collection?.title} ${e?.model?.title}`}
                 items={e}
-                image={e?.imgUrl}
+                image={e?.imgUrl?.path? minio_img_url+ e?.imgUrl?.path :""}
                 onRemove={() => HendleRemove(e)}
               />
             ))

@@ -6,6 +6,7 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { changeBuskets, changeLike } from "@/lib/features";
+import { minio_img_url } from "@/utils/divice";
 
 export default function GlamById({ product, productArr, id }) {
   const [LocalId, setLocalId] = useState(id);
@@ -60,7 +61,7 @@ export default function GlamById({ product, productArr, id }) {
               }  object-contain max-h-[740px]`}
               width={500}
               height={740}
-              src={oneProduct?.imgUrl || null}
+              src={oneProduct?.imgUrl?.path? minio_img_url+ oneProduct?.imgUrl?.path :"" || null}
               alt="image"
             />
           ) : (
@@ -190,7 +191,7 @@ export default function GlamById({ product, productArr, id }) {
             title={`${e?.collection?.title} ${e?.model?.title}`}
             items={e}
             text={e?.size?.title}
-            image={e?.imgUrl}
+            image={e?.imgUrl?.path? minio_img_url+ e?.imgUrl?.path :""}
             isLike={likes?.map((it) => it?.id)?.includes(e?.id)}
             onLike={() => {
               dispatch(

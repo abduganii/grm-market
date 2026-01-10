@@ -7,6 +7,7 @@ import React, { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../lib/hooks";
 import { changeBuskets, changeLike } from "../lib/features";
 import Masonry from "react-masonry-css";
+import { minio_img_url } from "@/utils/divice";
 
 export default function HomePage({ product }) {
   const { buskets } = useAppSelector((store) => store.buskets);
@@ -55,7 +56,7 @@ export default function HomePage({ product }) {
               items={e}
               type={e?.sizeType}
               text={e?.size?.title}
-              image={e?.imgUrl}
+              image={e?.imgUrl?.path? minio_img_url+ e?.imgUrl?.path :""}
               isLike={likes?.map((it) => it?.id)?.includes(e?.id)}
               onLike={() => {
                 dispatch(

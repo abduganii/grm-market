@@ -3,6 +3,7 @@ import GlamCard from "../components/glam-card";
 import React, { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../lib/hooks";
 import { changeBuskets, changeLike } from "../lib/features";
+import { minio_img_url } from "@/utils/divice";
 
 export default function LikesPage() {
   const { likes } = useAppSelector((store) => store.likes);
@@ -25,7 +26,7 @@ export default function LikesPage() {
               title={`${e.collection?.title} ${e?.model?.title}`}
               items={e}
               text={e?.size?.title}
-              image={e.imgUrl}
+              image={e?.imgUrl?.path? minio_img_url+ e?.imgUrl?.path :""}
               isLike={true}
               onBuslet={() => {
                 dispatch(
