@@ -79,11 +79,11 @@ export default function FixedLayout() {
   return (
     <Container
       className={
-        "flex justify-center sm:justify-between left-0  fixed  bottom-[20px] sm:bottom-[40px]"
+        "flex justify-center sm:justify-between left-0 fixed bottom-[20px] sm:bottom-[40px] px-4 sm:px-0 w-full z-50 pointer-events-none"
       }
     >
-      <div className="lg:w-[162px]"></div>
-      <div className=" flex gap-1 ">
+      <div className="lg:w-[162px] hidden lg:block"></div>
+      <div className="flex gap-1 pointer-events-auto shadow-lg rounded-[3px]">
         <div
           onClick={() => router.push("/")}
           className="cursor-pointer bg-white p-[10px] rounded-[3px] shadow"

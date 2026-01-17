@@ -17,12 +17,13 @@ export default function HomePage({ product }) {
     default: 4,
     // 1280: 4,
     1024: 3,
+    768: 2,
     640: 2,
   };
 
   return (
-    <div className="w-full px-[30px] mt-[90px]">
-      <header className="mb-[110px] text-center w-full max-w-[477px] mx-auto px-[30px]">
+    <div className="w-full px-4 sm:px-[30px] mt-[60px] sm:mt-[90px]">
+      <header className="mb-[60px] sm:mb-[110px] text-center w-full max-w-[477px] mx-auto px-4 sm:px-[30px]">
         <Link className="w-full inline-block max-w-[220px] mx-auto" href="/">
           <Image
             src={"/logo.svg"}

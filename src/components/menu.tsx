@@ -85,9 +85,9 @@ export default function Menu() {
 
     return (
         <div className="w-full bg-white pb-5">
-            <div className="flex flex-col md:flex-row gap-8 pl-14 pr-5 justify-between">
+            <div className="flex flex-col md:flex-row gap-8 pl-5 md:pl-14 pr-5 justify-between">
                 {/* Left Column */}
-                <div className="flex flex-col justify-between">
+                <div className="flex flex-col justify-between w-full md:w-auto">
                     <div className="space-y-6">
                         <div className="flex items-center gap-3">
                             <Image
@@ -112,7 +112,7 @@ export default function Menu() {
 
                     <div className="mt-8 md:mt-0 space-y-4">
                         <h4 className="font-bold text-lg text-[#333]">Контакты</h4>
-                        <div className="flex gap-8">
+                        <div className="flex flex-col sm:flex-row gap-4 sm:gap-8">
                             <div>
                                 <p className="text-xs text-gray-400 mb-1">Адрес</p>
                                 <p className="text-sm font-medium text-[#333]">
@@ -133,8 +133,8 @@ export default function Menu() {
                 </div>
 
                 {/* Right Column - Filters */}
-                <div className="flex flex-wrap gap-8 md:gap-16">
-                    <div className="flex flex-col gap-2">
+                <div className="flex flex-wrap gap-8 md:gap-16 w-full md:w-auto">
+                    <div className="flex flex-col gap-2 min-w-[120px]">
                         {filters.category.map((item) => (
                             <label
                                 key={item.value}
