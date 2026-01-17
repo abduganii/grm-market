@@ -56,9 +56,7 @@ export default function GlamById({ product, productArr, id }) {
           </div>
           {oneProduct?.imgUrl ? (
             <Image
-              className={`${
-                isloading ? "hidden" : ""
-              }  object-contain max-h-[740px]`}
+              className={`  object-contain max-h-[740px]`}
               width={500}
               height={740}
               src={oneProduct?.imgUrl?.path? minio_img_url+ oneProduct?.imgUrl?.path :"" || null}
@@ -182,8 +180,8 @@ export default function GlamById({ product, productArr, id }) {
         </div>
       </div>
       <div className="w-full mt-[94px] px-[30px] flex gap-8  ">
-        {productArr?.length &&
-          productArr?.map((e, i) => (
+        {productArr?.length ?
+          productArr?.map((e) => (
             <GlamCard
             key={e?.id}
             className="colm1"
@@ -210,7 +208,7 @@ export default function GlamById({ product, productArr, id }) {
               )
             }}
           />
-          ))}
+          )):""}
       </div>
     </>
   );
