@@ -64,7 +64,7 @@ export default function GlamCard({
           <div
             className={`absolute ${
               isLike ? "flex" : "hidden"
-            } group-hover:flex bottom-[69px] left-0 gap-1 w-full  items-center justify-center`}
+            } group-hover:flex  bottom-[69px] left-0 gap-1 w-full  items-center justify-center`}
           >
             <div
               onClick={(e) => {
