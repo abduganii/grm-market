@@ -1,5 +1,5 @@
 "use client";
-import {  useRouter } from "../i18n/routing";
+import { useRouter } from "../i18n/routing";
 import Image from "next/image";
 import React from "react";
 import { BusketIcons, LikeIcons } from "./icons";
@@ -43,9 +43,8 @@ export default function GlamCard({
               height={1000}
               width={1000}
               style={{ width: `${typeObj?.[type]}%` }}
-              className={`${
-                isloading ? "hidden" : ""
-              } object-contain m-auto  hover:shadow-xl bg-transparent cursor-pointer ease-in duration-200 hover:-translate-y-2`}
+              className={`${isloading ? "hidden" : ""
+                } object-contain m-auto  hover:shadow-xl bg-transparent cursor-pointer ease-in duration-200 hover:-translate-y-2`}
               src={image || null}
               alt="image"
               title={title}
@@ -62,9 +61,8 @@ export default function GlamCard({
             </div>
           )}
           <div
-            className={`absolute ${
-              isLike ? "flex" : "hidden"
-            } group-hover:flex  bottom-[69px] left-0 gap-1 w-full  items-center justify-center`}
+            className={`absolute ${isLike ? "flex" : "hidden"
+              } group-hover:flex  bottom-[69px] left-0 gap-1 w-full  items-center justify-center`}
           >
             <div
               onClick={(e) => {

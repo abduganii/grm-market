@@ -5,27 +5,27 @@ import { changeUserMe } from "@/lib/features";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { getDetailedDeviceName } from "@/utils/divice";
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 export default function AcountPage() {
   const [openChnagePhone, setOpenChnagePhone] = useState(false);
   const { userMe } = useAppSelector((store) => store.userMe);
   const { token } = useAppSelector((store) => store.token);
-  const [device, setDevice] = useState({});
+  const [device, setDevice] = useState<{ ip?: string; device?: string }>({});
   const [loading, setLoading] = useState(false);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const dispatch = useAppDispatch();
+
   useEffect(() => {
     setFirstName(userMe?.firstName);
     setLastName(userMe?.lastName);
   }, [userMe]);
   useEffect(() => {
     const getDeviceInfo = async () => {
-      // IP
       const res = await fetch("https://api.ipify.org?format=json");
       const data = await res.json();
 
-      // Device
       const device = getDetailedDeviceName();
 
       setDevice({
@@ -52,7 +52,7 @@ export default function AcountPage() {
       })
         .then((res) => res.json())
         .then((res) => {
-          dispatch(changeUserMe({...userMe,...res}));
+          dispatch(changeUserMe({ ...userMe, ...res }));
           setFirstName(res?.firstName);
           setLastName(res?.lastName);
           toast("успешно");
@@ -69,7 +69,7 @@ export default function AcountPage() {
         id:{userMe?.login}
       </h4>
       {openChnagePhone ? (
-        <ChnagePhone   onSuccess={() => openChnagePhone(false)} />
+        <ChnagePhone onSuccess={() => setOpenChnagePhone(false)} />
       ) : (
         ""
       )}
@@ -87,7 +87,7 @@ export default function AcountPage() {
           <p className="mb-2 text-[14px] leading-[16px]">Имя</p>
 
           <input
-            defaultValue={firstName}
+            value={firstName || ""}
             onChange={(e) => setFirstName(e.target.value)}
             placeholder="Имя"
             className="py-[11px] w-full px-[12px] outline-none border"
@@ -97,7 +97,7 @@ export default function AcountPage() {
           <p className="mb-2 text-[14px] leading-[16px]">Фамилия</p>
 
           <input
-            defaultValue={lastName}
+            value={lastName || ""}
             onChange={(e) => setLastName(e.target.value)}
             placeholder="Фамилия"
             className="py-[11px] w-full px-[12px] outline-none border"

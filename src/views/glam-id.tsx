@@ -11,7 +11,7 @@ import { minio_img_url } from "@/utils/divice";
 export default function GlamById({ product, productArr, id }) {
   const [LocalId, setLocalId] = useState(id);
   const [type, setType] = useState(1);
-  const [oneProduct, setOneProduct] = useState();
+  const [oneProduct, setOneProduct] = useState<any>();
   const { buskets } = useAppSelector((store) => store.buskets);
   const { likes } = useAppSelector((store) => store.likes);
   const dispatch = useAppDispatch();
@@ -59,7 +59,7 @@ export default function GlamById({ product, productArr, id }) {
               className={`  object-contain max-h-[740px]`}
               width={500}
               height={740}
-              src={oneProduct?.imgUrl?.path? minio_img_url+ oneProduct?.imgUrl?.path :"" || null}
+              src={oneProduct?.imgUrl?.path ? minio_img_url + oneProduct?.imgUrl?.path : ""}
               alt="image"
             />
           ) : (
@@ -92,11 +92,10 @@ export default function GlamById({ product, productArr, id }) {
               <p
                 key={e?.id}
                 onClick={() => setLocalId(e?.id)}
-                className={`${
-                  e?.id == LocalId
-                    ? "bg-[#212121] text-white"
-                    : "bg-[#F4F4F4] text-[#212121]"
-                } px-[10px] py-1 cursor-pointer rounded-[5px] text-[16px] leading-[18px]`}
+                className={`${e?.id == LocalId
+                  ? "bg-[#212121] text-white"
+                  : "bg-[#F4F4F4] text-[#212121]"
+                  } px-[10px] py-1 cursor-pointer rounded-[5px] text-[16px] leading-[18px]`}
               >
                 {e?.size?.title}
               </p>
@@ -105,24 +104,21 @@ export default function GlamById({ product, productArr, id }) {
           <div className="w-full border-b-[1px] mb-[32px] relative">
             <p
               onClick={() => setType(1)}
-              className={`${
-                type == 1 ? "" : "opacity-50"
-              } text-[#212121] text-[16px] inline-block p-[10px] leading-[18px] pb-[20px] cursor-pointer`}
+              className={`${type == 1 ? "" : "opacity-50"
+                } text-[#212121] text-[16px] inline-block p-[10px] leading-[18px] pb-[20px] cursor-pointer`}
             >
               Характеристика
             </p>
             <p
               onClick={() => setType(2)}
-              className={`${
-                type == 2 ? "" : "opacity-50"
-              } text-[#212121]  text-[16px] inline-block p-[10px] leading-[18px] pb-[20px] cursor-pointer`}
+              className={`${type == 2 ? "" : "opacity-50"
+                } text-[#212121]  text-[16px] inline-block p-[10px] leading-[18px] pb-[20px] cursor-pointer`}
             >
               Оплата и доставка
             </p>
             <div
-              className={`${
-                type == 1 ? "left-[0px] w-[130px]" : "left-[150px] w-[140px]"
-              } transition-all  duration-150 ease-in-out h-[2px]  bg-black absolute bottom-[0px]`}
+              className={`${type == 1 ? "left-[0px] w-[130px]" : "left-[150px] w-[140px]"
+                } transition-all  duration-150 ease-in-out h-[2px]  bg-black absolute bottom-[0px]`}
             ></div>
           </div>
           {type == 1 ? (
@@ -183,32 +179,30 @@ export default function GlamById({ product, productArr, id }) {
         {productArr?.length ?
           productArr?.map((e) => (
             <GlamCard
-            key={e?.id}
-            className="colm1"
-            url={`/glam/${e?.id}?modelId=${e?.model?.title}&color=${e?.color?.title}&collectionId=${e?.collection?.title}`}
-            title={`${e?.collection?.title} ${e?.model?.title}`}
-            items={e}
-            text={e?.size?.title}
-            image={e?.imgUrl?.path? minio_img_url+ e?.imgUrl?.path :""}
-            isLike={likes?.map((it) => it?.id)?.includes(e?.id)}
-            onLike={() => {
-              dispatch(
-                likes?.includes(e)
-                  ? changeLike(likes?.filter((itms) => itms?.id !== e?.id))
-                  : changeLike([e, ...likes])
-              );
-            }}
-            onBuslet={() => {
-              dispatch(
-                buskets?.includes(e)
-                  ? changeBuskets(
+              key={e?.id}
+              className="colm1"
+              url={`/glam/${e?.id}?modelId=${e?.model?.title}&color=${e?.color?.title}&collectionId=${e?.collection?.title}`}
+              title={`${e?.collection?.title} ${e?.model?.title}`}
+              text={e?.size?.title}
+              image={e?.imgUrl?.path ? minio_img_url + e?.imgUrl?.path : ""}
+              isLike={likes?.map((it) => it?.id)?.includes(e?.id)}
+              onLike={() => {
+                dispatch(
+                  likes?.includes(e)
+                    ? changeLike(likes?.filter((itms) => itms?.id !== e?.id))
+                    : changeLike([e, ...likes])
+                );
+              }}
+              onBuslet={() => {
+                dispatch(
+                  buskets?.includes(e)
+                    ? changeBuskets(
                       buskets?.filter((itms) => itms?.id !== e?.id)
                     )
-                  : changeBuskets([e, ...buskets])
-              )
-            }}
-          />
-          )):""}
+                    : changeBuskets([e, ...buskets])
+                );
+              }} type={undefined} isloading={undefined} />
+          )) : ""}
       </div>
     </>
   );

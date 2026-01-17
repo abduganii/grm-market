@@ -5,9 +5,14 @@ import { useAppDispatch } from "../lib/hooks";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 
-export default function SignInModal({ cosomPhone,onSuccess }) {
+interface SignInModalProps {
+  cosomPhone?: string;
+  onSuccess?: () => void;
+}
+
+export default function SignInModal({ cosomPhone, onSuccess }: SignInModalProps) {
   const [step, setStep] = useState(1);
-  const [phone, setPhone] = useState(cosomPhone|| "+998");
+  const [phone, setPhone] = useState(cosomPhone || "+998");
   const [code, setCode] = useState("");
   const [loading, setLoading] = useState(false);
   const dispatch = useAppDispatch();
@@ -26,7 +31,7 @@ export default function SignInModal({ cosomPhone,onSuccess }) {
         .then((res) => {
           if (res?.tmp?.code || res?.code) {
             setStep(2);
-            setCode(res?.tmp?.code|| res?.code);
+            setCode(res?.tmp?.code || res?.code);
           }
         });
     } catch (e) {
@@ -53,7 +58,7 @@ export default function SignInModal({ cosomPhone,onSuccess }) {
         .then((res) => {
           toast("Вы успешно зарегистрированы");
           dispatch(changeToken(res?.token));
-          if(onSuccess) onSuccess();
+          if (onSuccess) onSuccess();
         });
     } catch (e) {
     } finally {

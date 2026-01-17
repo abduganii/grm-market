@@ -4,7 +4,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const getInitialUserMe = () => {
   if (typeof window !== "undefined") {
     const storedUserMe = localStorage.getItem("UserMe");
-    return storedUserMe ? JSON.parse(storedToken) : null;
+    return storedUserMe ? JSON.parse(storedUserMe) : null;
   }
   return null;
 };

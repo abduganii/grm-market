@@ -19,7 +19,7 @@ export default function HomePage({ product }) {
     1024: 3,
     640: 2,
   };
-  
+
   return (
     <div className="w-full px-[30px] mt-[90px]">
       <header className="mb-[110px] text-center w-full max-w-[477px] mx-auto px-[30px]">
@@ -46,17 +46,16 @@ export default function HomePage({ product }) {
         className="flex gap-6"
         columnClassName="flex flex-col gap-6"
       >
-        {product?.length&&
+        {product?.length &&
           product?.map((e) => (
             <GlamCard
               key={e?.id}
               className="colm1"
               url={`/glam/${e?.id}?modelId=${e?.model?.title}&color=${e?.color?.title}&collectionId=${e?.collection?.title}`}
               title={`${e?.collection?.title} ${e?.model?.title}`}
-              items={e}
               type={e?.sizeType}
               text={e?.size?.title}
-              image={e?.imgUrl?.path? minio_img_url+ e?.imgUrl?.path :""}
+              image={e?.imgUrl?.path ? minio_img_url + e?.imgUrl?.path : ""}
               isLike={likes?.map((it) => it?.id)?.includes(e?.id)}
               onLike={() => {
                 dispatch(
@@ -69,14 +68,13 @@ export default function HomePage({ product }) {
                 dispatch(
                   buskets?.includes(e)
                     ? changeBuskets(
-                        buskets?.filter((itms) => itms?.id !== e?.id)
-                      )
+                      buskets?.filter((itms) => itms?.id !== e?.id)
+                    )
                     : changeBuskets([e, ...buskets])
-                )
-              }}
-            />
+                );
+              }} isloading={undefined} />
           ))}
-        </Masonry>
+      </Masonry>
     </div>
   );
 }

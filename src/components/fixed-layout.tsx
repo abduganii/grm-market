@@ -1,5 +1,6 @@
 "use client";
-import { useRouter } from "../i18n/routing";
+import { useRouter, usePathname } from "../i18n/routing";
+import { useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import Container from "./container";
 import { changeUserMe } from "../lib/features";
@@ -38,6 +39,19 @@ export default function FixedLayout() {
     setOpen(false);
   };
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+
+  const handleSearch = (e) => {
+    const term = e.target.value;
+    const params = new URLSearchParams(searchParams);
+    if (term) {
+      params.set("search", term);
+    } else {
+      params.delete("search");
+    }
+    router.replace(`${pathname}?${params.toString()}`);
+  };
   useEffect(() => {
     window.addEventListener("click", () => setOpenAuth(false));
   }, []);
@@ -52,7 +66,7 @@ export default function FixedLayout() {
             token,
           }
         );
-        
+
         dispatch(changeUserMe(response))
       } catch (error) {
         console.error(error);
@@ -127,9 +141,10 @@ export default function FixedLayout() {
           <input
             onFocus={() => setIsfocus(true)}
             onBlur={() => setIsfocus(false)}
-            className={`${
-              isFocus ? "max-w-[180px] " : "max-w-[120px] "
-            } transition-all hidden sm:inline-block  duration-150 ease-in-out  w-full outline-none`}
+            onChange={handleSearch}
+            defaultValue={searchParams.get("search")?.toString()}
+            className={`${isFocus ? "max-w-[180px] " : "max-w-[120px] "
+              } transition-all hidden sm:inline-block  duration-150 ease-in-out  w-full outline-none`}
             placeholder="Поиск"
           />
         </div>
@@ -142,10 +157,11 @@ export default function FixedLayout() {
         <p className="text-[14px] leading-[18px]">+998 99 140-44-22</p>
       </a>
 
-      {openAuth ? <SignInMadal onSuccess={()=>setOpenAuth(false)} /> : ""}
+      {openAuth ? <SignInMadal onSuccess={() => setOpenAuth(false)} /> : ""}
 
       <Drawer
-        title="Menu"
+        // title="Menu"
+
         placement={"bottom"}
         closable={true}
         onClose={onClose}

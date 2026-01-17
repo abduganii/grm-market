@@ -17,27 +17,35 @@ export default function BusketPage() {
   const router = useRouter();
 
   useEffect(() => {
-    if(userMe?.phone){
+    if (userMe?.phone) {
       setPhone(userMe?.phone);
     }
   }, [userMe]);
   const HendleRemove = (e) => {
     dispatch(changeBuskets(buskets?.filter((itms) => itms?.id !== e?.id)));
   };
+
+  const HandleCount = (e, count) => {
+    dispatch(changeBuskets(buskets?.map((itms) => itms?.id === e?.id ? { ...itms, count: count } : itms)));
+  };
+
+  console.log(buskets)
   return (
     <div className="w-full max-w-[1100px] gap-[20px] items-start flex flex-wrap xl:flex-nowrap justify-between">
       <div className="w-full max-w-[610px]">
         {buskets?.length
           ? buskets?.map((e) => (
-              <GlamCardBusket
-                key={e?.id}
-                url={`/glam/${e?.id}?modelId=${e?.model?.title}&color=${e?.color?.title}&collectionId=${e?.collection?.title}`}
-                title={`${e?.collection?.title} ${e?.model?.title}`}
-                items={e}
-                image={e?.imgUrl?.path? minio_img_url+ e?.imgUrl?.path :""}
-                onRemove={() => HendleRemove(e)}
-              />
-            ))
+            <GlamCardBusket
+              key={e?.id}
+              // url={`/glam/${e?.id}?modelId=${e?.model?.title}&color=${e?.color?.title}&collectionId=${e?.collection?.title}`}
+              title={`${e?.collection?.title} ${e?.model?.title}`}
+              items={e}
+              image={e?.imgUrl?.path ? minio_img_url + e?.imgUrl?.path : ""}
+              onRemove={() => HendleRemove(e)}
+              onCountChange={(count) => HandleCount(e, count)}
+              isMyOrder={undefined}
+              price={undefined} />
+          ))
           : ""}
       </div>
       <div className="w-full sm:max-w-[270px]">
@@ -62,31 +70,30 @@ export default function BusketPage() {
           disabled={userMe?.phone}
           className="py-[11px] w-full px-[12px] outline-none border-[#EEEEEE] border-[1px] border-solid"
         />
-        <buttun
+        <button
           onClick={
-            phone &&  buskets?.length
+            phone && buskets?.length
               ? () => {
-                  userMe?.phone
-                    ? router.push(`/order?phone=${phone}`)
-                    : setOpenAuth(true);
-                }
-              : () => {}
+                userMe?.phone
+                  ? router.push(`/order?phone=${phone}`)
+                  : setOpenAuth(true);
+              }
+              : () => { }
           }
-          disabled={phone}
-          className={`${
-            phone &&  buskets?.length
-              ? "bg-black text-white"
-              : "border-[#EEEEEE] border-[1px] border-solid"
-          } py-[11px] cursor-pointer text-center inline-block w-full mt-[30px]  px-[12px] `}
+          disabled={!phone}
+          className={`${phone && buskets?.length
+            ? "bg-black text-white"
+            : "border-[#EEEEEE] border-[1px] border-solid"
+            } py-[11px] cursor-pointer text-center inline-block w-full mt-[30px]  px-[12px] `}
         >
-          Оформиь заказ
-        </buttun>
+          Оформить заказ
+        </button>
       </div>
 
       {openAuth ? <SignInModal cosomPhone={phone} onSuccess={() => {
         setOpenAuth(false)
         router.push(`/order?phone=${phone}`)
-        }} /> : ""}
+      }} /> : ""}
     </div>
   );
 }

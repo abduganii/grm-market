@@ -44,9 +44,8 @@ export default function ProfileLayout({ children }) {
                   <Link
                     key={i}
                     href={`/profile/${e?.link}`}
-                    className={`${
-                      pathName.includes(e?.link) ? "opacity-100" : "opacity-45"
-                    } inline-block md:w-full mb-[12px] text-[13px] sm:text-[15px] leading-[21px]`}
+                    className={`${pathName.includes(e?.link) ? "opacity-100" : "opacity-45"
+                      } inline-block md:w-full mb-[12px] text-[13px] sm:text-[15px] leading-[21px]`}
                   >
                     {e?.name}
                   </Link>
@@ -54,7 +53,7 @@ export default function ProfileLayout({ children }) {
               }
             })}
 
-         { userMe &&   <Popconfirm
+            {userMe && <Popconfirm
               title="Log out"
               description="Are you sure to log out?"
               onConfirm={confirm}

@@ -1,6 +1,6 @@
 import L from "leaflet";
 
-delete (L.Icon.Default.prototype)?._getIconUrl;
+delete (L.Icon.Default.prototype as any)._getIconUrl;
 
 L.Icon.Default.mergeOptions({
   iconRetinaUrl:

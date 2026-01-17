@@ -7,22 +7,22 @@ import GlamCardBusket from "@/components/gllam-card-busket";
 import { minio_img_url } from "@/utils/divice";
 
 
-function HeaderItem({title, value}){
+function HeaderItem({ title, value }) {
   return (
     <div className="w-full">
-    <h3 className="text-[12px] leading-[14px] text-[#282A2C] mb-1 opacity-45">
-     {title}
-    </h3>
-    <p className="text-[14px]  leading-[19px] text-[#282A2C] mb-1 ">
+      <h3 className="text-[12px] leading-[14px] text-[#282A2C] mb-1 opacity-45">
+        {title}
+      </h3>
+      <p className="text-[14px]  leading-[19px] text-[#282A2C] mb-1 ">
 
-    {value}
-    </p>
-  </div>
+        {value}
+      </p>
+    </div>
   )
 }
 export default function MyOrdersPage() {
   const { token } = useAppSelector((store) => store.token);
-  const [myOrder, setMyOrder] = useState([]);
+  const [myOrder, setMyOrder] = useState<any>([]);
   useEffect(() => {
     if (!token) return;
 
@@ -44,7 +44,7 @@ export default function MyOrdersPage() {
     getMyOrders();
   }, [token]);
   console.log(myOrder);
- 
+
   return (
     <div className="w-full max-w-[1100px] gap-[20px] items-start flex flex-wrap xl:flex-nowrap justify-between">
       <div className="w-full max-w-[610px]">
@@ -55,26 +55,24 @@ export default function MyOrdersPage() {
               {dayjs(item?.startDate)?.format("DD MMMM YYYY HH:mm")}
             </p>
             <div className="flex px-[14px] py-[10px] gap-1 border-[#EEEEEE] my-[10px] border">
-              <HeaderItem title="Номер заказа" value={"№"+ item?.sequence}/>
-              <HeaderItem title="Статус заказа" value={ item?.order_status}/>
-              <HeaderItem title="Дата доставки" value={item?.date}/>
-              <HeaderItem title="Предоплата" value={item?.pre_payment}/>
-              <HeaderItem title="Осталось" value={Number(item?.totalPrice) - Number(item?.pre_payment)}/>
-              
+              <HeaderItem title="Номер заказа" value={"№" + item?.sequence} />
+              <HeaderItem title="Статус заказа" value={item?.order_status} />
+              <HeaderItem title="Дата доставки" value={item?.date} />
+              <HeaderItem title="Предоплата" value={item?.pre_payment} />
+              <HeaderItem title="Осталось" value={Number(item?.totalPrice) - Number(item?.pre_payment)} />
+
             </div>
             {item?.client_order_items?.length
               ? item?.client_order_items?.map((e) => (
-                  <GlamCardBusket
-                    key={e?.id}
-                    isMyOrder
-                    myCount={e?.count}
-                    price={e?.price}
-                    url={`/glam/${e?.id}?modelId=${e?.model?.title}&color=${e?.color?.title}&collectionId=${e?.collection?.title}`}
-                    title={`${e?.collection?.title} ${e?.model?.title}`}
-                    items={e?.product}
-                    image={e?.imgUrl?.path? minio_img_url+ e?.imgUrl?.path :""}
-                  />
-                ))
+                <GlamCardBusket
+                  key={e?.id}
+                  isMyOrder
+                  myCount={e?.count}
+                  price={e?.price}
+                  title={`${e?.collection?.title} ${e?.model?.title}`}
+                  items={e?.product}
+                  image={e?.imgUrl?.path ? minio_img_url + e?.imgUrl?.path : ""} onRemove={undefined} onCountChange={undefined} />
+              ))
               : ""}
           </div>
         ))}

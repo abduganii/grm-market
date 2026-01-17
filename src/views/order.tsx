@@ -24,7 +24,7 @@ const paymentMap = {
 export default function OrderPage() {
   const { buskets } = useAppSelector((store) => store.buskets);
   const { userMe } = useAppSelector((store) => store.userMe);
-  const [openMadal,setOpenMadal] = useState(false)
+  const [openMadal, setOpenMadal] = useState(false)
   const dispatch = useAppDispatch();
   const [typePay, setTypePay] = useState("cash");
   const [comment, setComment] = useState("");
@@ -32,32 +32,32 @@ export default function OrderPage() {
   const [district, setDistrict] = useState("");
   // const [address, setAddress] = useState("");
 
-  const [orderDate, setOrderDate] = useState(""); 
-const [orderTime, setOrderTime] = useState(""); 
+  const [orderDate, setOrderDate] = useState<any>(null);
+  const [orderTime, setOrderTime] = useState<any>(null);
   const [loading, setLoading] = useState(false);
   const [location, setLocation] = useState(null);
   // 🧠 Build request body
   const buildOrderBody = () => {
     let combinedDate = null;
-  
+
     if (orderDate) {
       combinedDate = orderDate.format("YYYY.MM.DD");
       if (orderTime) {
         combinedDate = `${combinedDate} ${orderTime.format("HH:mm")}`;
       }
     }
-  
+
     return {
       client_order_items: buskets.map((item) => ({
         product: item.id,
-        count: 1,
+        count: item?.count || 1,
       })),
       payment_type: paymentMap[typePay],
       delivery_comment: comment,
       city,
       district,
       full_address: location?.address,
-      location_link:  `https://yandex.com/maps/?pt=${location.lng},${location.lat}&z=17&l=map`,
+      location_link: `https://yandex.com/maps/?pt=${location.lng},${location.lat}&z=17&l=map`,
       date: combinedDate,
       user: userMe?.id,
     };
@@ -70,8 +70,6 @@ const [orderTime, setOrderTime] = useState("");
 
     try {
       setLoading(true);
-      console.log(buildOrderBody())
-      return
       const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/client-orders`, {
         method: "POST",
         headers: {
@@ -83,11 +81,11 @@ const [orderTime, setOrderTime] = useState("");
       if (!res.ok) throw new Error("Order failed");
 
       const data = await res.json();
-      if(data) {
+      if (data) {
         setOpenMadal(true)
         dispatch(
           changeBuskets([])
-          );
+        );
       }
     } catch (err) {
       toast.error("Order failed");
@@ -165,8 +163,8 @@ const [orderTime, setOrderTime] = useState("");
                       <p className="w-full">{item?.color?.title}</p>
                       <p className="w-full">{item?.shape?.title}</p>
                       <p className="w-full">{item?.style?.title}</p>
-                      <p className="w-full">1x</p>
-                      <p className="w-full">{item?.i_price}</p>
+                      <p className="w-full">{item?.count || 1} {item?.isMetric ? "м" : "x"} </p>
+                      <p className="w-full"> {(item?.i_price * (item?.count || 1) * (item?.isMetric ? item?.size?.x : item?.size?.kv)).toFixed(2)} sum</p>
                     </div>
                   ))}
                 </ul>
@@ -175,7 +173,7 @@ const [orderTime, setOrderTime] = useState("");
                     Итоговое сумма:
                   </h4>
                   <h4 className="font-medium text-[16px] leading-[18px] text-[#212121] ">
-                    0 сум
+                    {buskets.reduce((acc, item) => acc + (item?.i_price * (item?.count || 1) * (item?.isMetric ? item?.size?.x : item?.size?.kv)), 0).toFixed(2)} сум
                   </h4>
                 </div>
               </div>
@@ -188,9 +186,8 @@ const [orderTime, setOrderTime] = useState("");
                     <div
                       key={e}
                       // onClick={() => setTypePay(e)}
-                      className={`cursor-pointer flex items-center gap-2 border p-3 w-full ${
-                        "cash" === e ? "" : "opacity-40"
-                      }`}
+                      className={`cursor-pointer flex items-center gap-2 border p-3 w-full ${"cash" === e ? "" : "opacity-40"
+                        }`}
                     >
                       <div className="w-[16px] h-[16px] border rounded-full flex items-center justify-center">
                         {typePay === e && (
@@ -216,7 +213,7 @@ const [orderTime, setOrderTime] = useState("");
               </div>
               <div className="p-[30px] rounded-[3px] border-[#EEEEEE] border-[1px] mb-2">
                 <InputCostom
-                
+
                   placeholder={"Введите промокод"}
                   label={"Промокод"}
                 />
@@ -257,11 +254,11 @@ const [orderTime, setOrderTime] = useState("");
                     className={"colm2"}
                     placeholder={"Улица, дом, ориентир, номер квартиры"}
                     required={true}
-                    value={location?.address ||null}
-                    // onChange={(e) => setAddress(e.target.value)}
+                    value={location?.address || null}
+                  // onChange={(e) => setAddress(e.target.value)}
                   />
-                 
-                  <LocationModal location={location} setLocation={setLocation}  />
+
+                  <LocationModal location={location} setLocation={setLocation} />
                 </div>
                 <p className="text-[12px] leading-[18px] text-[#212121] opacity-50">
                   Убедитесь, что указали правильный адрес доставки. После
@@ -281,7 +278,7 @@ const [orderTime, setOrderTime] = useState("");
                       className=" w-full  outline-none  rounded-none border-solid h-12"
                       onChange={(date) => setOrderDate(date)}
                       format="YYYY-MM-DD"
-                   
+
                     />
                   </div>
                   <div className="flex-1">
@@ -290,7 +287,7 @@ const [orderTime, setOrderTime] = useState("");
                       value={orderTime}
                       onChange={(time) => setOrderTime(time)}
                       format="HH:mm"
-                    className=" w-full  outline-none  rounded-none border-solid h-12"
+                      className=" w-full  outline-none  rounded-none border-solid h-12"
                     />
                   </div>
                 </div>
@@ -310,12 +307,12 @@ const [orderTime, setOrderTime] = useState("");
                 placeholder="Комментарий для курьера"
               />
 
-              <buttun
-                onClick={loading ? () => {} : submitOrder}
+              <button
+                onClick={loading ? () => { } : submitOrder}
                 className="py-[11px] w-full mb-[59px] bg-[#212121] text-white text-center inline-block  px-[12px] border-[#EEEEEE] border-[1px] border-solid"
               >
                 {loading ? "Оформление..." : "Оформить заказ"}
-              </buttun>
+              </button>
             </div>
             <div className="w-full max-w-[270px]">
               <p className="text-[12px] leading-[14.4px] text-[#212121]">
@@ -341,7 +338,7 @@ const [orderTime, setOrderTime] = useState("");
           </div>
         </div>
       </div>
-     {openMadal && <OrderModal />}
+      {openMadal && <OrderModal />}
     </Container>
   );
 }
