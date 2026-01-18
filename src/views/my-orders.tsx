@@ -43,23 +43,22 @@ export default function MyOrdersPage() {
 
     getMyOrders();
   }, [token]);
-  console.log(myOrder);
 
   return (
-    <div className="w-full max-w-[1100px] gap-[20px] items-start flex flex-col lg:flex-row xl:flex-nowrap justify-between px-4 sm:px-0">
-      <div className="w-full max-w-[610px]">
+    <div className="w-full max-w-[1100px] gap-[20px] items-start flex flex-col-reverse lg:flex-row xl:flex-nowrap justify-between px-4 sm:px-0">
+      <div className="w-full lg:max-w-[610px]">
         {myOrder?.items?.map((item) => (
           <div key={item?.id}>
             <p className="text-[12px] text-[#212121]/45">
               {" "}
               {dayjs(item?.startDate)?.format("DD MMMM YYYY HH:mm")}
             </p>
-            <div className="flex px-[14px] py-[10px] gap-4 sm:gap-1 border-[#EEEEEE] my-[10px] border overflow-x-auto">
-              <div className="min-w-[100px] sm:min-w-0"><HeaderItem title="Номер заказа" value={"№" + item?.sequence} /></div>
-              <div className="min-w-[100px] sm:min-w-0"><HeaderItem title="Статус заказа" value={item?.order_status} /></div>
-              <div className="min-w-[120px] sm:min-w-0"><HeaderItem title="Дата доставки" value={item?.date} /></div>
-              <div className="min-w-[100px] sm:min-w-0"><HeaderItem title="Предоплата" value={item?.pre_payment} /></div>
-              <div className="min-w-[100px] sm:min-w-0"><HeaderItem title="Осталось" value={Number(item?.totalPrice) - Number(item?.pre_payment)} /></div>
+            <div className="flex px-[14px] py-[10px] gap-4 sm:gap-1 border-[#EEEEEE] my-[10px] border overflow-x-auto scrollbar-hide">
+              <div className="min-w-[100px] w-full"><HeaderItem title="Номер заказа" value={"№" + item?.sequence} /></div>
+              <div className="min-w-[100px] w-full"><HeaderItem title="Статус заказа" value={item?.order_status} /></div>
+              <div className="min-w-[120px] w-full"><HeaderItem title="Дата доставки" value={item?.date} /></div>
+              <div className="min-w-[100px] w-full"><HeaderItem title="Предоплата" value={item?.pre_payment} /></div>
+              <div className="min-w-[100px] w-full"><HeaderItem title="Осталось" value={Number(item?.totalPrice) - Number(item?.pre_payment)} /></div>
             </div>
             {item?.client_order_items?.length
               ? item?.client_order_items?.map((e) => (

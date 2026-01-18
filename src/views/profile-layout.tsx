@@ -37,7 +37,7 @@ export default function ProfileLayout({ children }) {
           Избранные
         </h3>
         <div className="flex mb-[100px]  flex-wrap md:flex-nowrap gap-[20px] lg:gap-[80px] w-full">
-          <div className="w-full flex gap-5 md:inline-block md:max-w-[115px]">
+          <div className="w-full flex gap-5 md:inline-block md:max-w-[115px] overflow-x-auto scrollbar-hide">
             {arr?.map((e, i) => {
               if (userMe || !e.isAuth) {
                 return (
@@ -45,7 +45,7 @@ export default function ProfileLayout({ children }) {
                     key={i}
                     href={`/profile/${e?.link}`}
                     className={`${pathName.includes(e?.link) ? "opacity-100" : "opacity-45"
-                      } inline-block md:w-full mb-[12px] text-[13px] sm:text-[15px] leading-[21px]`}
+                      } inline-block md:w-full mb-[12px] text-[13px] sm:text-[15px] leading-[21px] whitespace-nowrap`}
                   >
                     {e?.name}
                   </Link>
@@ -60,7 +60,7 @@ export default function ProfileLayout({ children }) {
               okText="Yes"
               cancelText="No"
             >
-              <p className="inline-block md:w-full mb-[12px] text-[13px] sm:text-[15px] leading-[17px] cursor-pointer mt-[25px]">
+              <p className="inline-block md:w-full mb-[12px] text-[13px] sm:text-[15px] leading-[17px] cursor-pointer mt-[25px] whitespace-nowrap">
                 Выйти
               </p>
             </Popconfirm>}

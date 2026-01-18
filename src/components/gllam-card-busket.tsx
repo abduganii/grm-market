@@ -6,9 +6,11 @@ import { CloseIcons, MinutIcons, PlusIcons } from "./icons";
 export default function GlamCardBusket({ isMyOrder, myCount = 1, price, title, onRemove, items, image, onCountChange }) {
   const [count, setCount] = useState(items?.isMetric ? items?.size?.y : items?.count || 1);
   return (
-    <div className="flex w-full max-w-[610px] relative sm:flex-nowrap border-[1px] flex-wrap  mb-[30px] p-[2px]  border-[#EEEEEE] items-start gap-[24px]">
+    <div className="flex flex-col w-full max-w-[610px] relative sm:flex-row sm:flex-nowrap border-[1px] flex-wrap  mb-[30px] p-[2px]  border-[#EEEEEE] items-start gap-[12px] sm:gap-[24px]">
       {image ? (
-        <Image src={image} alt={"img"} title={title} width={174} height={256} />
+        <div className="w-full sm:w-[174px] sm:h-[256px] h-auto aspect-[174/256] relative">
+          <Image src={image} alt={"img"} title={title} fill className="object-cover" />
+        </div>
       ) : <div
         className={`  flex items-center h-[256px] w-[174px]  bg-[#F0F0E5] justify-center `}
       >
@@ -18,9 +20,9 @@ export default function GlamCardBusket({ isMyOrder, myCount = 1, price, title, o
       {onRemove ? <div onClick={onRemove} className="ms-auto -mx-1.5 cursor-pointer absolute top-4 right-4 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700" data-dismiss-target="#toast-success" aria-label="Close">
         <CloseIcons />
       </div> : ""}
-      <div className="w-full max-w-[360px] ">
+      <div className="w-full sm:max-w-[360px] px-2 sm:px-0">
         <div className="flex flex-wrap py-[30px] border-b-[1px]">
-          <div className="w-1/4 mr-[4px]">
+          <div className="w-1/2 sm:w-1/4 mr-[4px]">
             <h3 className="text-[12px] leading-[14px] text-[#282A2C] mb-1 opacity-45">
               Коллекция
             </h3>
@@ -29,7 +31,7 @@ export default function GlamCardBusket({ isMyOrder, myCount = 1, price, title, o
             </p>
 
           </div>
-          <div className="w-1/4">
+          <div className="w-1/2 sm:w-1/4">
             <h3 className="text-[12px] leading-[14px] text-[#282A2C] mb-1 opacity-45">
               Модель
             </h3>
@@ -37,7 +39,7 @@ export default function GlamCardBusket({ isMyOrder, myCount = 1, price, title, o
               {items?.model?.title}
             </p>
           </div>
-          <div className="w-1/5">
+          <div className="w-1/2 sm:w-1/5 mt-4 sm:mt-0">
             <h3 className="text-[12px] leading-[14px] text-[#282A2C] mb-1 opacity-45">
               Размер
             </h3>
@@ -45,7 +47,7 @@ export default function GlamCardBusket({ isMyOrder, myCount = 1, price, title, o
               {items?.size?.title}
             </p>
           </div>
-          <div className="w-1/4">
+          <div className="w-1/2 sm:w-1/4 mt-4 sm:mt-0">
             <h3 className="text-[12px] leading-[14px] text-[#282A2C] mb-1 opacity-45">
               Цена за м²
             </h3>
@@ -53,7 +55,7 @@ export default function GlamCardBusket({ isMyOrder, myCount = 1, price, title, o
               {items?.i_price} sum
             </p>
           </div>
-          <div className="w-1/4">
+          <div className="w-1/2 sm:w-1/4 mt-4 sm:mt-0">
             <h3 className="text-[12px] leading-[14px] text-[#282A2C] mb-1 opacity-45">
               Цвет
             </h3>
@@ -61,7 +63,7 @@ export default function GlamCardBusket({ isMyOrder, myCount = 1, price, title, o
               {items?.color?.title}
             </p>
           </div>
-          <div className="w-1/4">
+          <div className="w-1/2 sm:w-1/4 mt-4 sm:mt-0">
             <h3 className="text-[12px] leading-[14px] text-[#282A2C] mb-1 opacity-45">
               Стиль
             </h3>
@@ -69,7 +71,7 @@ export default function GlamCardBusket({ isMyOrder, myCount = 1, price, title, o
               {items?.style?.title}
             </p>
           </div>
-          <div className="w-1/4">
+          <div className="w-1/2 sm:w-1/4 mt-4 sm:mt-0">
             <h3 className="text-[12px] leading-[14px] text-[#282A2C] mb-1 opacity-45">
               Форма
             </h3>
@@ -77,7 +79,7 @@ export default function GlamCardBusket({ isMyOrder, myCount = 1, price, title, o
               {items?.shape?.title}
             </p>
           </div>
-          <div className="w-1/4">
+          <div className="w-1/2 sm:w-1/4 mt-4 sm:mt-0">
             <h3 className="text-[12px] leading-[14px] text-[#282A2C] mb-1 opacity-45">
               Страна
             </h3>
@@ -87,7 +89,7 @@ export default function GlamCardBusket({ isMyOrder, myCount = 1, price, title, o
           </div>
         </div>
         <div className="flex justify-between  sm:flex-nowrap flex-wrap w-full items-center py-[25px] gap-[19px]">
-          {!isMyOrder ? <div className="flex  w-1/3 gap-[2px]">
+          {!isMyOrder ? <div className="flex  w-full sm:w-1/3 gap-[2px]">
             {items?.isMetric ? (
               <input
                 type="number"
@@ -100,7 +102,7 @@ export default function GlamCardBusket({ isMyOrder, myCount = 1, price, title, o
                   setCount(val);
                   onCountChange && onCountChange(val);
                 }}
-                className="w-[100px] px-3 py-2 border-[1px] border-[#EEEEEE] text-[14px] outline-none"
+                className="w-full sm:w-[100px] px-3 py-2 border-[1px] border-[#EEEEEE] text-[14px] outline-none"
               />
             ) : (
               <>
@@ -135,7 +137,7 @@ export default function GlamCardBusket({ isMyOrder, myCount = 1, price, title, o
                 </div>
               </>
             )}
-          </div> : <div className="w-1/3">
+          </div> : <div className="w-1/2 sm:w-1/3">
             <h3 className="text-[12px] leading-[14px] text-[#282A2C] mb-1 opacity-45">
               Количество
             </h3>
@@ -144,7 +146,7 @@ export default function GlamCardBusket({ isMyOrder, myCount = 1, price, title, o
             </p>
           </div>}
 
-          <div className="w-1/3">
+          <div className="w-1/2 sm:w-1/3">
             <h3 className="text-[12px] leading-[14px] text-[#282A2C] mb-1 opacity-45">
               Скидка
             </h3>
@@ -152,7 +154,7 @@ export default function GlamCardBusket({ isMyOrder, myCount = 1, price, title, o
               0%
             </p>
           </div>
-          <div className="w-1/3 ">
+          <div className="w-full sm:w-1/3 mt-2 sm:mt-0">
             <h3 className="text-[12px] leading-[14px] text-[#282A2C] mb-1 opacity-45">
               Итого
             </h3>

@@ -98,8 +98,8 @@ export default function OrderPage() {
         <h3 className="mb-[71px] md:inline-block hidden text-[22px] leading-[25px]">
           Корзина | Оформления заказа
         </h3>
-        <div className="flex mb-[100px]  flex-wrap md:flex-nowrap gap-[20px] lg:gap-[80px] w-full">
-          <div className="w-full flex gap-5 md:inline-block md:max-w-[205px]">
+        <div className="flex mb-[100px] flex-col-reverse md:flex-row gap-[20px] lg:gap-[80px] w-full">
+          <div className="w-full flex flex-col gap-5 md:inline-block md:max-w-[205px]">
             <h4 className="text-[14px] leading-[16px] font-medium">
               Об оформления
             </h4>
@@ -139,30 +139,30 @@ export default function OrderPage() {
               @t.me/username
             </a>
           </div>
-          <div className="w-full max-w-[1100px] lg:flex-nowrap flex-wrap gap-[20px] items-start flex justify-between">
-            <div className="w-full max-w-[610px]">
+          <div className="w-full max-w-[1100px] flex flex-col lg:flex-row gap-[20px] items-start justify-between">
+            <div className="w-full lg:max-w-[610px]">
               <div className="p-[30px] rounded-[3px] border-[#EEEEEE] border-[1px] mb-2">
                 <p className="text-[12px] leading-[14px] mb-[15px]">
                   Список выбранные вами заказов
                 </p>
-                <ul>
+                <ul className="max-h-[300px] overflow-y-auto pr-2">
                   {buskets.map((item) => (
                     <div
                       key={item.id}
-                      className="flex gap-2 border p-2 mb-1 text-[12px]"
+                      className="flex flex-wrap sm:flex-nowrap gap-2 border p-2 mb-1 text-[12px]"
                     >
-                      <p className="w-full">{item?.collection?.title}</p>
-                      <p className="w-full">{item?.model?.title}</p>
-                      <p className="w-full">{item?.size?.title}</p>
-                      <p className="w-full">{item?.color?.title}</p>
-                      <p className="w-full">{item?.shape?.title}</p>
-                      <p className="w-full">{item?.style?.title}</p>
-                      <p className="w-full">{item?.count || 1} {item?.isMetric ? "м" : "x"} </p>
-                      <p className="w-full"> {(item?.i_price * (item?.count || 1) * (item?.isMetric ? item?.size?.x : item?.size?.kv)).toFixed(2)} sum</p>
+                      <p className="w-1/2 sm:w-full">{item?.collection?.title}</p>
+                      <p className="w-1/2 sm:w-full">{item?.model?.title}</p>
+                      <p className="w-1/2 sm:w-full">{item?.size?.title}</p>
+                      <p className="w-1/2 sm:w-full">{item?.color?.title}</p>
+                      <p className="w-1/2 sm:w-full">{item?.shape?.title}</p>
+                      <p className="w-1/2 sm:w-full">{item?.style?.title}</p>
+                      <p className="w-1/2 sm:w-full">{item?.count || 1} {item?.isMetric ? "м" : "x"} </p>
+                      <p className="w-1/2 sm:w-full"> {(item?.i_price * (item?.count || 1) * (item?.isMetric ? item?.size?.x : item?.size?.kv)).toFixed(2)} sum</p>
                     </div>
                   ))}
-                </ul>
-                <div className="flex items-center gap-[15px] mt-[24px] justify-end">
+                </ul> This snippet is truncated, I will need to use multiple calls if the file is too large or I can focus on specific blocks.
+                <div className="flex flex-col sm:flex-row items-end sm:items-center gap-[15px] mt-[24px] justify-end">
                   <h4 className="font-medium text-[16px] leading-[18px] text-[#212121] ">
                     Итоговое сумма:
                   </h4>
@@ -175,11 +175,11 @@ export default function OrderPage() {
                 <p className="text-[12px] leading-[14px] mb-[15px]">
                   Укажите метод оплаты
                 </p>
-                <div className="flex gap-2 mb-2">
+                <div className="flex flex-col sm:flex-row gap-2 mb-2">
                   {typePayArr.map((e, i) => (
                     <div
                       key={e}
-                      // onClick={() => setTypePay(e)}
+                      onClick={() => setTypePay(e)}
                       className={`cursor-pointer flex items-center gap-2 border p-3 w-full ${"cash" === e ? "" : "opacity-40"
                         }`}
                     >
@@ -217,10 +217,10 @@ export default function OrderPage() {
                 </p>
               </div>
               <div className="p-[30px] rounded-[3px] border-[#EEEEEE] border-[1px] mb-6">
-                <div className="flex gap-2 flex-wrap">
+                <div className="flex flex-col gap-2 flex-wrap">
 
                   <InputCostom
-                    className={"colm2"}
+                    className={"colm2 w-full"}
                     placeholder={"Улица, дом, ориентир, номер квартиры"}
                     required={true}
                     value={location?.address || null}
@@ -239,8 +239,8 @@ export default function OrderPage() {
                 <p className="text-[12px] leading-[14px] mt-[30px] mb-[15px]">
                   Дата для получения доставки (не обязательно)
                 </p>
-                <div className="flex gap-2 mb-4">
-                  <div className="flex-1">
+                <div className="flex flex-col sm:flex-row gap-2 mb-4">
+                  <div className="flex-1 w-full">
                     <label className="text-[12px] mb-1 block">Дата доставки</label>
                     <DatePicker
                       value={orderDate}
@@ -250,7 +250,7 @@ export default function OrderPage() {
 
                     />
                   </div>
-                  <div className="flex-1">
+                  <div className="flex-1 w-full">
                     <label className="text-[12px] mb-1 block">Время доставки</label>
                     <TimePicker
                       value={orderTime}

@@ -7,5 +7,24 @@ export const routing = defineRouting({
   defaultLocale: "en",
 });
 
-export const { Link, redirect, usePathname, useRouter, getPathname } =
-  createNavigation(routing);
+const navigation = createNavigation(routing);
+
+export const { Link, redirect, usePathname, getPathname } = navigation;
+
+import NProgress from "nprogress";
+
+export const useRouter = () => {
+  const router = navigation.useRouter();
+
+  return {
+    ...router,
+    push: (...args: Parameters<typeof router.push>) => {
+      NProgress.start();
+      return router.push(...args);
+    },
+    replace: (...args: Parameters<typeof router.replace>) => {
+      NProgress.start();
+      return router.replace(...args);
+    },
+  };
+};
