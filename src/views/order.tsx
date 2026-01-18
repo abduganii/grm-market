@@ -28,15 +28,11 @@ export default function OrderPage() {
   const dispatch = useAppDispatch();
   const [typePay, setTypePay] = useState("cash");
   const [comment, setComment] = useState("");
-  const [city, setCity] = useState("");
-  const [district, setDistrict] = useState("");
-  // const [address, setAddress] = useState("");
 
   const [orderDate, setOrderDate] = useState<any>(null);
   const [orderTime, setOrderTime] = useState<any>(null);
   const [loading, setLoading] = useState(false);
   const [location, setLocation] = useState(null);
-  // 🧠 Build request body
   const buildOrderBody = () => {
     let combinedDate = null;
 
@@ -54,8 +50,6 @@ export default function OrderPage() {
       })),
       payment_type: paymentMap[typePay],
       delivery_comment: comment,
-      city,
-      district,
       full_address: location?.address,
       location_link: `https://yandex.com/maps/?pt=${location.lng},${location.lat}&z=17&l=map`,
       date: combinedDate,
@@ -224,32 +218,7 @@ export default function OrderPage() {
               </div>
               <div className="p-[30px] rounded-[3px] border-[#EEEEEE] border-[1px] mb-6">
                 <div className="flex gap-2 flex-wrap">
-                  <SelectCostom
-                    className={"colm2"}
-                    placeholder={"Город"}
-                    options={[
-                      {
-                        value: "Tashkent",
-                        label: "Tashkent",
-                      },
-                    ]}
-                    label={" Введите Город"}
-                    onChange={(e) => {
-                      setCity(e);
-                    }}
-                  />
-                  <SelectCostom
-                    className={"colm2"}
-                    placeholder={"Район"}
-                    options={[
-                      {
-                        value: "Tashkent",
-                        label: "Tashkent",
-                      },
-                    ]}
-                    label={" Введите Район"}
-                    onChange={(e) => setDistrict(e)}
-                  />
+
                   <InputCostom
                     className={"colm2"}
                     placeholder={"Улица, дом, ориентир, номер квартиры"}

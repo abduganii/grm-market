@@ -154,7 +154,7 @@ export default function FixedLayout() {
         className="cursor-pointer hidden  bg-white p-[10px] rounded-[3px] shadow lg:flex gap-1  items-center "
       >
         <TelIcons />
-        <p className="text-[14px] leading-[18px]">+998 99 140-44-22</p>
+        <p className="text-[14px] leading-[18px]">+998 94 609-34-44</p>
       </a>
 
       {openAuth ? <SignInMadal onSuccess={() => setOpenAuth(false)} /> : ""}

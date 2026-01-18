@@ -125,7 +125,7 @@ export default function Menu() {
                                     href="tel:+998991404422"
                                     className="text-sm font-medium text-[#333]"
                                 >
-                                    +998 99 140-44-22
+                                    +998 94 609-34-44
                                 </a>
                             </div>
                         </div>

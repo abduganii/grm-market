@@ -44,8 +44,8 @@ export default function HomePage({ product }) {
 
       <Masonry
         breakpointCols={breakpointColumnsObj}
-        className="flex gap-6"
-        columnClassName="flex flex-col gap-6"
+        className="flex gap-8"
+        columnClassName="flex flex-col gap-16"
       >
         {product?.length &&
           product?.map((e) => (

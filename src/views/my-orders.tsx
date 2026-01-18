@@ -70,7 +70,7 @@ export default function MyOrdersPage() {
                   price={e?.price}
                   title={`${e?.collection?.title} ${e?.model?.title}`}
                   items={e?.product}
-                  image={e?.imgUrl?.path ? minio_img_url + e?.imgUrl?.path : ""} onRemove={undefined} onCountChange={undefined} />
+                  image={e?.product?.imgUrl?.path ? minio_img_url + e?.product?.imgUrl?.path : ""} onRemove={undefined} onCountChange={undefined} />
               ))
               : ""}
           </div>

@@ -44,7 +44,7 @@ export default function GlamCard({
               width={1000}
               style={{ width: `${typeObj?.[type]}%` }}
               className={`${isloading ? "hidden" : ""
-                } object-contain m-auto  hover:shadow-xl bg-transparent cursor-pointer ease-in duration-200 hover:-translate-y-2`}
+                } object-contain m-auto  bg-transparent cursor-pointer ease-in duration-200 hover:-translate-y-2`}
               src={image || null}
               alt="image"
               title={title}
@@ -87,7 +87,7 @@ export default function GlamCard({
             </div>
           </div>
         </div>
-        <h3 className="text-[20px] leading-[25px] font-normal mt-3 mb-2">
+        <h3 className="text-[20px]  leading-[25px] font-normal mt-3 mb-2">
           {title}
         </h3>
         <p className="text-[15px] tetx-[#00000005] leading-[18px] font-normal ">
