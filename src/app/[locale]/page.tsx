@@ -4,7 +4,7 @@ import HomePage from "../../views/home";
 async function getProduct(search) {
   return fetchData(`${process.env.NEXT_PUBLIC_URL}/qr-base/i-market`, {
     page: 1,
-    limit: 20,
+    limit: 10,
     status: "published",
     search: search || undefined
   })
@@ -16,7 +16,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<any
 
   return (
     <>
-      <HomePage product={product?.items} />
+      <HomePage product={product?.items} search={search} />
     </>
   );
 }

@@ -3,13 +3,15 @@
 import GlamCard from "../components/glam-card";
 import { Link } from "../i18n/routing";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useAppDispatch, useAppSelector } from "../lib/hooks";
 import { changeBuskets, changeLike } from "../lib/features";
 import Masonry from "react-masonry-css";
 import { minio_img_url } from "@/utils/divice";
+import { fetchData } from "../service/get";
+import GlamCardSkeleton from "../components/skeletons/glam-card-skeleton";
 
-export default function HomePage({ product }) {
+export default function HomePage({ product, search }: { product: any, search?: any }) {
   const { buskets } = useAppSelector((store) => store.buskets);
   const { likes } = useAppSelector((store) => store.likes);
   const dispatch = useAppDispatch();
@@ -20,6 +22,58 @@ export default function HomePage({ product }) {
     768: 2,
     640: 2,
   };
+
+  const [products, setProducts] = useState<any[]>(product || []);
+  const [page, setPage] = useState(2);
+  const [loading, setLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
+
+  const observer = useRef<IntersectionObserver | null>(null);
+
+  const lastElementRef = useCallback((node: HTMLDivElement) => {
+    if (loading) return;
+    if (observer.current) observer.current.disconnect();
+    observer.current = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting && hasMore) {
+        loadMore();
+      }
+    });
+    if (node) observer.current.observe(node);
+  }, [loading, hasMore]);
+
+  useEffect(() => {
+    setProducts(product || []);
+    setPage(2);
+    setHasMore(true);
+  }, [product]);
+
+  const loadMore = async () => {
+    setLoading(true);
+    try {
+      const res = await fetchData(`${process.env.NEXT_PUBLIC_URL}/qr-base/i-market`, {
+        page: page,
+        limit: 10,
+        status: "published",
+        search: search || undefined,
+      });
+
+      if (res?.items?.length) {
+        setProducts((prev) => [...prev, ...res.items]);
+        setPage((prev) => prev + 1);
+        if (res.items.length < 10) {
+          setHasMore(false);
+        }
+      } else {
+        setHasMore(false);
+      }
+    } catch (error) {
+      console.error("Failed to load more products", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const skeletons = Array(4).fill(0);
 
   return (
     <div className="w-full px-4 sm:px-[30px] mt-[60px] sm:mt-[90px]">
@@ -47,35 +101,40 @@ export default function HomePage({ product }) {
         className="flex gap-8"
         columnClassName="flex flex-col gap-16"
       >
-        {product?.length &&
-          product?.map((e) => (
-            <GlamCard
-              key={e?.id}
-              className="colm1"
-              url={`/glam/${e?.id}?modelId=${e?.model?.title}&color=${e?.color?.title}&collectionId=${e?.collection?.title}`}
-              title={`${e?.collection?.title} ${e?.model?.title}`}
-              type={e?.sizeType}
-              text={e?.size?.title}
-              image={e?.imgUrl?.path ? minio_img_url + e?.imgUrl?.path : ""}
-              isLike={likes?.map((it) => it?.id)?.includes(e?.id)}
-              onLike={() => {
-                dispatch(
-                  likes?.includes(e)
-                    ? changeLike(likes?.filter((itms) => itms?.id !== e?.id))
-                    : changeLike([e, ...likes])
-                );
-              }}
-              onBuslet={() => {
-                dispatch(
-                  buskets?.includes(e)
-                    ? changeBuskets(
-                      buskets?.filter((itms) => itms?.id !== e?.id)
-                    )
-                    : changeBuskets([e, ...buskets])
-                );
-              }} isloading={undefined} />
-          ))}
+        {products?.map((e) => (
+          <GlamCard
+            key={e?.id}
+            className="colm1"
+            url={`/glam/${e?.id}?modelId=${e?.model?.title}&color=${e?.color?.title}&collectionId=${e?.collection?.title}`}
+            title={`${e?.collection?.title} ${e?.model?.title}`}
+            type={e?.sizeType}
+            text={e?.size?.title}
+            image={e?.imgUrl?.path ? minio_img_url + e?.imgUrl?.path : ""}
+            isLike={likes?.map((it: any) => it?.id)?.includes(e?.id)}
+            onLike={() => {
+              dispatch(
+                likes?.some((itms: any) => itms?.id === e?.id)
+                  ? changeLike(likes?.filter((itms: any) => itms?.id !== e?.id))
+                  : changeLike([e, ...likes])
+              );
+            }}
+            onBuslet={() => {
+              dispatch(
+                buskets?.some((itms: any) => itms?.id === e?.id)
+                  ? changeBuskets(
+                    buskets?.filter((itms: any) => itms?.id !== e?.id)
+                  )
+                  : changeBuskets([e, ...buskets])
+              );
+            }}
+            isloading={undefined}
+          />
+        ))}
+        {loading && skeletons.map((_, i) => <GlamCardSkeleton key={`skeleton-${i}`} />)}
       </Masonry>
+
+      {/* Sentinel for IntersectionObserver */}
+      <div ref={lastElementRef} className="h-10 w-full" />
     </div>
   );
 }
