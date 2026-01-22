@@ -37,7 +37,7 @@ export default function HomePage({ product, search }: { product: any, search?: a
       if (entries[0].isIntersecting && hasMore) {
         loadMore();
       }
-    });
+    }, { rootMargin: "1200px" });
     if (node) observer.current.observe(node);
   }, [loading, hasMore]);
 
