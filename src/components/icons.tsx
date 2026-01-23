@@ -6,18 +6,20 @@ interface IconProps extends React.SVGProps<SVGSVGElement> {
 
 export const LikeIcons = ({ stroke, fill = 'none', width = 20, height = 20, className, ...props }: IconProps & { stroke?: string }) => {
     return (
-        <svg width={width} height={height} viewBox="0 0 20 20" fill={fill} xmlns="http://www.w3.org/4000/svg" className={className} {...props}>
-            <path d="M16.25 10.4767L9.99997 16.6667L3.74997 10.4767C3.33772 10.0755 3.013 9.59337 2.79626 9.06055C2.57951 8.52774 2.47543 7.95582 2.49058 7.3808C2.50573 6.80579 2.63977 6.24014 2.88426 5.71947C3.12876 5.19881 3.47841 4.7344 3.9112 4.35551C4.344 3.97661 4.85055 3.69143 5.39898 3.51793C5.9474 3.34442 6.5258 3.28635 7.09777 3.34736C7.66974 3.40837 8.22288 3.58716 8.72236 3.87245C9.22184 4.15774 9.65684 4.54336 9.99997 5.00502C10.3446 4.54671 10.7801 4.16446 11.2792 3.8822C11.7784 3.59993 12.3304 3.42373 12.9007 3.36463C13.4711 3.30552 14.0475 3.36477 14.5939 3.53869C15.1404 3.7126 15.645 3.99742 16.0763 4.37533C16.5075 4.75324 16.8562 5.2161 17.1003 5.73494C17.3445 6.25378 17.4789 6.81743 17.4952 7.39062C17.5115 7.9638 17.4093 8.53419 17.1951 9.06607C16.9808 9.59795 16.6591 10.0799 16.25 10.4817" stroke={stroke} strokeLinecap="round" strokeLinejoin="round" />
+        <svg width={width} height={height} viewBox="0 0 20 20" fill={fill} xmlns="http://www.w3.org/2000/svg" className={className} {...props}>
+            <path d="M16.2501 10.4766L10.0001 16.6666L3.75009 10.4766C3.33784 10.0754 3.01312 9.59325 2.79638 9.06043C2.57963 8.52762 2.47556 7.9557 2.4907 7.38068C2.50585 6.80567 2.63989 6.24002 2.88439 5.71935C3.12888 5.19868 3.47853 4.73428 3.91133 4.35539C4.34412 3.97649 4.85068 3.69131 5.3991 3.5178C5.94752 3.3443 6.52593 3.28622 7.09789 3.34724C7.66986 3.40825 8.223 3.58703 8.72248 3.87233C9.22196 4.15762 9.65696 4.54324 10.0001 5.0049C10.3447 4.54659 10.7802 4.16434 11.2793 3.88207C11.7785 3.59981 12.3305 3.42361 12.9009 3.3645C13.4712 3.3054 14.0477 3.36465 14.5941 3.53856C15.1405 3.71247 15.6451 3.9973 16.0764 4.37521C16.5077 4.75311 16.8563 5.21597 17.1004 5.73481C17.3446 6.25365 17.479 6.81731 17.4953 7.39049C17.5117 7.96368 17.4095 8.53406 17.1952 9.06594C16.9809 9.59783 16.6592 10.0798 16.2501 10.4816" stroke="black" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
+
 
     )
 }
 
 export const BusketIcons = ({ width = 20, height = 20, className, ...props }: IconProps) => {
     return (
-        <svg width={width} height={height} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/4000/svg" className={className} {...props}>
-            <path d="M5.00004 14.1667C4.07957 14.1667 3.33337 14.9129 3.33337 15.8333C3.33337 16.7538 4.07957 17.5 5.00004 17.5C5.92052 17.5 6.66671 16.7538 6.66671 15.8333C6.66671 14.9129 5.92052 14.1667 5.00004 14.1667ZM5.00004 14.1667H14.1667M5.00004 14.1667V2.5H3.33337M14.1667 14.1667C13.2462 14.1667 12.5 14.9129 12.5 15.8333C12.5 16.7538 13.2462 17.5 14.1667 17.5C15.0872 17.5 15.8334 16.7538 15.8334 15.8333C15.8334 14.9129 15.0872 14.1667 14.1667 14.1667ZM5.00004 4.16667L10.0042 4.52417M15.9525 10.0017L15.8334 10.8333H5.00004M12.5 5H17.5M15 2.5V7.5" stroke="black" strokeLinecap="round" strokeLinejoin="round" />
+        <svg width={width} height={height} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} {...props}>
+            <path d="M4.99992 14.1667C4.07944 14.1667 3.33325 14.9129 3.33325 15.8333C3.33325 16.7538 4.07944 17.5 4.99992 17.5C5.92039 17.5 6.66659 16.7538 6.66659 15.8333C6.66659 14.9129 5.92039 14.1667 4.99992 14.1667ZM4.99992 14.1667H14.1666M4.99992 14.1667V2.5H3.33325M14.1666 14.1667C13.2461 14.1667 12.4999 14.9129 12.4999 15.8333C12.4999 16.7538 13.2461 17.5 14.1666 17.5C15.0871 17.5 15.8333 16.7538 15.8333 15.8333C15.8333 14.9129 15.0871 14.1667 14.1666 14.1667ZM4.99992 4.16667L16.6666 5L15.8333 10.8333H4.99992" stroke="black" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
+
 
 
     )
@@ -31,16 +33,18 @@ export const BackIcons = ({ width = 24, height = 24, className, ...props }: Icon
 }
 export const HomeIcons = ({ width = 20, height = 20, className, ...props }: IconProps) => {
     return (
-        <svg width={width} height={height} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/4000/svg" className={className} {...props}>
-            <path d="M7.5 17.5V12.5C7.5 12.058 7.67559 11.634 7.98816 11.3215C8.30072 11.0089 8.72464 10.8333 9.16667 10.8333H10.8333C11.2754 10.8333 11.6993 11.0089 12.0118 11.3215C12.3244 11.634 12.5 12.058 12.5 12.5V17.5M4.16667 10H2.5L10 2.5L17.5 10H15.8333V15.8333C15.8333 16.2754 15.6577 16.6993 15.3452 17.0118C15.0326 17.3244 14.6087 17.5 14.1667 17.5H5.83333C5.39131 17.5 4.96738 17.3244 4.65482 17.0118C4.34226 16.6993 4.16667 16.2754 4.16667 15.8333V10Z" stroke="black" strokeLinecap="round" strokeLinejoin="round" />
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M7.5 17.5V12.5C7.5 12.058 7.67559 11.634 7.98816 11.3215C8.30072 11.0089 8.72464 10.8333 9.16667 10.8333H10.8333C11.2754 10.8333 11.6993 11.0089 12.0118 11.3215C12.3244 11.634 12.5 12.058 12.5 12.5V17.5M4.16667 10H2.5L10 2.5L17.5 10H15.8333V15.8333C15.8333 16.2754 15.6577 16.6993 15.3452 17.0118C15.0326 17.3244 14.6087 17.5 14.1667 17.5H5.83333C5.39131 17.5 4.96738 17.3244 4.65482 17.0118C4.34226 16.6993 4.16667 16.2754 4.16667 15.8333V10Z" stroke="black" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
+
     )
 }
 export const PersonIcons = ({ width = 20, height = 20, className, ...props }: IconProps) => {
     return (
-        <svg width={width} height={height} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/4000/svg" className={className} {...props}>
-            <path d="M5 17.5V15.8333C5 14.9493 5.35119 14.1014 5.97631 13.4763C6.60143 12.8512 7.44928 12.5 8.33333 12.5H11.6667C12.5507 12.5 13.3986 12.8512 14.0237 13.4763C14.6488 14.1014 15 14.9493 15 15.8333V17.5M13.3333 5.83333C13.3333 7.67428 11.8409 9.16667 10 9.16667C8.15905 9.16667 6.66667 7.67428 6.66667 5.83333C6.66667 3.99238 8.15905 2.5 10 2.5C11.8409 2.5 13.3333 3.99238 13.3333 5.83333Z" stroke="black" strokeLinecap="round" strokeLinejoin="round" />
+        <svg width={width} height={height} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} {...props}>
+            <path d="M5 17.5V15.8333C5 14.9493 5.35119 14.1014 5.97631 13.4763C6.60143 12.8512 7.44928 12.5 8.33333 12.5H11.6667C12.5507 12.5 13.3986 12.8512 14.0237 13.4763C14.6488 14.1014 15 14.9493 15 15.8333V17.5M13.3333 5.83333C13.3333 7.67428 11.8409 9.16667 10 9.16667C8.15905 9.16667 6.66667 7.67428 6.66667 5.83333C6.66667 3.99238 8.15905 2.5 10 2.5C11.8409 2.5 13.3333 3.99238 13.3333 5.83333Z" stroke="black" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
+
     )
 }
 
@@ -53,9 +57,10 @@ export const BurgerIcons = ({ width = 20, height = 20, className, ...props }: Ic
 }
 export const SearchIcons = ({ width = 20, height = 20, className, ...props }: IconProps) => {
     return (
-        <svg width={width} height={height} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/4000/svg" className={className} {...props}>
-            <path d="M17.5 17.5L12.5 12.5M14.1667 8.33333C14.1667 11.555 11.555 14.1667 8.33333 14.1667C5.11167 14.1667 2.5 11.555 2.5 8.33333C2.5 5.11167 5.11167 2.5 8.33333 2.5C11.555 2.5 14.1667 5.11167 14.1667 8.33333Z" stroke="black" strokeLinecap="round" strokeLinejoin="round" />
+        <svg width={width} height={height} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} {...props}>
+            <path d="M17.5 17.5L12.5 12.5M14.1667 8.33333C14.1667 11.555 11.555 14.1667 8.33333 14.1667C5.11167 14.1667 2.5 11.555 2.5 8.33333C2.5 5.11167 5.11167 2.5 8.33333 2.5C11.555 2.5 14.1667 5.11167 14.1667 8.33333Z" stroke="black" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
+
 
     )
 }
@@ -140,6 +145,25 @@ export const CloseIcons = ({ width, height, className = "w-3 h-3", ...props }: I
     return (
         <svg width={width} height={height} className={className} aria-hidden="true" xmlns="http://www.w3.org/4000/svg" fill="none" viewBox="0 0 14 14" {...props}>
             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+        </svg>
+    )
+}
+
+export const FilterIcons = ({ width = 20, height = 20, className, ...props }: IconProps) => {
+    return (
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2.5 3.33337H17.5M9.16667 13.3334H14.1667M10.8333 16.6667H7.5M15 6.66671H3.33333M16.6667 10H6.66667" stroke="black" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+
+    )
+}
+
+export const LoginIcons = ({ width = 20, height = 20, className, ...props }: IconProps) => {
+    return (
+        <svg width={width} height={height} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} {...props}>
+            <path d="M7.5 17.5H4.16667C3.72464 17.5 3.30072 17.3244 2.98816 17.0118C2.67559 16.6993 2.5 16.2754 2.5 15.8333V4.16667C2.5 3.72464 2.67559 3.30072 2.98816 2.98816C3.30072 2.67559 3.72464 2.5 4.16667 2.5H7.5" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M13.3333 14.1667L17.5 10L13.3333 5.83334" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M17.5 10H7.5" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
     )
 }

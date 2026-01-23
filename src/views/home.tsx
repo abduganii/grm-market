@@ -37,7 +37,7 @@ export default function HomePage({ product, search }: { product: any, search?: a
       if (entries[0].isIntersecting && hasMore) {
         loadMore();
       }
-    }, { rootMargin: "1200px" });
+    }, { rootMargin: "1800px" });
     if (node) observer.current.observe(node);
   }, [loading, hasMore]);
 
@@ -76,8 +76,8 @@ export default function HomePage({ product, search }: { product: any, search?: a
   const skeletons = Array(4).fill(0);
 
   return (
-    <div className="w-full px-4 sm:px-[30px] mt-[60px] sm:mt-[90px]">
-      <header className="mb-[60px] sm:mb-[110px] text-center w-full max-w-[477px] mx-auto px-4 sm:px-[30px]">
+    <div className="w-full px-4 sm:px-[30px] mt-[60px] sm:mt-[60px]">
+      <header className="mb-[60px] sm:mb-[80px] text-center w-full max-w-[477px] mx-auto px-4 sm:px-[30px]">
         <Link className="w-full inline-block max-w-[220px] mx-auto" href="/">
           <Image
             src={"/logo.svg"}

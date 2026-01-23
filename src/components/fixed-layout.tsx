@@ -13,17 +13,21 @@ import {
   PersonIcons,
   SearchIcons,
   TelIcons,
+  FilterIcons,
+  LoginIcons,
 } from "./icons";
 import SignInMadal from "./sign-in";
 import { useAppDispatch, useAppSelector } from "../lib/hooks";
 
 import Menu from "./menu";
 import { Drawer } from "antd";
+import FilterModal from "./filter-modal";
 
 
 export default function FixedLayout() {
   const [isFocus, setIsfocus] = useState(false);
   const [openAuth, setOpenAuth] = useState(false);
+  const [openFilter, setOpenFilter] = useState(false);
   const [open, setOpen] = useState(false);
   const dispatch = useAppDispatch();
   const { likes } = useAppSelector((store) => store.likes);
@@ -52,8 +56,12 @@ export default function FixedLayout() {
     }
     router.replace(`${pathname}?${params.toString()}`);
   };
+
   useEffect(() => {
-    window.addEventListener("click", () => setOpenAuth(false));
+    window.addEventListener("click", () => {
+      setOpenAuth(false);
+      // setOpenFilter(false); // Optional: close filter on outside click if desired, but modal handles its own background click usually
+    });
   }, []);
   useEffect(() => {
     if (!token) return;
@@ -77,87 +85,106 @@ export default function FixedLayout() {
   }, [token]);
 
   return (
-    <Container
-      className={
-        "flex justify-center sm:justify-between left-0 fixed bottom-[20px] sm:bottom-[40px] px-4 sm:px-0 w-full z-50 pointer-events-none"
-      }
-    >
-      <div className="lg:w-[162px] hidden lg:block"></div>
-      <div className="flex gap-1 pointer-events-auto shadow-lg rounded-[3px]">
-        <div
-          onClick={() => router.push("/")}
-          className="cursor-pointer bg-white p-[10px] rounded-[3px] shadow"
-        >
-          <HomeIcons />
-        </div>
-        <div
-          onClick={(e) => {
-            e.stopPropagation();
-            if (userMe?.id) {
-              router.push("/profile/account");
-            } else {
-              setOpenAuth(true);
-            }
-          }}
-          className="cursor-pointer bg-white p-[10px] rounded-[3px] shadow"
-        >
-          <PersonIcons />
-        </div>
-        <div
-          onClick={showDrawer}
-          className="cursor-pointer flex gap-1  items-center bg-white p-[10px] rounded-[3px] shadow"
-        >
-          <BurgerIcons />
-          <p className="text-[14px] leading-[18px]">Menu</p>
-        </div>
-        <div
-          onClick={() => router.push("/profile/likes")}
-          className="cursor-pointer relative  bg-white p-[10px] rounded-[3px] shadow"
-        >
-          {likes?.length ? (
-            <p className="h-[12px] w-[12px] text-[10px] leading-[12px] flex items-center absolute  justify-center text-white bg-[#FFA500] rounded-[1px] top-[2px] right-[2px]">
-              {likes?.length}
-            </p>
-          ) : (
-            ""
-          )}
-          <LikeIcons stroke={"black"} />
-        </div>
-        <div
-          onClick={() => router.push("/profile/busket")}
-          className="cursor-pointer relative bg-white p-[10px] rounded-[3px] shadow"
-        >
-          {buskets?.length ? (
-            <p className="h-[12px] w-[12px] text-[10px] leading-[12px] flex items-center absolute  justify-center text-white bg-[#FFA500] rounded-[1px] top-[2px] right-[2px]">
-              {buskets?.length}
-            </p>
-          ) : (
-            ""
-          )}
-          <BusketIcons />
-        </div>
-        <div className="cursor-pointer bg-white p-[10px] rounded-[3px] shadow flex gap-1  items-center ">
-          <SearchIcons />
-          <input
-            onFocus={() => setIsfocus(true)}
-            onBlur={() => setIsfocus(false)}
-            onChange={handleSearch}
-            defaultValue={searchParams.get("search")?.toString()}
-            className={`${isFocus ? "max-w-[180px] " : "max-w-[120px] "
-              } transition-all hidden sm:inline-block  duration-150 ease-in-out  w-full outline-none`}
-            placeholder="Поиск"
-          />
-        </div>
-      </div>
-      <a
-        href="tel:+998991404422"
-        className="cursor-pointer hidden  bg-white p-[10px] rounded-[3px] shadow lg:flex gap-1  items-center "
+    <>
+      <Container
+        className={
+          "flex justify-center sm:justify-between left-0 fixed bottom-[20px] sm:bottom-[40px] px-4 sm:px-0 w-full z-50 pointer-events-none"
+        }
       >
-        <TelIcons />
-        <p className="text-[14px] leading-[18px]">+998 94 609-34-44</p>
-      </a>
+        <div className="lg:w-[162px] hidden lg:block"></div>
+        <div className="flex gap-1 pointer-events-auto  rounded-[8px]">
+          <div
+            onClick={() => router.push("/")}
+            className="cursor-pointer bg-white p-[10px] rounded-[8px] shadow"
+          >
+            <HomeIcons />
+          </div>
 
+          <div
+            onClick={showDrawer}
+            className="cursor-pointer flex gap-1  items-center bg-white p-[10px] rounded-[8px] shadow"
+          >
+            <BurgerIcons />
+            <p className="text-[14px] leading-[18px]">Меню</p>
+          </div>
+
+          <div className="cursor-pointer bg-white p-[10px] rounded-[8px] shadow flex gap-1  items-center ">
+            <SearchIcons />
+            <input
+              onFocus={() => setIsfocus(true)}
+              onBlur={() => setIsfocus(false)}
+              onChange={handleSearch}
+              defaultValue={searchParams.get("search")?.toString()}
+              className={`max-w-[120px] transition-all duration-150 ease-in-out  w-full outline-none`}
+              placeholder="Поиск"
+            />
+          </div>
+
+          <div
+            onClick={(e) => {
+              e.stopPropagation();
+              setOpenFilter(true);
+            }}
+            className="cursor-pointer flex gap-1 items-center bg-white p-[10px] rounded-[8px] shadow"
+          >
+            <FilterIcons />
+            <p className="text-[14px] leading-[18px]">Фильтр</p>
+          </div>
+
+          <div
+            onClick={(e) => {
+              e.stopPropagation();
+              if (userMe?.id) {
+                router.push("/profile/account");
+              } else {
+                setOpenAuth(true);
+              }
+            }}
+            className="cursor-pointer flex gap-1 items-center bg-white p-[10px] rounded-[8px] shadow"
+          >
+            {userMe?.id ? <PersonIcons /> : <LoginIcons />}
+            <p className="text-[14px] leading-[18px]">{userMe?.id ? "Профиль" : "Войти"}</p>
+          </div>
+
+          <div
+            onClick={() => router.push("/profile/likes")}
+            className="cursor-pointer relative  bg-white p-[10px] rounded-[8px] shadow"
+          >
+            {likes?.length ? (
+              <p className="h-[12px] w-[12px] text-[10px] leading-[12px] flex items-center absolute  justify-center text-white bg-[#FFA500] rounded-[1px] top-[2px] right-[2px]">
+                {likes?.length}
+              </p>
+            ) : (
+              ""
+            )}
+            <LikeIcons stroke={"black"} />
+          </div>
+          <div
+            onClick={() => router.push("/profile/busket")}
+            className="cursor-pointer relative bg-white p-[10px] rounded-[8px] shadow"
+          >
+            {buskets?.length ? (
+              <p className="h-[12px] w-[12px] text-[10px] leading-[12px] flex items-center absolute  justify-center text-white bg-[#FFA500] rounded-[1px] top-[2px] right-[2px]">
+                {buskets?.length}
+              </p>
+            ) : (
+              ""
+            )}
+            <BusketIcons />
+          </div>
+        </div>
+        <a
+          href="tel:+998991404422"
+          className="cursor-pointer hidden  bg-white p-[10px] rounded-[8px] shadow lg:flex gap-1  items-center "
+        >
+          <TelIcons />
+          <p className="text-[14px] leading-[18px]">+998 94 609-34-44</p>
+        </a>
+
+
+      </Container>
       {openAuth ? <SignInMadal onSuccess={() => setOpenAuth(false)} /> : ""}
+      {openFilter ? <FilterModal onClose={() => setOpenFilter(false)} /> : ""}
 
       <Drawer
         // title="Menu"
@@ -169,6 +196,6 @@ export default function FixedLayout() {
       >
         <Menu />
       </Drawer>
-    </Container>
+    </>
   );
 }

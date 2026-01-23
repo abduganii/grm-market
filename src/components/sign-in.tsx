@@ -67,7 +67,7 @@ export default function SignInModal({ cosomPhone, onSuccess }: SignInModalProps)
   };
 
   return (
-    <div className="fixed inset-0 bg-[#21212199] flex items-center justify-center">
+    <div className="fixed z-[1000] inset-1 bg-[#21212199] flex items-center justify-center">
       <div
         onClick={(e) => e.stopPropagation()}
         className="bg-white max-w-[600px] w-full p-[20px] sm:p-[63px]"

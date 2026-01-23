@@ -26,11 +26,11 @@ export default function GlamCard({
   const router = useRouter();
 
   return (
-    <div className="mb-1 break-inside-avoid w-full">
+    <div className="mb-1 group  break-inside-avoid w-full">
       <div className={`${className && className}   text-center`}>
         <div
-          onClick={() => router.push(url)}
-          className="w-full h-auto min-h-[100px] relative group flex text-center items-center justify-center"
+
+          className="w-full h-auto min-h-[100px] relative  flex text-center items-center justify-center"
         >
           {isloading ? (
             <div className="p-4 max-w-sm w-full mx-auto">
@@ -40,6 +40,7 @@ export default function GlamCard({
             </div>
           ) : image ? (
             <Image
+              onClick={() => router.push(url)}
               height={1000}
               width={1000}
               style={{ width: `${typeObj?.[type]}%` }}
@@ -62,7 +63,7 @@ export default function GlamCard({
           )}
           <div
             className={`absolute ${isLike ? "flex" : "hidden"
-              } group-hover:flex  bottom-[69px] left-0 gap-1 w-full  items-center justify-center`}
+              } group-hover:flex  bottom-[25px] left-0 gap-1 w-full  items-center justify-center`}
           >
             <div
               onClick={(e) => {
@@ -87,7 +88,7 @@ export default function GlamCard({
             </div>
           </div>
         </div>
-        <h3 className="text-[20px]  leading-[25px] font-normal mt-3 mb-2">
+        <h3 onClick={() => router.push(url)} className="text-[20px]  cursor-pointer group-hover:underline group-hover:decoration-solid leading-[25px] font-normal mt-3 mb-2">
           {title}
         </h3>
         <p className="text-[15px] tetx-[#00000005] leading-[18px] font-normal ">
