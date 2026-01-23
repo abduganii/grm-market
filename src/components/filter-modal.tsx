@@ -65,7 +65,7 @@ export default function FilterModal({ onClose }: FilterModalProps) {
                     if (data && Array.isArray(data)) {
                         fix(data);
                     } else if (data && data.items && Array.isArray(data.items)) {
-                        setColors(data.items);
+                        // setColors(data.items);
                     }
                 }
             } catch (error) {
