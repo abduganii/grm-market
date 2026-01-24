@@ -3,6 +3,7 @@
 import GlamCard from "../components/glam-card";
 import { Link } from "../i18n/routing";
 import Image from "next/image";
+import { useSearchParams } from "next/navigation";
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useAppDispatch, useAppSelector } from "../lib/hooks";
 import { changeBuskets, changeLike } from "../lib/features";
@@ -12,6 +13,7 @@ import { fetchData } from "../service/get";
 import GlamCardSkeleton from "../components/skeletons/glam-card-skeleton";
 
 export default function HomePage({ product, search }: { product: any, search?: any }) {
+  const searchParams = useSearchParams();
   const { buskets } = useAppSelector((store) => store.buskets);
   const { likes } = useAppSelector((store) => store.likes);
   const dispatch = useAppDispatch();
@@ -55,6 +57,11 @@ export default function HomePage({ product, search }: { product: any, search?: a
         limit: 10,
         status: "published",
         search: search || undefined,
+        // style: searchParams.get('style') || undefined,
+        // shape: searchParams.get('shape') || undefined,
+        // color: searchParams.get('color') || undefined,
+        // width: searchParams.get('width') || undefined,
+        // length: searchParams.get('length') || undefined,
       });
 
       if (res?.items?.length) {

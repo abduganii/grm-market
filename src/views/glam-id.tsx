@@ -2,6 +2,7 @@
 import Back from "../components/back";
 import GlamCard from "../components/glam-card";
 import { BackPlusIcons, LikeIcons, ShareIcons } from "../components/icons";
+import { Image as AntImage } from "antd";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
@@ -46,7 +47,7 @@ export default function GlamById({ product, productArr, id }) {
         <div className="flex flex-col-reverse lg:flex-row w-full gap-2 max-w-full lg:max-w-[620px]">
           <div className="flex lg:flex-col gap-2 overflow-x-auto lg:overflow-visible w-full lg:w-[81px] pb-2 lg:pb-0">
             <div
-              className={`flex shrink-0 items-center justify-center h-[81px] lg:h-[122px] w-[81px] bg-[#F0F0E5]`}
+              className={`flex shrink-0 items-center justify-center h-[81px] lg:h-[122px] w-[81px] bg-[#F0F0E5] overflow-hidden`}
             >
               <Image
                 src={"/empty-folder.png"}
@@ -58,12 +59,12 @@ export default function GlamById({ product, productArr, id }) {
           </div>
           {oneProduct?.imgUrl ? (
             <div className="relative w-full aspect-[2/3] max-h-[500px] lg:max-h-[740px]">
-              <Image
-                className={`object-contain w-full h-full bg-[#fcfcfc]`}
+              <AntImage
+                src={oneProduct?.imgUrl?.path ? minio_img_url + oneProduct?.imgUrl?.path : ""}
                 width={500}
                 height={740}
-                src={oneProduct?.imgUrl?.path ? minio_img_url + oneProduct?.imgUrl?.path : ""}
-                alt="image"
+                className="object-contain w-full h-full bg-[#fcfcfc]"
+                alt="img"
               />
             </div>
           ) : (
@@ -178,37 +179,37 @@ export default function GlamById({ product, productArr, id }) {
             </p>
           </div>
         </div>
-        <div className="w-full mt-[50px] lg:mt-[94px] px-4 md:px-[30px] flex gap-4 md:gap-8 overflow-x-auto pb-4">
-          {productArr?.length ?
-            productArr?.map((e) => (
-              <GlamCard
-                key={e?.id}
-                className="colm1"
-                url={`/glam/${e?.id}?modelId=${e?.model?.title}&color=${e?.color?.title}&collectionId=${e?.collection?.title}`}
-                title={`${e?.collection?.title} ${e?.model?.title}`}
-                text={e?.size?.title}
-                image={e?.imgUrl?.path ? minio_img_url + e?.imgUrl?.path : ""}
-                isLike={likes?.map((it) => it?.id)?.includes(e?.id)}
-                onLike={() => {
-                  dispatch(
-                    likes?.includes(e)
-                      ? changeLike(likes?.filter((itms) => itms?.id !== e?.id))
-                      : changeLike([e, ...likes])
-                  );
-                }}
-                onBuslet={() => {
-                  dispatch(
-                    buskets?.includes(e)
-                      ? changeBuskets(
-                        buskets?.filter((itms) => itms?.id !== e?.id)
-                      )
-                      : changeBuskets([e, ...buskets])
-                  );
-                }} type={undefined} isloading={undefined} />
-            )) : ""}
-        </div>
-      </div>
 
+      </div>
+      <div className="w-full mt-[50px] lg:mt-[94px] px-4 md:px-[30px] flex gap-4 md:gap-8 overflow-x-auto pb-4">
+        {productArr?.length ?
+          productArr?.map((e) => (
+            <GlamCard
+              key={e?.id}
+              className="colm1"
+              url={`/glam/${e?.id}?modelId=${e?.model?.title}&color=${e?.color?.title}&collectionId=${e?.collection?.title}`}
+              title={`${e?.collection?.title} ${e?.model?.title}`}
+              text={e?.size?.title}
+              image={e?.imgUrl?.path ? minio_img_url + e?.imgUrl?.path : ""}
+              isLike={likes?.map((it) => it?.id)?.includes(e?.id)}
+              onLike={() => {
+                dispatch(
+                  likes?.includes(e)
+                    ? changeLike(likes?.filter((itms) => itms?.id !== e?.id))
+                    : changeLike([e, ...likes])
+                );
+              }}
+              onBuslet={() => {
+                dispatch(
+                  buskets?.includes(e)
+                    ? changeBuskets(
+                      buskets?.filter((itms) => itms?.id !== e?.id)
+                    )
+                    : changeBuskets([e, ...buskets])
+                );
+              }} type={undefined} isloading={undefined} />
+          )) : ""}
+      </div>
     </>
   );
 }

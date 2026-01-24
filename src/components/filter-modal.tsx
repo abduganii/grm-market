@@ -9,38 +9,39 @@ interface FilterModalProps {
     onClose: () => void;
 }
 
-const forms = [
-    { label: "Прямоугольный", image: "/forms/rectangular.png", value: "rectangular" },
-    { label: "Квадрат", image: "/forms/square.png", value: "square" },
-    { label: "Круглый", image: "/forms/round.png", value: "round" },
-    { label: "Эллипс", image: "/forms/ellipse.png", value: "ellipse" },
-    { label: "Овал", image: "/forms/oval.png", value: "oval" },
-    { label: "Произвольный", image: "/forms/arbitrary.png", value: "arbitrary" },
-];
 
-const widths = [
-    "70", "80", "100", "120", "150", "180", "200",
-    "240", "250", "260", "280", "290", "300", "320",
-    "330", "340", "350", "360", "370", "380", "390",
-    "395", "400", "410", "420", "430", "440", "450"
-];
-
-const lengths = [
-    "125", "150", "200", "240", "250", "260", "280",
-    "290", "300", "320", "330", "340", "350", "360",
-    "380", "390", "395", "400", "420", "430", "450",
-    "450", "450", "450", "450", "450", "450", "450"
-];
 
 export default function FilterModal({ onClose }: FilterModalProps) {
     const searchParams = useSearchParams();
     const router = useRouter();
     const pathname = usePathname();
     const [styles, setStyles] = useState<{ id: string; title: string; image?: string }[]>([]);
-    const [colors, fix] = useState<{ id: string; title: string; code?: string }[]>([]);
+    const [colors, setColors] = useState<{ id: string; title: string; code?: string }[]>([]);
+    const [shapes, setShapes] = useState<{
+        id: string,
+        title: string,
+        meter: string
+    }[]>([]);
+    const [sizes, setSizes] = useState<{ id: string; title: string; code?: string }[]>([]);
     const [selectedType, setSelectedType] = useState<"piece" | "meter">("piece");
 
     useEffect(() => {
+        const fetchShape = async () => {
+            try {
+                const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/shape`);
+                if (res.ok) {
+                    const data = await res.json();
+
+                    if (data && Array.isArray(data)) {
+                        setShapes(data);
+                    } else if (data && data.items && Array.isArray(data.items)) {
+                        setShapes(data.items);
+                    }
+                }
+            } catch (error) {
+                console.error("Failed to fetch styles:", error);
+            }
+        };
         const fetchStyles = async () => {
             try {
                 const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/style`);
@@ -63,9 +64,24 @@ export default function FilterModal({ onClose }: FilterModalProps) {
                 if (res.ok) {
                     const data = await res.json();
                     if (data && Array.isArray(data)) {
-                        fix(data);
+                        setColors(data);
                     } else if (data && data.items && Array.isArray(data.items)) {
-                        // setColors(data.items);
+                        setColors(data.items);
+                    }
+                }
+            } catch (error) {
+                console.error("Failed to fetch colors:", error);
+            }
+        };
+        const fetchSizes = async () => {
+            try {
+                const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/size`);
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data && Array.isArray(data)) {
+                        setSizes(data);
+                    } else if (data && data.items && Array.isArray(data.items)) {
+                        setSizes(data.items);
                     }
                 }
             } catch (error) {
@@ -75,6 +91,8 @@ export default function FilterModal({ onClose }: FilterModalProps) {
 
         fetchStyles();
         fetchColors();
+        fetchShape()
+        fetchSizes()
     }, []);
 
     const handleFilterChange = (type: string, value: string) => {
@@ -105,6 +123,7 @@ export default function FilterModal({ onClose }: FilterModalProps) {
         router.replace(pathname);
         onClose();
     };
+    console.log(shapes)
 
     return (
         <div className="fixed z-[1000] inset-0 bg-[#00000080] flex items-center justify-center p-4" onClick={onClose}>
@@ -116,41 +135,36 @@ export default function FilterModal({ onClose }: FilterModalProps) {
                 </div>
 
                 <div className="px-6 pb-20 overflow-y-auto flex-1">
-                    {/* Types */}
                     <div className="flex gap-4 justify-center mb-8">
                         <div
                             onClick={() => setSelectedType("piece")}
-                            className={`cursor-pointer flex flex-col items-center gap-2 ${selectedType === "piece" ? "opacity-100" : "opacity-50"}`}
+                            className={`cursor-pointer  w-full flex flex-col items-center gap-2 ${selectedType === "piece" ? "opacity-100" : "opacity-50"}`}
                         >
-                            <div className="w-[200px] h-[100px] bg-gray-100 rounded-lg overflow-hidden relative">
-                                {/* Placeholder for Piece Rugs Image - ideally use Image component if asset exists */}
-                                <div className="absolute inset-0 bg-gray-200 flex items-center justify-center text-gray-400">Image</div>
+                            <div className="w-full text-center flex items-end justify-center h-[160px] bg-gray-100 rounded-lg overflow-hidden relative">
+                                <Image className="w-[222px] h-[149px]" src="/count.png" alt="Piece" width={222} height={149} />
                             </div>
                             <span className="text-sm font-medium">Штучные ковры</span>
                         </div>
                         <div
                             onClick={() => setSelectedType("meter")}
-                            className={`cursor-pointer flex flex-col items-center gap-2 ${selectedType === "meter" ? "opacity-100" : "opacity-50"}`}
+                            className={`cursor-pointer flex  w-full flex-col items-center gap-2 ${selectedType === "meter" ? "opacity-100" : "opacity-50"}`}
                         >
-                            <div className="w-[200px] h-[100px] bg-gray-100 rounded-lg overflow-hidden relative">
-                                {/* Placeholder for Meter Rugs Image */}
-                                <div className="absolute inset-0 bg-gray-200 flex items-center justify-center text-gray-400">Image</div>
+                            <div className="w-full text-center h-[160px]  flex items-end justify-center bg-gray-100 rounded-lg overflow-hidden relative">
+                                <Image className="w-[222px] h-[149px]" src="/metric.png" alt="Piece" width={222} height={149} />
                             </div>
                             <span className="text-sm font-medium">Метражные ковры</span>
                         </div>
                     </div>
 
-                    {/* Forms */}
                     <div className="mb-8">
                         <h3 className="text-center font-bold mb-4">Форма</h3>
                         <div className="flex flex-wrap justify-center gap-6">
-                            {forms.map((form) => (
-                                <div key={form.value} className="flex flex-col items-center gap-2 cursor-pointer" onClick={() => handleFilterChange("form", form.value)}>
-                                    <div className={`w-[80px] h-[80px] bg-gray-100 flex items-center justify-center ${isChecked("form", form.value) ? "ring-2 ring-black" : ""}`}>
-                                        {/* Placeholder for shape images */}
-                                        <span className="text-xs">{form.label}</span>
+                            {shapes.map((shape) => (
+                                <div key={shape.id} className="flex flex-col items-center gap-2 cursor-pointer" onClick={() => handleFilterChange("shape", shape.id)}>
+                                    <div className={`w-[80px] h-[80px] bg-gray-100 flex items-center justify-center ${isChecked("shape", shape.id) ? "ring-2 ring-black" : ""}`}>
+                                        <span className="text-xs">{shape.title}</span>
                                     </div>
-                                    <span className="text-xs text-center text-gray-500">{form.label}</span>
+                                    <span className="text-xs text-center text-gray-500">{shape.meter}</span>
                                 </div>
                             ))}
                         </div>
@@ -200,13 +214,13 @@ export default function FilterModal({ onClose }: FilterModalProps) {
                             <div className="flex flex-col items-center">
                                 <span className="mb-2 text-sm font-medium">Ширина (x)</span>
                                 <div className="grid grid-cols-7 gap-2">
-                                    {widths.map((w, i) => (
+                                    {sizes.map((size, i) => (
                                         <div
                                             key={i}
-                                            className={`w-10 h-8 flex items-center justify-center bg-gray-50 text-xs rounded cursor-pointer hover:bg-gray-100 ${isChecked('width', w) ? 'bg-black text-white hover:bg-black' : ''}`}
-                                            onClick={() => handleFilterChange("width", w)}
+                                            className={`w-10 h-8 flex items-center justify-center bg-gray-50 text-xs rounded cursor-pointer hover:bg-gray-100 ${isChecked('width', size?.id) ? 'bg-black text-white hover:bg-black' : ''}`}
+                                            onClick={() => handleFilterChange("width", size?.id)}
                                         >
-                                            {w}
+                                            {size?.title}
                                         </div>
                                     ))}
                                 </div>
@@ -214,13 +228,13 @@ export default function FilterModal({ onClose }: FilterModalProps) {
                             <div className="flex flex-col items-center">
                                 <span className="mb-2 text-sm font-medium">Длина (y)</span>
                                 <div className="grid grid-cols-7 gap-2">
-                                    {lengths.map((l, i) => (
+                                    {sizes.map((size, i) => (
                                         <div
                                             key={i}
-                                            className={`w-10 h-8 flex items-center justify-center bg-gray-50 text-xs rounded cursor-pointer hover:bg-gray-100 ${isChecked('length', l) ? 'bg-black text-white hover:bg-black' : ''}`}
-                                            onClick={() => handleFilterChange("length", l)}
+                                            className={`w-10 h-8 flex items-center justify-center bg-gray-50 text-xs rounded cursor-pointer hover:bg-gray-100 ${isChecked('length', size?.id) ? 'bg-black text-white hover:bg-black' : ''}`}
+                                            onClick={() => handleFilterChange("length", size?.id)}
                                         >
-                                            {l}
+                                            {size?.title}
                                         </div>
                                     ))}
                                 </div>
