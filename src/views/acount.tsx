@@ -65,7 +65,7 @@ export default function AcountPage() {
 
   return (
     <div className="w-full h-full">
-      <h4 className="text-[44px] leading-[51px] mt-3 mb-[13px]">
+      <h4 className="text-[24px] md:text-[44px] leading-[28px] md:leading-[51px] mt-3 md:mb-[13px] mb-[14px]">
         id:{userMe?.login}
       </h4>
       {openChnagePhone ? (

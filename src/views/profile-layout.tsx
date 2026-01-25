@@ -28,7 +28,7 @@ export default function ProfileLayout({ children }) {
   return (
     <Container
       className={
-        "flex flex-wrap md:flex-nowrap px-[26px]  mt-[26px] gap-[35px] items-center"
+        "flex flex-wrap md:flex-nowrap md:px-[26px]  md:mt-[26px] px-[14px] mt-[14px] gap-[35px] items-center"
       }
     >
       <Back />
@@ -60,7 +60,7 @@ export default function ProfileLayout({ children }) {
               okText="Yes"
               cancelText="No"
             >
-              <p className="inline-block md:w-full mb-[12px] text-[13px] sm:text-[15px] leading-[17px] cursor-pointer mt-[25px] whitespace-nowrap">
+              <p className="inline-block md:w-full mb-[12px] text-[13px] sm:text-[15px] leading-[21px] cursor-pointer md:mt-[25px] whitespace-nowrap">
                 Выйти
               </p>
             </Popconfirm>}

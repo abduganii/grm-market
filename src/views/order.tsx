@@ -140,7 +140,7 @@ export default function OrderPage() {
             </a>
           </div>
           <div className="w-full max-w-[1100px] flex flex-col lg:flex-row gap-[20px] items-start justify-between">
-            <div className="w-full lg:max-w-[610px]">
+            <div className="w-full ">
               <div className="p-[30px] rounded-[3px] border-[#EEEEEE] border-[1px] mb-2">
                 <p className="text-[12px] leading-[14px] mb-[15px]">
                   Список выбранные вами заказов
@@ -161,7 +161,7 @@ export default function OrderPage() {
                       <p className="w-1/2 sm:w-full"> {(item?.i_price * (item?.count || 1) * (item?.isMetric ? item?.size?.x : item?.size?.kv)).toFixed(2)} sum</p>
                     </div>
                   ))}
-                </ul> This snippet is truncated, I will need to use multiple calls if the file is too large or I can focus on specific blocks.
+                </ul>
                 <div className="flex flex-col sm:flex-row items-end sm:items-center gap-[15px] mt-[24px] justify-end">
                   <h4 className="font-medium text-[16px] leading-[18px] text-[#212121] ">
                     Итоговое сумма:

@@ -45,8 +45,8 @@ export default function MyOrdersPage() {
   }, [token]);
 
   return (
-    <div className="w-full max-w-[1100px] gap-[20px] items-start flex flex-col-reverse lg:flex-row xl:flex-nowrap justify-between px-4 sm:px-0">
-      <div className="w-full lg:max-w-[610px]">
+    <div className="w-full max-w-[1100px] gap-[20px] items-start flex flex-col-reverse lg:flex-row xl:flex-nowrap justify-between md:px-4 sm:px-0">
+      <div className="w-full ">
         {myOrder?.items?.map((item) => (
           <div key={item?.id}>
             <p className="text-[12px] text-[#212121]/45">

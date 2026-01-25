@@ -61,5 +61,10 @@
         "share": "Ulashish",
         "noImage": "Rasm yo'q",
         "paymentDeliveryInfo": "Qo'shimcha ma'lumot olish uchun bog'laning."
+    },
+    "NotFound": {
+        "title": "Sahifa topilmadi",
+        "description": "Siz qidirayotgan sahifa mavjud emas.",
+        "button": "Bosh sahifaga"
     }
 }

@@ -66,9 +66,10 @@ export const SearchIcons = ({ width = 20, height = 20, className, ...props }: Ic
 }
 export const TelIcons = ({ width = 20, height = 20, className, ...props }: IconProps) => {
     return (
-        <svg width={width} height={height} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/4000/svg" className={className} {...props}>
-            <path d="M4.16667 3.33331H7.5L9.16667 7.49998L7.08333 8.74998C7.9758 10.5596 9.44039 12.0242 11.25 12.9166L12.5 10.8333L16.6667 12.5V15.8333C16.6667 16.2753 16.4911 16.6993 16.1785 17.0118C15.866 17.3244 15.442 17.5 15 17.5C11.7494 17.3024 8.68346 15.9221 6.38069 13.6193C4.07792 11.3165 2.69754 8.25059 2.5 4.99998C2.5 4.55795 2.67559 4.13403 2.98816 3.82147C3.30072 3.50891 3.72464 3.33331 4.16667 3.33331Z" stroke="black" strokeLinecap="round" strokeLinejoin="round" />
+        <svg width={width} height={height} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} {...props}>
+            <path d="M4.16667 3.33337H7.5L9.16667 7.50004L7.08333 8.75004C7.9758 10.5596 9.44039 12.0242 11.25 12.9167L12.5 10.8334L16.6667 12.5V15.8334C16.6667 16.2754 16.4911 16.6993 16.1785 17.0119C15.866 17.3244 15.442 17.5 15 17.5C11.7494 17.3025 8.68346 15.9221 6.38069 13.6194C4.07792 11.3166 2.69754 8.25065 2.5 5.00004C2.5 4.55801 2.67559 4.13409 2.98816 3.82153C3.30072 3.50897 3.72464 3.33337 4.16667 3.33337Z" stroke="black" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
+
     )
 }
 export const BackPlusIcons = ({ width = 20, height = 20, className, ...props }: IconProps) => {
@@ -78,11 +79,12 @@ export const BackPlusIcons = ({ width = 20, height = 20, className, ...props }: 
         </svg>
     )
 }
-export const ShareIcons = ({ width = 20, height = 20, className, ...props }: IconProps) => {
+export const ShareIcons = ({ width = 22, height = 22, className, ...props }: IconProps) => {
     return (
         <svg width={width} height={height} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/4000/svg" className={className} {...props}>
-            <path d="M7.25001 8.91666L12.75 6.08332M7.25001 11.0834L12.75 13.9167M7.5 10C7.5 11.3807 6.38071 12.5 5 12.5C3.61929 12.5 2.5 11.3807 2.5 10C2.5 8.61929 3.61929 7.5 5 7.5C6.38071 7.5 7.5 8.61929 7.5 10ZM17.5 5C17.5 6.38071 16.3807 7.5 15 7.5C13.6193 7.5 12.5 6.38071 12.5 5C12.5 3.61929 13.6193 2.5 15 2.5C16.3807 2.5 17.5 3.61929 17.5 5ZM17.5 15C17.5 16.3807 16.3807 17.5 15 17.5C13.6193 17.5 12.5 16.3807 12.5 15C12.5 13.6193 13.6193 12.5 15 12.5C16.3807 12.5 17.5 13.6193 17.5 15Z" stroke="#121212" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M7.25001 8.91666L12.75 6.08332M7.25001 11.0834L12.75 13.9167M7.5 10C7.5 11.3807 6.38071 12.5 5 12.5C3.61929 12.5 2.5 11.3807 2.5 10C2.5 8.61929 3.61929 7.5 5 7.5C6.38071 7.5 7.5 8.61929 7.5 10ZM17.5 5C17.5 6.38071 16.3807 7.5 15 7.5C13.6193 7.5 12.5 6.38071 12.5 5C12.5 3.61929 13.6193 2.5 15 2.5C16.3807 2.5 17.5 3.61929 17.5 5ZM17.5 15C17.5 16.3807 16.3807 17.5 15 17.5C13.6193 17.5 12.5 16.3807 12.5 15C12.5 13.6193 13.6193 12.5 15 12.5C16.3807 12.5 17.5 13.6193 17.5 15Z" stroke="#121212" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
+
     )
 }
 export const PlusIcons = ({ width = 20, height = 20, className, ...props }: IconProps) => {

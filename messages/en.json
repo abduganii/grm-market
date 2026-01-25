@@ -61,5 +61,10 @@
         "share": "Share",
         "noImage": "No Image",
         "paymentDeliveryInfo": "Contact us for more information."
+    },
+    "NotFound": {
+        "title": "Page Not Found",
+        "description": "The page you are looking for does not exist.",
+        "button": "Go Home"
     }
 }

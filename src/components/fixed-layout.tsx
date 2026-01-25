@@ -99,7 +99,7 @@ export default function FixedLayout() {
         <div className="flex gap-1 pointer-events-auto  rounded-[8px]">
           <div
             onClick={() => router.push("/")}
-            className="cursor-pointer bg-white p-[10px] rounded-[8px] shadow"
+            className="cursor-pointer bg-white  h-[40px] p-[10px] rounded-[8px] shadow"
             role="button"
             aria-label="Home"
           >
@@ -108,7 +108,7 @@ export default function FixedLayout() {
 
           <div
             onClick={showDrawer}
-            className="cursor-pointer flex gap-1  items-center bg-white p-[10px] rounded-[8px] shadow"
+            className="cursor-pointer  h-[40px] flex gap-1  items-center bg-white p-[10px] rounded-[8px] shadow"
             role="button"
             aria-label="Menu"
           >
@@ -116,7 +116,7 @@ export default function FixedLayout() {
             <p className="text-[14px] leading-[18px]">{t('menu')}</p>
           </div>
 
-          <div className="cursor-pointer bg-white p-[10px] rounded-[8px] shadow flex gap-1  items-center ">
+          <div className="cursor-pointer  h-[40px] bg-white p-[10px] rounded-[8px] shadow flex gap-1  items-center ">
             <SearchIcons />
             <input
               onFocus={() => setIsfocus(true)}
@@ -134,7 +134,7 @@ export default function FixedLayout() {
               e.stopPropagation();
               setOpenFilter(true);
             }}
-            className="cursor-pointer flex gap-1 items-center bg-white p-[10px] rounded-[8px] shadow"
+            className="cursor-pointer h-[40px]  flex gap-1 items-center bg-white p-[10px] rounded-[8px] shadow"
             role="button"
             aria-label="Filter"
           >
@@ -151,7 +151,7 @@ export default function FixedLayout() {
                 setOpenAuth(true);
               }
             }}
-            className="cursor-pointer flex gap-1 items-center bg-white p-[10px] rounded-[8px] shadow"
+            className="cursor-pointer h-[40px]  flex gap-1 items-center bg-white p-[10px] rounded-[8px] shadow"
             role="button"
             aria-label="Profile"
           >
@@ -161,7 +161,7 @@ export default function FixedLayout() {
 
           <div
             onClick={() => router.push("/profile/likes")}
-            className="cursor-pointer relative  bg-white p-[10px] rounded-[8px] shadow"
+            className="cursor-pointer relative h-[40px] w-[40px] bg-white p-[10px] rounded-[8px] shadow"
             role="button"
             aria-label="Likes"
           >
@@ -176,7 +176,7 @@ export default function FixedLayout() {
           </div>
           <div
             onClick={() => router.push("/profile/busket")}
-            className="cursor-pointer relative bg-white p-[10px] rounded-[8px] shadow"
+            className="cursor-pointer h-[40px] w-[40px] relative bg-white p-[10px] rounded-[8px] shadow"
             role="button"
             aria-label="Basket"
           >

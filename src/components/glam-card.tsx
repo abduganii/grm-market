@@ -22,6 +22,7 @@ export default function GlamCard({
   text,
   image,
   isloading,
+
 }) {
   const router = useRouter();
 

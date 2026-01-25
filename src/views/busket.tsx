@@ -31,8 +31,8 @@ export default function BusketPage() {
 
   console.log(buskets)
   return (
-    <div className="w-full max-w-[1100px] gap-[20px] items-start flex flex-col lg:flex-row xl:flex-nowrap justify-between px-4 sm:px-0">
-      <div className="w-full lg:max-w-[610px]">
+    <div className="w-full max-w-[1100px] md:gap-[20px] gap-3 items-start flex flex-col lg:flex-row xl:flex-nowrap justify-between md:px-4 sm:px-0">
+      <div className="w-full">
         {buskets?.length
           ? buskets?.map((e) => (
             <GlamCardBusket

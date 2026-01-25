@@ -15,7 +15,6 @@ import { useTranslations } from "next-intl";
 
 export default function HomePage({ product, search }: { product: any, search?: any }) {
   const t = useTranslations('Home');
-  const searchParams = useSearchParams();
   const { buskets } = useAppSelector((store) => store.buskets);
   const { likes } = useAppSelector((store) => store.likes);
   const dispatch = useAppDispatch();

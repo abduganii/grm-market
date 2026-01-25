@@ -1,7 +1,7 @@
 "use client";
 import Back from "../components/back";
 import GlamCard from "../components/glam-card";
-import { BackPlusIcons, LikeIcons, ShareIcons } from "../components/icons";
+import { BackPlusIcons, LikeIcons, ShareIcons, TelIcons } from "../components/icons";
 import { Image as AntImage } from "antd";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { changeBuskets, changeLike } from "@/lib/features";
 import { minio_img_url } from "@/utils/divice";
 import { useTranslations } from "next-intl";
+import { toast } from "react-toastify";
 
 export default function GlamById({ product, productArr, id }) {
   const t = useTranslations('Product');
@@ -36,6 +37,7 @@ export default function GlamById({ product, productArr, id }) {
         : changeBuskets([e, ...buskets])
     );
   };
+  console.log(product)
 
   return (
     <>
@@ -47,30 +49,30 @@ export default function GlamById({ product, productArr, id }) {
         <div className="hidden lg:block">
           <Back />
         </div>
-        <div className="flex flex-col-reverse lg:flex-row w-full gap-2 max-w-full lg:max-w-[620px]">
-          <div className="flex lg:flex-col gap-2 overflow-x-auto lg:overflow-visible w-full lg:w-[81px] pb-2 lg:pb-0">
+        <div className="flex flex-col-reverse lg:flex-row w-full gap-4 max-w-full lg:max-w-[620px]">
+          <div className="flex lg:flex-col gap-2 overflow-x-auto lg:overflow-visible w-full lg:w-[81px] pb-2 lg:pb-0 no-scrollbar">
 
             <Image
               src={oneProduct?.imgUrl?.path ? minio_img_url + oneProduct?.imgUrl?.path : ""}
               width={81}
-              height={122}
-              className="flex shrink-0 items-center justify-center h-[81px] lg:h-[122px] w-[81px] bg-[#F0F0E5] overflow-hidden"
+              height={"100"}
+              className="flex shrink-0 items-center object-contain  justify-center  w-[81px]  overflow-hidden rounded-md"
               alt={oneProduct?.model?.title || "Product thumbnail"}
             />
           </div>
           {oneProduct?.imgUrl ? (
-            <div className="relative w-full aspect-[2/3] max-h-[500px] lg:max-h-[740px]">
+            <div className="relative w-full flex items-center justify-center aspect-[6/4] lg:aspect-[4/4] lg:max-h-[740px] rounded-lg overflow-hidden bg-[#fcfcfc]">
               <AntImage
                 src={oneProduct?.imgUrl?.path ? minio_img_url + oneProduct?.imgUrl?.path : ""}
                 width={500}
                 height={"100%"}
-                className="object-contain w-full h-full bg-[#fcfcfc]"
+                className="object-contain w-full h-full"
                 alt={oneProduct?.model?.title || "Product main image"}
               />
             </div>
           ) : (
             <div
-              className={`flex items-center h-[300px] sm:h-[500px] lg:h-[740px] w-full max-w-full lg:max-w-[500px] bg-[#F0F0E5] justify-center`}
+              className={`flex items-center aspect-[3/4] sm:aspect-[2/3] w-full max-w-full lg:max-w-[500px] bg-[#F0F0E5] justify-center rounded-lg`}
             >
               <Image
                 src={"/empty-folder.png"}
@@ -81,68 +83,66 @@ export default function GlamById({ product, productArr, id }) {
             </div>
           )}
         </div>
-        <div className="w-full lg:max-w-[530px] mt-0 lg:mt-[20px]">
-          <h4 className="text-[20px] lg:text-[24px] leading-[26px] lg:leading-[30px] text-wrap lg:text-nowrap text-[#282A2C] font-normal mb-1">
+        <div className="w-full lg:max-w-[530px] mt-4 lg:mt-[20px]">
+          <h4 className="text-[18px] lg:text-[24px] leading-[24px] lg:leading-[30px] text-wrap lg:text-nowrap text-[#282A2C] font-normal mb-2">
             {oneProduct?.model?.title}
           </h4>
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-5">
-            <h4 className="text-[32px] lg:text-[40px] leading-[40px] lg:leading-[50px] text-wrap lg:text-nowrap font-normal text-[#282A2C]">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 sm:mb-5 gap-2">
+            <h4 className="text-[28px] lg:text-[40px] leading-[34px] lg:leading-[50px] font-semibold text-[#282A2C]">
               {oneProduct?.collection?.title}
             </h4>
-            <p className="text-[18px] lg:text-[24px] leading-[20px] lg:leading-[26px] font-normal text-[#212121]">
-              {oneProduct?.i_price} sum
+            <p className="text-[20px] lg:text-[24px] leading-[24px] lg:leading-[26px] font-medium text-[#212121]">
+              {Number(oneProduct?.i_price).toLocaleString()} sum
             </p>
           </div>
-          <div className="flex flex-wrap gap-[2px] mb-[49px]">
+          <div className="flex flex-wrap gap-2 mb-[32px] lg:mb-[49px]">
             {product?.map((e, i) => (
               <p
                 key={e?.id}
                 onClick={() => setLocalId(e?.id)}
                 className={`${e?.id == LocalId
                   ? "bg-[#212121] text-white"
-                  : "bg-[#F4F4F4] text-[#212121]"
-                  } px-[10px] py-1 cursor-pointer rounded-[5px] text-[14px] lg:text-[16px] leading-[16px] lg:leading-[18px]`}
+                  : "bg-[#F4F4F4] text-[#212121] hover:bg-gray-200"
+                  } px-3 py-2 cursor-pointer rounded-[5px] text-[14px] lg:text-[16px] transition-colors`}
               >
                 {e?.size?.title}
               </p>
             ))}
           </div>
-          <div className="w-full border-b-[1px] mb-[32px] relative">
+          <div className="w-full border-b-[1px] mb-[24px] lg:mb-[32px] relative flex">
             <p
               onClick={() => setType(1)}
-              className={`${type == 1 ? "" : "opacity-50"
-                } text-[#212121] text-[16px] inline-block p-[10px] leading-[18px] pb-[20px] cursor-pointer`}
+              className={`${type == 1 ? "text-black border-black" : "text-gray-500 border-transparent opacity-70"
+                } text-[15px] lg:text-[16px] font-medium inline-block px-4 py-3 border-b-2 transition-all cursor-pointer`}
             >
               {t('characteristics')}
             </p>
             <p
               onClick={() => setType(2)}
-              className={`${type == 2 ? "" : "opacity-50"
-                } text-[#212121]  text-[16px] inline-block p-[10px] leading-[18px] pb-[20px] cursor-pointer`}
+              className={`${type == 2 ? "text-black border-black" : "text-gray-500 border-transparent opacity-70"
+                } text-[15px] lg:text-[16px] font-medium inline-block px-4 py-3 border-b-2 transition-all cursor-pointer`}
             >
               {t('paymentAndDelivery')}
             </p>
-            <div
-              className={`${type == 1 ? "left-[0px] w-[130px]" : "left-[150px] w-[140px]"
-                } transition-all  duration-150 ease-in-out h-[2px]  bg-black absolute bottom-[0px]`}
-            ></div>
           </div>
           {type == 1 ? (
-            <>
-              <p className="text-[15px]  text-[#282A2C] w-full max-w-[144px] leading-[18px]  whitespace-pre-line">
+            <div >
+              <p className="text-[14px] lg:text-[15px] text-[#282A2C] leading-[22px] whitespace-pre-line">
                 {oneProduct?.internetInfo}
               </p>
-            </>
+            </div>
           ) : (
-            <p className="min-h-[200px]">
-              {t('paymentDeliveryInfo')}
-            </p>
+            <div >
+              <p className="text-[14px] lg:text-[15px] text-[#282A2C] leading-[22px]">
+                {t('paymentDeliveryInfo')}
+              </p>
+            </div>
           )}
 
-          <div className="mt-[30px] lg:mt-[50px] mb-[36px] flex flex-col sm:flex-row gap-[10px]">
+          <div className="mt-[30px] lg:mt-[50px] mb-[36px] flex flex-col sm:flex-row gap-3">
             <button
               onClick={() => HendleBusket(oneProduct)}
-              className="bg-[#121212] text-white  text-[13px] leading-[15px] py-[10px] rounded-[2px] px-[24px] flex items-center gap-2"
+              className="bg-[#121212] text-white text-[14px] md:text-[15px] font-medium py-3 md:py-4 rounded-lg px-6 flex items-center justify-center gap-2 hover:bg-gray-800 transition-colors w-full sm:w-auto flex-1"
             >
               {buskets?.map((it) => it?.id)?.includes(oneProduct?.id) ? (
                 t('added')
@@ -155,7 +155,7 @@ export default function GlamById({ product, productArr, id }) {
 
             <button
               onClick={() => HendleLike(oneProduct)}
-              className="text-[#121212] bg-[#F4F4F4]  text-[13px] leading-[15px] py-[10px] rounded-[2px] px-[24px] flex items-center gap-2"
+              className="text-[#121212] bg-[#F4F4F4] text-[14px] md:text-[15px] font-medium py-3 md:py-4 rounded-lg px-6 flex items-center justify-center gap-2 hover:bg-gray-200 transition-colors w-full sm:w-auto"
             >
               <LikeIcons
                 stroke={
@@ -172,42 +172,60 @@ export default function GlamById({ product, productArr, id }) {
               {t('like')}
             </button>
           </div>
-          <div className="flex items-center gap-2 cursor-pointer">
-            <ShareIcons />
-            <p className="text-[#121212]   text-[13px] leading-[15px]">
-              {t('share')}
-            </p>
+          <div className="flex gap-[24px]">
+
+            <div
+              onClick={() => {
+                navigator.clipboard.writeText(window.location.href);
+                toast.success("Ссылка скопирована!");
+              }}
+              className="flex items-center gap-2 cursor-pointer"
+            >
+              <ShareIcons />
+              <p className="text-[#121212]   text-[13px] leading-[15px]">
+                {t('share')}
+              </p>
+            </div>
+            <a
+              href="tel:+998991404422"
+              className="cursor-pointer inline-flex hidden  bg-white p-[10px] rounded-[8px] shadow lg:flex gap-1  items-center "
+              aria-label="Call Us"
+            >
+              <TelIcons />
+              <p className="text-[14px] leading-[18px]">+998 94 609-34-44</p>
+            </a>
           </div>
         </div>
 
       </div>
-      <div className="w-full mt-[50px] lg:mt-[94px] px-4 md:px-[30px] flex gap-4 md:gap-8 overflow-x-auto pb-4">
+      <div className="w-full mt-[50px] lg:mt-[94px] px-4 md:px-[30px] flex gap-4 md:gap-8 overflow-x-auto pb-6 no-scrollbar snap-x snap-mandatory">
         {productArr?.length ?
           productArr?.map((e) => (
-            <GlamCard
-              key={e?.id}
-              className="colm1"
-              url={`/glam/${e?.id}?modelId=${e?.model?.title}&color=${e?.color?.title}&collectionId=${e?.collection?.title}`}
-              title={`${e?.collection?.title} ${e?.model?.title}`}
-              text={e?.size?.title}
-              image={e?.imgUrl?.path ? minio_img_url + e?.imgUrl?.path : ""}
-              isLike={likes?.map((it) => it?.id)?.includes(e?.id)}
-              onLike={() => {
-                dispatch(
-                  likes?.includes(e)
-                    ? changeLike(likes?.filter((itms) => itms?.id !== e?.id))
-                    : changeLike([e, ...likes])
-                );
-              }}
-              onBuslet={() => {
-                dispatch(
-                  buskets?.includes(e)
-                    ? changeBuskets(
-                      buskets?.filter((itms) => itms?.id !== e?.id)
-                    )
-                    : changeBuskets([e, ...buskets])
-                );
-              }} type={undefined} isloading={undefined} />
+            <div key={e?.id} className="min-w-[160px] sm:min-w-[220px] lg:min-w-[260px] snap-start">
+              <GlamCard
+                className="colm1"
+                url={`/glam/${e?.id}?modelId=${e?.model?.title}&color=${e?.color?.title}&collectionId=${e?.collection?.title}`}
+                title={`${e?.collection?.title} ${e?.model?.title}`}
+                text={e?.size?.title}
+                image={e?.imgUrl?.path ? minio_img_url + e?.imgUrl?.path : ""}
+                isLike={likes?.map((it) => it?.id)?.includes(e?.id)}
+                onLike={() => {
+                  dispatch(
+                    likes?.includes(e)
+                      ? changeLike(likes?.filter((itms) => itms?.id !== e?.id))
+                      : changeLike([e, ...likes])
+                  );
+                }}
+                onBuslet={() => {
+                  dispatch(
+                    buskets?.includes(e)
+                      ? changeBuskets(
+                        buskets?.filter((itms) => itms?.id !== e?.id)
+                      )
+                      : changeBuskets([e, ...buskets])
+                  );
+                }} type={e?.sizeType} isloading={undefined} />
+            </div>
           )) : ""}
       </div>
     </>

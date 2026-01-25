@@ -35,8 +35,12 @@ export async function generateMetadata(
   };
 }
 
-export default async function GilamById({ params, searchParams }: { params: Promise<{ id: string }>, searchParams: Promise<any> }) {
-  const { id } = await params;
+import { getTranslations } from 'next-intl/server';
+import BreadcrumbSchema from '@/components/breadcrumb-schema';
+
+export default async function GilamById({ params, searchParams }: { params: Promise<{ id: string, locale: string }>, searchParams: Promise<any> }) {
+  const { id, locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'Layout' });
   const sp = await searchParams;
   const oneProduct = await getSingleProduct(id);
   const product = await getProduct({ search: sp?.modelId + " " + sp?.color + " " + sp?.collectionId, productId: id });
@@ -59,30 +63,20 @@ export default async function GilamById({ params, searchParams }: { params: Prom
     }
   };
 
-  const breadcrumbLd = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      {
-        '@type': 'ListItem',
-        position: 1,
-        name: 'Home',
-        item: SITE_URL
-      },
-      {
-        '@type': 'ListItem',
-        position: 2,
-        name: oneProduct?.[0]?.collection?.title || 'Collection',
-        item: `${SITE_URL}/?collection=${oneProduct?.[0]?.collection?.id}`
-      },
-      {
-        '@type': 'ListItem',
-        position: 3,
-        name: oneProduct?.[0]?.model?.title,
-        item: `${SITE_URL}/glam/${id}`
-      }
-    ]
-  };
+  const breadcrumbItems = [
+    {
+      name: t('menu') || 'Home', // Fallback to 'Home' if translation fails, though 'menu' might not be the best key. 'Home' is usually separate. Let's check keys.
+      url: `${SITE_URL}/${locale}`
+    },
+    {
+      name: oneProduct?.[0]?.collection?.title || 'Collection',
+      url: `${SITE_URL}/${locale}/?collection=${oneProduct?.[0]?.collection?.id}`
+    },
+    {
+      name: oneProduct?.[0]?.model?.title,
+      url: `${SITE_URL}/${locale}/glam/${id}`
+    }
+  ];
 
   return (
     <>
@@ -90,10 +84,7 @@ export default async function GilamById({ params, searchParams }: { params: Prom
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
-      />
+      <BreadcrumbSchema items={breadcrumbItems} />
       <GlamById
         id={id}
         product={oneProduct}

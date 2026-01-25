@@ -7,10 +7,10 @@ import { toast } from "react-toastify";
 
 export default function ChnagePhone({ onSuccess }) {
   const [step, setStep] = useState(1);
-  const [phone, setPhone] = useState( "+998");
+  const [phone, setPhone] = useState("+998");
   const [code, setCode] = useState("");
   const [loading, setLoading] = useState(false);
- 
+
   const { token } = useAppSelector((store) => store.token);
   // 1️⃣ SEND PHONE
   const sendPhone = async () => {
@@ -21,8 +21,8 @@ export default function ChnagePhone({ onSuccess }) {
       await fetch(`${process.env.NEXT_PUBLIC_URL}/user/client/change-phone`, {
         method: "POST",
         headers: {
-           "Content-Type": "application/json" ,
-           Authorization: "Bearer " + token,
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
         },
         body: JSON.stringify({ phone }),
       })
@@ -30,7 +30,7 @@ export default function ChnagePhone({ onSuccess }) {
         .then((res) => {
           if (res?.tmp?.code || res?.code) {
             setStep(2);
-            setCode(res?.tmp?.code|| res?.code);
+            setCode(res?.tmp?.code || res?.code);
           }
         });
     } catch (e) {
@@ -50,16 +50,16 @@ export default function ChnagePhone({ onSuccess }) {
         {
           method: "POST",
           headers: {
-             "Content-Type": "application/json",
-             Authorization: "Bearer " + token,
-             },
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token,
+          },
           body: JSON.stringify({ code }),
         }
       )
         // .then((res) => res.json())
         .then(() => {
           toast("Вы успешно изменили номер");
-          if(onSuccess) onSuccess();
+          if (onSuccess) onSuccess();
         });
     } catch (e) {
     } finally {
@@ -71,25 +71,25 @@ export default function ChnagePhone({ onSuccess }) {
     <div className="fixed inset-0 bg-[#21212199] flex items-center justify-center">
       <div
         onClick={(e) => e.stopPropagation()}
-        className="bg-white max-w-[600px] w-full p-[20px] sm:p-[63px]"
+        className="bg-white max-w-[600px] w-full md:p-[20px] p-[14px] sm:p-[63px]"
       >
-        <h3 className="text-[32px] font-bold">Change Phone</h3>
+        <h3 className="text-[16px] md:text-[32px] font-bold">Change Phone</h3>
 
         {step === 1 && (
           <>
-            <p className="text-[14px] mt-[20px] mb-2">Введите номер телефона</p>
+            <p className="md:text-[14px] text-[12px] md:mt-[20px] mt-[14px] mb-2">Введите номер телефона</p>
 
             <div className="flex gap-2 flex-wrap sm:flex-nowrap">
               <input
                 value={phone}
                 onChange={(e) => setPhone(formatUzPhone(e.target.value))}
                 placeholder="+998 99 999 99 99"
-                className="border px-[12px] py-[11px] w-full sm:max-w-[290px]"
+                className="border md:px-[12px] px-[8px] md:py-[11px] py-[8px] w-full sm:max-w-[290px]"
               />
               <button
                 onClick={sendPhone}
                 disabled={loading}
-                className="bg-black text-white px-[16px]"
+                className="bg-black w-full md:w-auto text-white py-[11px] px-[16px]"
               >
                 {loading ? "Отправка..." : "Отправить SMS"}
               </button>
@@ -100,22 +100,22 @@ export default function ChnagePhone({ onSuccess }) {
         {/* STEP 2 */}
         {step === 2 && (
           <>
-            <p className="text-[14px] mt-[20px] mb-2">
+            <p className="md:text-[14px] text-[12px] md:mt-[20px] mt-[14px] mb-2">
               Код отправлен на {phone}
             </p>
 
-            <div className="flex gap-2">
+            <div className="flex gap-2 flex-wrap sm:flex-nowrap">
               <input
                 value={code}
                 onChange={(e) => setCode(e.target.value)}
                 placeholder="SMS код"
-                className="border px-[12px] py-[11px] w-full sm:max-w-[290px]"
+                className="border md:px-[12px] px-[8px] md:py-[11px] py-[8px] w-full sm:max-w-[290px]"
               />
 
               <button
                 onClick={verifyCode}
                 disabled={loading}
-                className="bg-black text-white px-[40px]"
+                className="bg-black w-full md:w-auto text-white py-[11px] px-[16px]"
               >
                 {loading ? "Проверка..." : "Подтвердить"}
               </button>
