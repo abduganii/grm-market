@@ -92,7 +92,7 @@ export default function FixedLayout() {
     <>
       <Container
         className={
-          "flex justify-center sm:justify-between left-0 fixed bottom-[20px] sm:bottom-[40px] px-4 sm:px-0 w-full z-50 pointer-events-none"
+          "flex justify-center sm:justify-between inset-x-0 fixed bottom-[20px] sm:bottom-[40px] px-4 sm:px-0 w-full z-50 pointer-events-none"
         }
       >
         <div className="lg:w-[162px] hidden lg:block"></div>

@@ -10,6 +10,7 @@ import { changeBuskets, changeLike } from "@/lib/features";
 import { minio_img_url } from "@/utils/divice";
 import { useTranslations } from "next-intl";
 import { toast } from "react-toastify";
+import Masonry from "react-masonry-css";
 
 export default function GlamById({ product, productArr, id }) {
   const t = useTranslations('Product');
@@ -37,7 +38,14 @@ export default function GlamById({ product, productArr, id }) {
         : changeBuskets([e, ...buskets])
     );
   };
-  console.log(product)
+  const breakpointColumnsObj = {
+    default: 4,
+    // 1280: 4,
+    1024: 3,
+    768: 2,
+    640: 2,
+  };
+
 
   return (
     <>
@@ -142,7 +150,7 @@ export default function GlamById({ product, productArr, id }) {
           <div className="mt-[30px] lg:mt-[50px] mb-[36px] flex flex-col sm:flex-row gap-3">
             <button
               onClick={() => HendleBusket(oneProduct)}
-              className="bg-[#121212] text-white text-[14px] md:text-[15px] font-medium py-3 md:py-4 rounded-lg px-6 flex items-center justify-center gap-2 hover:bg-gray-800 transition-colors w-full sm:w-auto flex-1"
+              className="bg-[#121212] text-white text-[14px] md:text-[15px] font-medium py-3 rounded-lg px-6 flex items-center justify-center gap-2 hover:bg-gray-800 transition-colors w-full sm:w-auto flex-1"
             >
               {buskets?.map((it) => it?.id)?.includes(oneProduct?.id) ? (
                 t('added')
@@ -155,7 +163,7 @@ export default function GlamById({ product, productArr, id }) {
 
             <button
               onClick={() => HendleLike(oneProduct)}
-              className="text-[#121212] bg-[#F4F4F4] text-[14px] md:text-[15px] font-medium py-3 md:py-4 rounded-lg px-6 flex items-center justify-center gap-2 hover:bg-gray-200 transition-colors w-full sm:w-auto"
+              className="text-[#121212] bg-[#F4F4F4] text-[14px] md:text-[15px] font-medium py-3  rounded-lg px-6 flex items-center justify-center gap-2 hover:bg-gray-200 transition-colors w-full sm:w-auto"
             >
               <LikeIcons
                 stroke={
@@ -172,62 +180,58 @@ export default function GlamById({ product, productArr, id }) {
               {t('like')}
             </button>
           </div>
-          <div className="flex gap-[24px]">
 
-            <div
-              onClick={() => {
-                navigator.clipboard.writeText(window.location.href);
-                toast.success("Ссылка скопирована!");
-              }}
-              className="flex items-center gap-2 cursor-pointer"
-            >
-              <ShareIcons />
-              <p className="text-[#121212]   text-[13px] leading-[15px]">
-                {t('share')}
-              </p>
-            </div>
-            <a
-              href="tel:+998991404422"
-              className="cursor-pointer inline-flex hidden  bg-white p-[10px] rounded-[8px] shadow lg:flex gap-1  items-center "
-              aria-label="Call Us"
-            >
-              <TelIcons />
-              <p className="text-[14px] leading-[18px]">+998 94 609-34-44</p>
-            </a>
+          <div
+            onClick={() => {
+              navigator.clipboard.writeText(window.location.href);
+              toast.success("Ссылка скопирована!");
+            }}
+            className="flex items-center gap-2 cursor-pointer"
+          >
+            <ShareIcons />
+            <p className="text-[#121212]   text-[13px] leading-[15px]">
+              {t('share')}
+            </p>
           </div>
         </div>
 
       </div>
-      <div className="w-full mt-[50px] lg:mt-[94px] px-4 md:px-[30px] flex gap-4 md:gap-8 overflow-x-auto pb-6 no-scrollbar snap-x snap-mandatory">
-        {productArr?.length ?
-          productArr?.map((e) => (
-            <div key={e?.id} className="min-w-[160px] sm:min-w-[220px] lg:min-w-[260px] snap-start">
-              <GlamCard
-                className="colm1"
-                url={`/glam/${e?.id}?modelId=${e?.model?.title}&color=${e?.color?.title}&collectionId=${e?.collection?.title}`}
-                title={`${e?.collection?.title} ${e?.model?.title}`}
-                text={e?.size?.title}
-                image={e?.imgUrl?.path ? minio_img_url + e?.imgUrl?.path : ""}
-                isLike={likes?.map((it) => it?.id)?.includes(e?.id)}
-                onLike={() => {
-                  dispatch(
-                    likes?.includes(e)
-                      ? changeLike(likes?.filter((itms) => itms?.id !== e?.id))
-                      : changeLike([e, ...likes])
-                  );
-                }}
-                onBuslet={() => {
-                  dispatch(
-                    buskets?.includes(e)
-                      ? changeBuskets(
-                        buskets?.filter((itms) => itms?.id !== e?.id)
-                      )
-                      : changeBuskets([e, ...buskets])
-                  );
-                }} type={e?.sizeType} isloading={undefined} />
-            </div>
-          )) : ""}
-      </div>
+
+      <Masonry
+        breakpointCols={breakpointColumnsObj}
+        className="flex gap-8 mt-20"
+        columnClassName="flex flex-col gap-16"
+      >
+        {productArr?.length ? productArr?.map((e) => (
+          <GlamCard
+            key={e?.id}
+            className="colm1"
+            url={`/glam/${e?.id}?modelId=${e?.model?.title}&color=${e?.color?.title}&collectionId=${e?.collection?.title}`}
+            title={`${e?.collection?.title} ${e?.model?.title}`}
+            type={e?.sizeType}
+            text={e?.size?.title}
+            image={e?.imgUrl?.path ? minio_img_url + e?.imgUrl?.path : ""}
+            isLike={likes?.map((it: any) => it?.id)?.includes(e?.id)}
+            onLike={() => {
+              dispatch(
+                likes?.some((itms: any) => itms?.id === e?.id)
+                  ? changeLike(likes?.filter((itms: any) => itms?.id !== e?.id))
+                  : changeLike([e, ...likes])
+              );
+            }}
+            onBuslet={() => {
+              dispatch(
+                buskets?.some((itms: any) => itms?.id === e?.id)
+                  ? changeBuskets(
+                    buskets?.filter((itms: any) => itms?.id !== e?.id)
+                  )
+                  : changeBuskets([e, ...buskets])
+              );
+            }}
+            isloading={undefined}
+          />
+        )) : ""}
+      </Masonry>
     </>
   );
 }

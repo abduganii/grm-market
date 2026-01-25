@@ -20,7 +20,12 @@ export default function HomePage({ product, search }: { product: any, search?: a
   const dispatch = useAppDispatch();
   const breakpointColumnsObj = {
     default: 4,
-    // 1280: 4,
+    10680: 10,
+    6680: 9,
+    3680: 8,
+    2680: 6,
+    2280: 5,
+    2080: 4,
     1024: 3,
     768: 2,
     640: 2,
