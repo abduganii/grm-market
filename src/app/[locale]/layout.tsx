@@ -20,17 +20,17 @@ export async function generateMetadata({ params }): Promise<Metadata> {
   return {
     metadataBase: new URL(SITE_URL),
     title: {
-      default: t('title'),
+      default: t('title') || 'Gilam Market',
       template: '%s | Gilam Market'
     },
-    description: t('description'),
+    description: t('description') || 'Gilam Market — sifatli gilamlar va qulay narxlar',
     openGraph: {
       type: 'website',
       locale: locale === 'en' ? 'en_US' : locale === 'ru' ? 'ru_RU' : 'uz_UZ',
       url: SITE_URL,
       siteName: 'Gilam Market',
-      title: t('ogTitle'),
-      description: t('ogDescription'),
+      title: t('ogTitle') || "Gilam Market - Premium gilamlar va poyandozlar onlayn",
+      description: t('ogDescription') || 'Gilam Market — sifatli gilamlar va qulay narxlar',
       images: [
         {
           url: `${SITE_URL}/logo.svg`,
@@ -42,8 +42,8 @@ export async function generateMetadata({ params }): Promise<Metadata> {
     },
     twitter: {
       card: 'summary_large_image',
-      title: t('title'),
-      description: t('description'),
+      title: t('title') || 'Gilam Market',
+      description: t('description') || 'Gilam Market — sifatli gilamlar va qulay narxlar',
       images: [`${SITE_URL}/logo.svg`],
     },
     alternates: {

@@ -1,7 +1,7 @@
 import { fetchData } from "../../service/get";
 import HomePage from "../../views/home";
 import { SITE_URL } from "../../utils/seo";
-
+import { Metadata } from "next";
 
 async function getProduct(search) {
   return fetchData(`${process.env.NEXT_PUBLIC_URL}/qr-base/i-market`, {
@@ -12,6 +12,9 @@ async function getProduct(search) {
   })
 }
 
+export const metadata: Metadata = {
+  title: "Gilam Market",
+};
 export default async function Home({ searchParams }: { searchParams: Promise<any> }) {
   const { search,
     // style, shape, color, width, length 
