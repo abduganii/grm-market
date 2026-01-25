@@ -48,7 +48,7 @@ export default function BusketPage() {
           ))
           : ""}
       </div>
-      <div className="w-full sm:max-w-[270px]">
+      <div className="w-full sm:max-w-[270px] flex-shrink-0">
         <p className="text-[12px] leading-[14.4px] text-[#212121]">Заказчик</p>
         <p className="text-[20px] leading-[23.4px] text-[#212121] mt-[6px] mb-[24px]">
           {userMe ? userMe?.login : "Не ригистрирован"}

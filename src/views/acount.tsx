@@ -83,7 +83,7 @@ export default function AcountPage() {
         </p>
       </div>
       <div className="flex flex-col sm:flex-row sm:items-end gap-4 max-w-[596px] mt-[41px] mb-[48px]">
-        <div className=" w-full">
+        <div className="w-full">
           <p className="mb-2 text-[14px] leading-[16px]">Имя</p>
 
           <input
@@ -93,7 +93,7 @@ export default function AcountPage() {
             className="py-[11px] w-full px-[12px] outline-none border"
           />
         </div>
-        <div className=" w-full">
+        <div className="w-full">
           <p className="mb-2 text-[14px] leading-[16px]">Фамилия</p>
 
           <input
@@ -106,7 +106,7 @@ export default function AcountPage() {
         <button
           onClick={ChageData}
           disabled={loading}
-          className="bg-black h-12 text-white px-[40px] w-full sm:w-auto"
+          className="bg-black h-12 text-white px-[40px] w-full sm:w-auto flex-shrink-0"
         >
           {loading ? "Проверка..." : "Подтвердить"}
         </button>

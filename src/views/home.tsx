@@ -92,8 +92,8 @@ export default function HomePage({ product, search }: { product: any, search?: a
             src={"/logo.svg"}
             width={220}
             height={90}
-            alt="GRM Market Logo"
-            title="gr-code"
+            alt="Gilam Market"
+            title="Gilam Market"
             priority={true}
           />
         </Link>

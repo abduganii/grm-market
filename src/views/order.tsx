@@ -95,10 +95,10 @@ export default function OrderPage() {
     >
       <Back />
       <div className="mt-[14px] w-full">
-        <h3 className="mb-[71px] md:inline-block hidden text-[22px] leading-[25px]">
+        <h3 className="mb-[30px] md:mb-[71px] inline-block text-[22px] leading-[25px]">
           Корзина | Оформления заказа
         </h3>
-        <div className="flex mb-[100px] flex-col-reverse md:flex-row gap-[20px] lg:gap-[80px] w-full">
+        <div className="flex mb-[100px] flex-col-reverse md:flex-row gap-[20px] lg:gap-[60px] w-full">
           <div className="w-full flex flex-col gap-5 md:inline-block md:max-w-[205px]">
             <h4 className="text-[14px] leading-[16px] font-medium">
               Об оформления
