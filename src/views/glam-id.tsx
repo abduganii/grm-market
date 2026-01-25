@@ -8,8 +8,10 @@ import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { changeBuskets, changeLike } from "@/lib/features";
 import { minio_img_url } from "@/utils/divice";
+import { useTranslations } from "next-intl";
 
 export default function GlamById({ product, productArr, id }) {
+  const t = useTranslations('Product');
   const [LocalId, setLocalId] = useState(id);
   const [type, setType] = useState(1);
   const [oneProduct, setOneProduct] = useState<any>();
@@ -34,6 +36,7 @@ export default function GlamById({ product, productArr, id }) {
         : changeBuskets([e, ...buskets])
     );
   };
+
   return (
     <>
       <div
@@ -46,25 +49,23 @@ export default function GlamById({ product, productArr, id }) {
         </div>
         <div className="flex flex-col-reverse lg:flex-row w-full gap-2 max-w-full lg:max-w-[620px]">
           <div className="flex lg:flex-col gap-2 overflow-x-auto lg:overflow-visible w-full lg:w-[81px] pb-2 lg:pb-0">
-            <div
-              className={`flex shrink-0 items-center justify-center h-[81px] lg:h-[122px] w-[81px] bg-[#F0F0E5] overflow-hidden`}
-            >
-              <Image
-                src={"/empty-folder.png"}
-                width={20}
-                height={20}
-                alt="img"
-              />
-            </div>
+
+            <Image
+              src={oneProduct?.imgUrl?.path ? minio_img_url + oneProduct?.imgUrl?.path : ""}
+              width={81}
+              height={122}
+              className="flex shrink-0 items-center justify-center h-[81px] lg:h-[122px] w-[81px] bg-[#F0F0E5] overflow-hidden"
+              alt={oneProduct?.model?.title || "Product thumbnail"}
+            />
           </div>
           {oneProduct?.imgUrl ? (
             <div className="relative w-full aspect-[2/3] max-h-[500px] lg:max-h-[740px]">
               <AntImage
                 src={oneProduct?.imgUrl?.path ? minio_img_url + oneProduct?.imgUrl?.path : ""}
                 width={500}
-                height={740}
+                height={"100%"}
                 className="object-contain w-full h-full bg-[#fcfcfc]"
-                alt="img"
+                alt={oneProduct?.model?.title || "Product main image"}
               />
             </div>
           ) : (
@@ -75,7 +76,7 @@ export default function GlamById({ product, productArr, id }) {
                 src={"/empty-folder.png"}
                 width={60}
                 height={60}
-                alt="img"
+                alt="No image available"
               />
             </div>
           )}
@@ -88,7 +89,7 @@ export default function GlamById({ product, productArr, id }) {
             <h4 className="text-[32px] lg:text-[40px] leading-[40px] lg:leading-[50px] text-wrap lg:text-nowrap font-normal text-[#282A2C]">
               {oneProduct?.collection?.title}
             </h4>
-            <p className="text-[18px] leading-[20px] font-normal text-[#212121]">
+            <p className="text-[18px] lg:text-[24px] leading-[20px] lg:leading-[26px] font-normal text-[#212121]">
               {oneProduct?.i_price} sum
             </p>
           </div>
@@ -100,7 +101,7 @@ export default function GlamById({ product, productArr, id }) {
                 className={`${e?.id == LocalId
                   ? "bg-[#212121] text-white"
                   : "bg-[#F4F4F4] text-[#212121]"
-                  } px-[10px] py-1 cursor-pointer rounded-[5px] text-[16px] leading-[18px]`}
+                  } px-[10px] py-1 cursor-pointer rounded-[5px] text-[14px] lg:text-[16px] leading-[16px] lg:leading-[18px]`}
               >
                 {e?.size?.title}
               </p>
@@ -112,14 +113,14 @@ export default function GlamById({ product, productArr, id }) {
               className={`${type == 1 ? "" : "opacity-50"
                 } text-[#212121] text-[16px] inline-block p-[10px] leading-[18px] pb-[20px] cursor-pointer`}
             >
-              Характеристика
+              {t('characteristics')}
             </p>
             <p
               onClick={() => setType(2)}
               className={`${type == 2 ? "" : "opacity-50"
                 } text-[#212121]  text-[16px] inline-block p-[10px] leading-[18px] pb-[20px] cursor-pointer`}
             >
-              Оплата и доставка
+              {t('paymentAndDelivery')}
             </p>
             <div
               className={`${type == 1 ? "left-[0px] w-[130px]" : "left-[150px] w-[140px]"
@@ -128,14 +129,13 @@ export default function GlamById({ product, productArr, id }) {
           </div>
           {type == 1 ? (
             <>
-              <p className="text-[15px] min-h-[200px] text-[#282A2C] w-full max-w-[144px] leading-[18px]  whitespace-pre-line">
+              <p className="text-[15px]  text-[#282A2C] w-full max-w-[144px] leading-[18px]  whitespace-pre-line">
                 {oneProduct?.internetInfo}
               </p>
             </>
           ) : (
             <p className="min-h-[200px]">
-              Добро пожаловать в наш интернет-магазин ковров – место, где
-              качество, стиль и уют соединяются! Мы гордимся тем, что предлагаем
+              {t('paymentDeliveryInfo')}
             </p>
           )}
 
@@ -145,10 +145,10 @@ export default function GlamById({ product, productArr, id }) {
               className="bg-[#121212] text-white  text-[13px] leading-[15px] py-[10px] rounded-[2px] px-[24px] flex items-center gap-2"
             >
               {buskets?.map((it) => it?.id)?.includes(oneProduct?.id) ? (
-                "Добавлено"
+                t('added')
               ) : (
                 <>
-                  <BackPlusIcons /> Добавить в корзинку
+                  <BackPlusIcons /> {t('addToCart')}
                 </>
               )}
             </button>
@@ -169,13 +169,13 @@ export default function GlamById({ product, productArr, id }) {
                     : "none"
                 }
               />
-              Понравился
+              {t('like')}
             </button>
           </div>
           <div className="flex items-center gap-2 cursor-pointer">
             <ShareIcons />
             <p className="text-[#121212]   text-[13px] leading-[15px]">
-              Поделится
+              {t('share')}
             </p>
           </div>
         </div>

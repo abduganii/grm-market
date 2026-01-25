@@ -22,10 +22,13 @@ import { useAppDispatch, useAppSelector } from "../lib/hooks";
 import Menu from "./menu";
 import { Drawer } from "antd";
 import FilterModal from "./filter-modal";
+import { useTranslations } from "next-intl";
 
 
 export default function FixedLayout() {
+  const t = useTranslations('Layout');
   const [isFocus, setIsfocus] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
   const [openAuth, setOpenAuth] = useState(false);
   const [openFilter, setOpenFilter] = useState(false);
   const [open, setOpen] = useState(false);
@@ -58,6 +61,7 @@ export default function FixedLayout() {
   };
 
   useEffect(() => {
+    setIsMounted(true);
     window.addEventListener("click", () => {
       setOpenAuth(false);
       // setOpenFilter(false); // Optional: close filter on outside click if desired, but modal handles its own background click usually
@@ -96,6 +100,8 @@ export default function FixedLayout() {
           <div
             onClick={() => router.push("/")}
             className="cursor-pointer bg-white p-[10px] rounded-[8px] shadow"
+            role="button"
+            aria-label="Home"
           >
             <HomeIcons />
           </div>
@@ -103,9 +109,11 @@ export default function FixedLayout() {
           <div
             onClick={showDrawer}
             className="cursor-pointer flex gap-1  items-center bg-white p-[10px] rounded-[8px] shadow"
+            role="button"
+            aria-label="Menu"
           >
             <BurgerIcons />
-            <p className="text-[14px] leading-[18px]">Меню</p>
+            <p className="text-[14px] leading-[18px]">{t('menu')}</p>
           </div>
 
           <div className="cursor-pointer bg-white p-[10px] rounded-[8px] shadow flex gap-1  items-center ">
@@ -116,7 +124,8 @@ export default function FixedLayout() {
               onChange={handleSearch}
               defaultValue={searchParams.get("search")?.toString()}
               className={`max-w-[120px] transition-all duration-150 ease-in-out  w-full outline-none`}
-              placeholder="Поиск"
+              placeholder={t('search')}
+              aria-label="Search"
             />
           </div>
 
@@ -126,9 +135,11 @@ export default function FixedLayout() {
               setOpenFilter(true);
             }}
             className="cursor-pointer flex gap-1 items-center bg-white p-[10px] rounded-[8px] shadow"
+            role="button"
+            aria-label="Filter"
           >
             <FilterIcons />
-            <p className="text-[14px] leading-[18px]">Фильтр</p>
+            <p className="text-[14px] leading-[18px]">{t('filter')}</p>
           </div>
 
           <div
@@ -141,16 +152,20 @@ export default function FixedLayout() {
               }
             }}
             className="cursor-pointer flex gap-1 items-center bg-white p-[10px] rounded-[8px] shadow"
+            role="button"
+            aria-label="Profile"
           >
             {userMe?.id ? <PersonIcons /> : <LoginIcons />}
-            <p className="text-[14px] leading-[18px]">{userMe?.id ? "Профиль" : "Войти"}</p>
+            <p className="text-[14px] leading-[18px]">{userMe?.id ? t('profile') : t('login')}</p>
           </div>
 
           <div
             onClick={() => router.push("/profile/likes")}
             className="cursor-pointer relative  bg-white p-[10px] rounded-[8px] shadow"
+            role="button"
+            aria-label="Likes"
           >
-            {likes?.length ? (
+            {isMounted && likes?.length ? (
               <p className="h-[12px] w-[12px] text-[10px] leading-[12px] flex items-center absolute  justify-center text-white bg-[#FFA500] rounded-[1px] top-[2px] right-[2px]">
                 {likes?.length}
               </p>
@@ -162,8 +177,10 @@ export default function FixedLayout() {
           <div
             onClick={() => router.push("/profile/busket")}
             className="cursor-pointer relative bg-white p-[10px] rounded-[8px] shadow"
+            role="button"
+            aria-label="Basket"
           >
-            {buskets?.length ? (
+            {isMounted && buskets?.length ? (
               <p className="h-[12px] w-[12px] text-[10px] leading-[12px] flex items-center absolute  justify-center text-white bg-[#FFA500] rounded-[1px] top-[2px] right-[2px]">
                 {buskets?.length}
               </p>
@@ -176,6 +193,7 @@ export default function FixedLayout() {
         <a
           href="tel:+998991404422"
           className="cursor-pointer hidden  bg-white p-[10px] rounded-[8px] shadow lg:flex gap-1  items-center "
+          aria-label="Call Us"
         >
           <TelIcons />
           <p className="text-[14px] leading-[18px]">+998 94 609-34-44</p>

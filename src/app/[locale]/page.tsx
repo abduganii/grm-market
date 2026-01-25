@@ -1,5 +1,7 @@
 import { fetchData } from "../../service/get";
 import HomePage from "../../views/home";
+import { SITE_URL } from "../../utils/seo";
+
 
 async function getProduct(search) {
   return fetchData(`${process.env.NEXT_PUBLIC_URL}/qr-base/i-market`, {
@@ -26,8 +28,29 @@ export default async function Home({ searchParams }: { searchParams: Promise<any
     // length: length || undefined,
   });
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'Gilam Market',
+    url: SITE_URL,
+    logo: `${SITE_URL}/logo.svg`,
+    description: 'Turkish, Iranian and Uzbek carpets - only premium quality and affordable prices.',
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: {
+        '@type': 'EntryPoint',
+        urlTemplate: `${SITE_URL}/?search={search_term_string}`
+      },
+      'query-input': 'required name=search_term_string'
+    }
+  }
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <HomePage product={product?.items} search={search} />
     </>
   );

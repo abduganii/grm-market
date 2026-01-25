@@ -1,10 +1,20 @@
-"use client";
 import InfoPageLayout from "../../../components/info-page-layout";
+import { getTranslations } from 'next-intl/server';
+
+export async function generateMetadata({ params }) {
+    const { locale } = await params;
+    const t = await getTranslations({ locale, namespace: 'Delivery' });
+
+    return {
+        title: t('title'),
+        description: t('description')
+    };
+}
 
 export default function DeliveryPage() {
     return (
         <InfoPageLayout title="О доставке">
-            <div className="flex flex-col gap-6 text-[16px] leading-[24px] text-[#212121]">
+            <div className="flex flex-col gap-6 text-[14px] md:text-[16px] leading-[20px] md:leading-[24px] text-[#212121]">
                 <p>
                     Благодарим вас за покупку в нашем интернет-магазине ковров. Мы искренне ценим оказанное нам доверие и рады, что вы выбрали именно нас для приобретения качественных ковровых изделий.
                 </p>

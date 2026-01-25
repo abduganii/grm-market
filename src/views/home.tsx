@@ -11,8 +11,10 @@ import Masonry from "react-masonry-css";
 import { minio_img_url } from "@/utils/divice";
 import { fetchData } from "../service/get";
 import GlamCardSkeleton from "../components/skeletons/glam-card-skeleton";
+import { useTranslations } from "next-intl";
 
 export default function HomePage({ product, search }: { product: any, search?: any }) {
+  const t = useTranslations('Home');
   const searchParams = useSearchParams();
   const { buskets } = useAppSelector((store) => store.buskets);
   const { likes } = useAppSelector((store) => store.likes);
@@ -90,8 +92,9 @@ export default function HomePage({ product, search }: { product: any, search?: a
             src={"/logo.svg"}
             width={220}
             height={90}
-            alt="image"
+            alt="GRM Market Logo"
             title="gr-code"
+            priority={true}
           />
         </Link>
         <h3 className="text-[17px] leading-[20px] text-[#212121] mt-5 mb-[7px] font-semibold">

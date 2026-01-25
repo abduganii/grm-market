@@ -26,7 +26,7 @@ export default function GlamCard({
   const router = useRouter();
 
   return (
-    <div className="mb-1 group  break-inside-avoid w-full">
+    <article className="mb-1 group  break-inside-avoid w-full">
       <div className={`${className && className}   text-center`}>
         <div
 
@@ -47,8 +47,9 @@ export default function GlamCard({
               className={`${isloading ? "hidden" : ""
                 } object-contain m-auto  bg-transparent cursor-pointer ease-in duration-200 hover:-translate-y-2`}
               src={image || null}
-              alt="image"
+              alt={title || "Product Image"}
               title={title}
+              sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
             />
           ) : (
             <div
@@ -88,13 +89,13 @@ export default function GlamCard({
             </div>
           </div>
         </div>
-        <h3 onClick={() => router.push(url)} className="text-[20px]  cursor-pointer group-hover:underline group-hover:decoration-solid leading-[25px] font-normal mt-3 mb-2">
+        <h3 onClick={() => router.push(url)} className="text-[14px] sm:text-[16px] md:text-[18px] lg:text-[20px] cursor-pointer group-hover:underline group-hover:decoration-solid leading-[18px] sm:leading-[25px] font-normal mt-3 mb-2">
           {title}
         </h3>
-        <p className="text-[15px] tetx-[#00000005] leading-[18px] font-normal ">
+        <p className="text-[12px] sm:text-[13px] md:text-[14px] lg:text-[15px] tetx-[#00000005] leading-[14px] sm:leading-[18px] font-normal ">
           {text}
         </p>
       </div>
-    </div>
+    </article>
   );
 }

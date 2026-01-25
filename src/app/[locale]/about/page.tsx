@@ -1,10 +1,20 @@
-"use client";
 import InfoPageLayout from "../../../components/info-page-layout";
+import { getTranslations } from 'next-intl/server';
+
+export async function generateMetadata({ params }) {
+    const { locale } = await params;
+    const t = await getTranslations({ locale, namespace: 'About' });
+
+    return {
+        title: t('title'),
+        description: t('description')
+    };
+}
 
 export default function AboutPage() {
     return (
         <InfoPageLayout title="О нас">
-            <div className="flex flex-col gap-6 text-[16px] leading-[24px] text-[#212121]">
+            <div className="flex flex-col gap-6 text-[14px] md:text-[16px] leading-[20px] md:leading-[24px] text-[#212121]">
                 <p>
                     Добро пожаловать в наш интернет-магазин ковров – место, где качество, стиль и уют соединяются!
                     Мы гордимся тем, что предлагаем широкий ассортимент ковров, который удовлетворит самые изысканные вкусы. В нашем магазине вы найдете очаровательные премиум-ковры, произведенные в Турции и Иране, странах, известных своим многовековым мастерством и традициями изготовления ковров. Наш ассортимент включает более 100 коллекций и свыше 500 моделей ковров. У нас есть ковры для любого интерьера – от классических до современных, от небольших акцентов до больших решений, создающих уют в вашем доме. Мы предлагаем различные категории ковров, включая:

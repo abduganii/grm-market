@@ -1,10 +1,20 @@
-"use client";
 import InfoPageLayout from "../../../components/info-page-layout";
+import { getTranslations } from 'next-intl/server';
+
+export async function generateMetadata({ params }) {
+    const { locale } = await params;
+    const t = await getTranslations({ locale, namespace: 'Payment' });
+
+    return {
+        title: t('title'),
+        description: t('description')
+    };
+}
 
 export default function PaymentPage() {
     return (
         <InfoPageLayout title="Об оплате">
-            <div className="flex flex-col gap-6 text-[16px] leading-[24px] text-[#212121]">
+            <div className="flex flex-col gap-6 text-[14px] md:text-[16px] leading-[20px] md:leading-[24px] text-[#212121]">
                 <p>
                     Благодарим вас за оформление заказа в нашем интернет-магазине ковров. Мы высоко ценим ваш выбор и стремимся обеспечить максимально прозрачные и удобные условия оплаты для каждого клиента.
                 </p>
