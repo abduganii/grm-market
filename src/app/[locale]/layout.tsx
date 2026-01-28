@@ -10,6 +10,8 @@ import { ToastContainer } from 'react-toastify';
 import { Metadata } from 'next';
 import { SITE_URL } from '../../utils/seo';
 import { Inter } from 'next/font/google';
+import { Suspense } from "react";
+import Metrika from "@/components/Metrika";
 
 const inter = Inter({ subsets: ['latin', 'cyrillic'] });
 
@@ -105,6 +107,9 @@ export default async function LocaleLayout({ children, params }) {
             <FixedLayout />
           </StoreProvider>
         </NextIntlClientProvider>
+        <Suspense>
+          <Metrika />
+        </Suspense>
       </body>
     </html>
   );
