@@ -99,11 +99,11 @@ export default function FixedLayout() {
         <div className="flex gap-1 pointer-events-auto  rounded-[8px]">
           <div
             onClick={() => router.push("/")}
-            className="cursor-pointer bg-white  h-[40px] p-[10px] rounded-[8px] shadow"
+            className={`cursor-pointer ${pathname === "/" ? "bg-[#121212] text-white" : "bg-white"}  h-[40px] p-[10px] rounded-[8px] shadow`}
             role="button"
             aria-label="Home"
           >
-            <HomeIcons />
+            <HomeIcons stroke={pathname === "/" ? "white" : "black"} />
           </div>
 
           <div
@@ -151,17 +151,17 @@ export default function FixedLayout() {
                 setOpenAuth(true);
               }
             }}
-            className="cursor-pointer h-[40px]  flex gap-1 items-center bg-white p-[10px] rounded-[8px] shadow"
+            className={`cursor-pointer h-[40px]  flex gap-1 items-center ${pathname === "/profile/account" ? "bg-[#121212] text-white" : "bg-white"} p-[10px] rounded-[8px] shadow`}
             role="button"
             aria-label="Profile"
           >
-            {userMe?.id ? <PersonIcons /> : <LoginIcons />}
+            {userMe?.id ? <PersonIcons stroke={pathname === "/profile/account" ? "white" : "black"} /> : <LoginIcons stroke={pathname === "/profile/account" ? "white" : "black"} />}
             <p className="text-[14px] leading-[18px]">{userMe?.id ? t('profile') : t('login')}</p>
           </div>
 
           <div
             onClick={() => router.push("/profile/likes")}
-            className="cursor-pointer relative h-[40px] w-[40px] bg-white p-[10px] rounded-[8px] shadow"
+            className={`cursor-pointer relative h-[40px] w-[40px] ${pathname === "/profile/likes" ? "bg-[#121212] text-white" : "bg-white"} p-[10px] rounded-[8px] shadow`}
             role="button"
             aria-label="Likes"
           >
@@ -172,11 +172,11 @@ export default function FixedLayout() {
             ) : (
               ""
             )}
-            <LikeIcons stroke={"black"} />
+            <LikeIcons stroke={pathname === "/profile/likes" ? "white" : "black"} />
           </div>
           <div
             onClick={() => router.push("/profile/busket")}
-            className="cursor-pointer h-[40px] w-[40px] relative bg-white p-[10px] rounded-[8px] shadow"
+            className={`cursor-pointer h-[40px] w-[40px] relative ${pathname === "/profile/busket" ? "bg-[#121212] text-white" : "bg-white"} p-[10px] rounded-[8px] shadow`}
             role="button"
             aria-label="Basket"
           >
@@ -187,7 +187,7 @@ export default function FixedLayout() {
             ) : (
               ""
             )}
-            <BusketIcons />
+            <BusketIcons stroke={pathname === "/profile/busket" ? "white" : "black"} />
           </div>
         </div>
         <a

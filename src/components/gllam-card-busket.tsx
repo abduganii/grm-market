@@ -4,7 +4,7 @@ import { CloseIcons, MinutIcons, PlusIcons } from "./icons";
 
 
 export default function GlamCardBusket({ isMyOrder, myCount = 1, price, title, onRemove, items, image, onCountChange }) {
-  const [count, setCount] = useState(items?.isMetric ? items?.size?.y : items?.count || 1);
+  const [count, setCount] = useState(items?.isMetric ? items?.size?.y * 100 : items?.count || 1);
   return (
     <div className="flex flex-col w-full  relative sm:flex-row sm:flex-nowrap border-[1px] flex-wrap  md:mb-[30px] mb-[15px] p-[2px]  border-[#EEEEEE] items-start gap-[12px] sm:gap-[24px]">
       {image ? (
@@ -96,11 +96,11 @@ export default function GlamCardBusket({ isMyOrder, myCount = 1, price, title, o
                 value={count}
                 onChange={(e) => {
                   let val = parseFloat(e.target.value);
-                  const maxVal = items?.size?.y || 100; // Fallback if size.y is missing
+                  const maxVal = items?.size?.y * 100 || 100; // Fallback if size.y is missing
                   if (val > maxVal) val = maxVal;
                   if (val < 0) val = 0;
                   setCount(val);
-                  onCountChange && onCountChange(val);
+                  onCountChange && onCountChange(val / 100);
                 }}
                 className="w-full sm:w-[100px] px-3 py-2 border-[1px] border-[#EEEEEE] text-[14px] outline-none"
               />

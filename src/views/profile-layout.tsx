@@ -28,7 +28,7 @@ export default function ProfileLayout({ children }) {
   return (
     <Container
       className={
-        "flex flex-wrap md:flex-nowrap md:px-[26px]  md:mt-[26px] px-[14px] mt-[14px] gap-[35px] items-center"
+        "flex flex-wrap md:flex-nowrap   md:mt-[26px]  mt-[14px] gap-[35px] items-center"
       }
     >
       <Back />

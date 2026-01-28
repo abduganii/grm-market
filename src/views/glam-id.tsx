@@ -59,7 +59,6 @@ export default function GlamById({ product, productArr, id }) {
         </div>
         <div className="flex flex-col-reverse lg:flex-row w-full gap-4 max-w-full lg:max-w-[620px]">
           <div className="flex lg:flex-col gap-2 overflow-x-auto lg:overflow-visible w-full lg:w-[81px] pb-2 lg:pb-0 no-scrollbar">
-
             <Image
               src={oneProduct?.imgUrl?.path ? minio_img_url + oneProduct?.imgUrl?.path : ""}
               width={81}
@@ -199,7 +198,7 @@ export default function GlamById({ product, productArr, id }) {
 
       <Masonry
         breakpointCols={breakpointColumnsObj}
-        className="flex gap-8 mt-20"
+        className="flex gap-8 mt-60"
         columnClassName="flex flex-col gap-16"
       >
         {productArr?.length ? productArr?.map((e) => (

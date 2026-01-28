@@ -19,16 +19,15 @@ export default function HomePage({ product, search }: { product: any, search?: a
   const { likes } = useAppSelector((store) => store.likes);
   const dispatch = useAppDispatch();
   const breakpointColumnsObj = {
-    default: 4,
+    default: 5,
     10680: 10,
-    6680: 9,
-    3680: 8,
+    6680: 8,
+    3680: 7,
     2680: 6,
-    2280: 5,
-    2080: 4,
-    1024: 3,
+    2080: 5,
+    1300: 4,
+    1000: 3,
     768: 2,
-    640: 2,
   };
 
   const [products, setProducts] = useState<any[]>(product || []);
